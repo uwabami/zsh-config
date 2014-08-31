@@ -1,9 +1,34 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
+# $Lastupdate: 2014-09-01 05:09:53$
 #
-# Copyright(C) Youhei SASAKI <uwabami@gfd-dennou.org> All rights reserved.
-# $Lastupdate: 2014-09-01 00:59:24$
-# License: CC0 or MIT/X11 @see LICENSE in detail
+# Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the University nor the names of its contributors
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+#
 # NOTE:
 # Refernce: Qitta article http://qiita.com/kubosho_/items/c200680c26e509a4f41c
 #
@@ -41,7 +66,7 @@ typeset -Uga precmd_functions
 typeset -Uga preexec_functions
 
 ## utilities
-autoload -Uz is-at-least    # zsh のバージョンチェック
+autoload -Uz is-at-least     # zsh のバージョンチェック
 autoload -Uz colors; colors  # 色指定を $fg[red] 等で行なえるように.
 
 ### History
@@ -179,35 +204,6 @@ function update_prompt (){
 }
 precmd_functions+=update_prompt
 
-### screen の title をディレクトリ名or実行中のコマンド名にする
-## 引数を screen の title に
-# function set_screen_title (){
-#     [ $WINDOW ] &&  echo -ne "\ek$1\e\\"
-# }
-## pwd を screen の title に: 8 文字制限
-# function precmd_screen_window_title () {
-#     set_screen_title $(echo -n ${$(print -nD `pwd`):t} | cut -c1-8)
-# }
-## コマンドを screen のタイトルに: 8 文字制限
-# 引数を表示するコマンド
-# typeset -a _screen_cmd_arg; _screen_cmd_arg=( sudo ssh man )
-# 無視するコマンド
-# typeset -a _screen_cmd_ignore; _screen_cmd_ignore=( cd ls zsh )
-# 関数本体
-# function preexec_screen_command_title () {
-#     local -a cmd; cmd=(`print -nD ${(z)2}`)
-#     if [ ${_screen_cmd_arg[(i)$cmd[1]]} -le $#_screen_cmd_arg ];then
-#         shift cmd
-#         set_screen_title `echo $cmd | cut -c1-8`
-#     elif [ ${_screen_cmd_ignore[(i)$cmd[1]]} -le $#_screen_cmd_ignore ]; then
-#         return
-#     else
-#         set_screen_title `echo $cmd | cut -c1-8`
-#     fi
-# }
-# precmd_functions+=precmd_screen_window_title
-# preexec_functions+=preexec_screen_command_title
-
 ### ssh-reagent
 function ssh-reagent(){
     for agent in /tmp/ssh-*/agent.*; do
@@ -221,6 +217,7 @@ function ssh-reagent(){
     echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
 }
 
+# peco
 if whence peco > /dev/null ; then
     _auto_zcompile_source $ZDOTDIR/utils/select-history.zsh
 fi
@@ -233,6 +230,7 @@ if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ] && (whence nkf >/de
     export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s | nkf -w '
 fi
 export LESSCHARSET=utf-8
+
 # alias man='LANG=C man'
 # @see Linux / Unix: Colored Man Pages With less Command
 # http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
