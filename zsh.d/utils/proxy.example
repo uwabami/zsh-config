@@ -1,0 +1,21 @@
+#! /usr/bin/env zsh
+# -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
+#
+# Copyright(C) Youhei SASAKI <uwabami@gfd-dennou.org> All rights reserved.
+# $Lastupdate: 2013-09-28 01:56:34$
+# License: CC0 or MIT/X11 @see LICENSE in detail
+#
+# Usage:
+#
+#  Change proxy settings and rename this file:
+#    % mv proxy.exmaple proxy.zsh
+#
+# Code:
+#
+## for "VCS proxy" wrapper variables
+export _http_proxy_server_=127.0.0.1
+export _http_proxy_port_=8080
+
+## main proxy settings
+export http_proxy="http://$_http_proxy_server_:$_http_proxy_port_"
+export ftp_proxy=$http_proxy
