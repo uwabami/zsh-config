@@ -2,7 +2,7 @@
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
 #
 # Copyright(C) Youhei SASAKI <uwabami@gfd-dennou.org> All rights reserved.
-# $Lastupdate: 2014-08-31 00:42:51$
+# $Lastupdate: 2014-09-01 00:59:24$
 # License: CC0 or MIT/X11 @see LICENSE in detail
 # NOTE:
 # Refernce: Qitta article http://qiita.com/kubosho_/items/c200680c26e509a4f41c
@@ -221,10 +221,9 @@ function ssh-reagent(){
     echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
 }
 
-### percol
-# if whence percol >/dev/null; then
-#     for f ($ZDOTDIR/percol/*.zsh) _auto_zcompile_source "${f}"
-# fi
+if whence peco > /dev/null ; then
+    _auto_zcompile_source $ZDOTDIR/utils/select-history.zsh
+fi
 
 ### Aliases
 export MANPAGER='less -s'
