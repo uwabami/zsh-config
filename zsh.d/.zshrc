@@ -101,7 +101,7 @@ zstyle ':completion:*' remote-access true
 zstyle ':completion:*' completer \
     _oldlist _complete _match _ignored _approximate _list _history
 ## 補完候補の追加
-is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/completions ] && \
+is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
     fpath+=( $ZDOTDIR/modules/zsh-completions/src $fpath )
 is-at-least 4.3.10 && [ -d $HOME/.rbenv/completions/rbenv.zsh ] && \
     fpath+=( $HOME/.rbenv/completions/rbenv.zsh $fpath )
@@ -326,5 +326,5 @@ alias flashswap="sudo swapoff -a ; sudo swapon -a"
 
 # load last
 is-at-least 4.3.10 && \
-    [ -d $ZDOTDIR/modules/syntax-highlighting ] && \
-    source $ZDOTDIR/modules/syntax-highlighting/zsh-syntax-highlighting.zsh
+    [ -d $ZDOTDIR/modules/zsh-syntax-highlighting ] && \
+    source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
