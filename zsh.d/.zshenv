@@ -72,8 +72,6 @@ function _auto_zcompile_source  () {
 }
 
 ### Language specific settings
-## Emacs
-[ -d $HOME/.cask/bin ] && path=($HOME/.cask/bin $path)
 
 ## TeX
 export TEXMFHOME=$HOME/.texmf
