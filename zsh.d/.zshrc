@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-10-07 16:13:44$
+# $Lastupdate: 2014-10-07 18:31:32$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -30,7 +30,9 @@
 # SUCH DAMAGE.
 #
 # NOTE:
-# Refernce: Qitta article http://qiita.com/kubosho_/items/c200680c26e509a4f41c
+# Refernce:
+# - Qitta article http://qiita.com/kubosho_/items/c200680c26e509a4f41c
+# - @satoh_fumiyasu: https://twitter.com/satoh_fumiyasu/status/519386124020482049
 #
 # Code:
 
@@ -173,8 +175,9 @@ precmd_functions+=prompt_vcs_info
 
 # 変数の文字列計算用関数
 function count_prompt_chars (){
-    # shell まおう @satoh_fumiyasu さまより教えて頂き改良.
-    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | sed -e 's/?/a/g' | iconv -f UTF-8 -t US-ASCII//TRANSLIT | sed '/?/aa/g' | wc -m | sed -e 's/ //g'
+    # @see https://twitter.com/satoh_fumiyasu/status/519386124020482049
+    # Thanks to @satoh_fumiyasu
+    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | sed -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
 }
 # precmd のプロンプト更新用関数
 function update_prompt (){
