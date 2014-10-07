@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-09-01 05:09:53$
+# $Lastupdate: 2014-10-07 16:13:44$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -132,7 +132,7 @@ is-at-least 4.3.10 && [ -d $HOME/.rbenv/completions/rbenv.zsh ] && \
     fpath+=( $HOME/.rbenv/completions/rbenv.zsh $fpath )
 typeset -gxU fpath
 # 初期化
-autoload -Uz compinit ; compinit -d $ZDOTDIR/tmp/$USER-zcompdump
+autoload -Uz compinit ; compinit -u -d $ZDOTDIR/tmp/$USER-zcompdump
 
 ### PROMPT
 ## option
@@ -173,7 +173,8 @@ precmd_functions+=prompt_vcs_info
 
 # 変数の文字列計算用関数
 function count_prompt_chars (){
-    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g'
+    # shell まおう @satoh_fumiyasu さまより教えて頂き改良.
+    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | sed -e 's/?/a/g' | iconv -f UTF-8 -t US-ASCII//TRANSLIT | sed '/?/aa/g' | wc -m | sed -e 's/ //g'
 }
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -295,7 +296,7 @@ alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
 [ -d /Applications/MacPorts/Emacs.app ] && \
   alias emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
-alias en="emacs -nw"
+alias en="emacsclient --tty"
 alias xscreen="screen -x || screen"
 if whence wcwidth-cjk >/dev/null ; then
     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
@@ -318,8 +319,11 @@ if whence svn-buildpackage >/dev/null ; then
     alias svn-bct="svn-buildpackage --svn-builder='svn-pbuilder' --svn-lintian --svn-tag --svn-retag --svn-dont-clean"
 fi
 
-alias xxx="rm -f ~/.xsession-errors; startx -- -dpi 96 -nolisten tcp 1> ${HOME}/.xlog 2>&1"
-alias flashswap="sudo swapoff -a ; sudo swapon -a"
+# alias xxx="rm -f ~/.xsession-errors; startx -- -dpi 96 -nolisten tcp 1> ${HOME}/.xlog 2>&1"
+# alias flashswap="sudo swapoff -a ; sudo swapon -a"
+
+alias halt="sudo systemctl poweroff"
+alias reboot="sudo systemctl reboot"
 
 # load last
 is-at-least 4.3.10 && \
