@@ -140,11 +140,11 @@ fi
     _auto_zcompile_source $ZDOTDIR/utils/proxy
 
 ### Vendor Software (e.g., Compiler)
-[ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
-[ -d /opt/FJSVplang ] && _auto_zcompile_source $ZDOTDIR/vendor/fujitsu.zsh
-[ -d /opt/intel ] && _auto_zcompile_source $ZDOTDIR/vendor/intel.zsh
-[ -d /opt/SolarisStudio ] && \
-    _auto_zcompile_source $ZDOTDIR/vendor/soralisstudio.zsh
+# [ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
+# [ -d /opt/FJSVplang ] && _auto_zcompile_source $ZDOTDIR/vendor/fujitsu.zsh
+# [ -d /opt/intel ] && _auto_zcompile_source $ZDOTDIR/vendor/intel.zsh
+# [ -d /opt/SolarisStudio ] && \
+#     _auto_zcompile_source $ZDOTDIR/vendor/soralisstudio.zsh
 
 ### misc
 ## VTE terminal: fix EAW width
