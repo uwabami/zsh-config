@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-10-07 18:31:32$
+# $Lastupdate: 2014-11-04 12:12:41$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -177,7 +177,7 @@ precmd_functions+=prompt_vcs_info
 function count_prompt_chars (){
     # @see https://twitter.com/satoh_fumiyasu/status/519386124020482049
     # Thanks to @satoh_fumiyasu
-    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | sed -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
+    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
 }
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -299,7 +299,14 @@ alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
 [ -d /Applications/MacPorts/Emacs.app ] && \
   alias emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
-alias en="emacsclient --tty"
+function en (){
+    if [ -S /tmp/emacs$UID/server ] ; then
+        emacsclient --tty
+    else
+        emacs --daemon && emacsclient --tty
+    fi
+}
+# alias en="[ emacsclient --tty"
 alias xscreen="screen -x || screen"
 if whence wcwidth-cjk >/dev/null ; then
     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"

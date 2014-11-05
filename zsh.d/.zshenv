@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-09-01 05:07:48$
+# $Lastupdate: 2014-11-06 02:57:36$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -88,10 +88,7 @@ whence java >/dev/null && \
 ## Ruby
 [ -d $HOME/Library/site_ruby ] && \
     export RUBYLIB=$HOME/Library/site_ruby:$RUBYLIB
-if [ -d $HOME/.rbenv/bin ] ; then
-    path=($HOME/.rbenv/bin $path) && \
-        eval "$(rbenv init -)"
-fi
+whence rbenv >/dev/null && eval "$(rbenv init -)"
 # load/unload local gems
 function load_local_gems(){
     export GEM_HOME=$HOME/.gem
