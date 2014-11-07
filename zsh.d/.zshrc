@@ -230,9 +230,9 @@ fi
 export MANPAGER='less -s'
 export PAGER='less -R'
 export LESS='-R'
-if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ] && (whence nkf >/dev/null)  ; then
-    export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s | nkf -w '
-fi
+# if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ] && (whence nkf >/dev/null)  ; then
+#    export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s | nkf -w '
+# fi
 export LESSCHARSET=utf-8
 
 # alias man='LANG=C man'
