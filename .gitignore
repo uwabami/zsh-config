@@ -1,3 +1,4 @@
 *.zwc
 zsh.d/utils/proxy
+zsh.d/utils/userinfo
 zsh.d/tmp

@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-11-06 02:57:36$
+# $Lastupdate: 2014-11-07 18:02:30$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -30,15 +30,20 @@
 # SUCH DAMAGE.
 #
 ### BASIC
+
+## config load function: auto-zcompile & source
+function _auto_zcompile_source  () {
+    local A; A=$1
+    [[ -e "${A:r}.zwc" ]] && [[ "$A" -ot "${A:r}.zwc" ]] ||
+    zcompile $A >/dev/null 2>&1 ; source $A
+}
+
 ## LANG
 export LANG=ja_JP.UTF-8
 
 ## Debian specific
-export DEBFULLNAME="Youhei SASAKI"
-export DEBEMAIL="uwabami@gfd-dennou.org"
-export KPKG_MAINTAINER=${DEBFULLNAME}
-export KPKG_EMAIL=${DEBEMAIL}
-export COLUMNS=${COLUMNS:-80}
+[ -f $ZDOTDIR/utils/userinfo ] && \
+    _auto_zcompile_source $ZDOTDIR/utils/userinfo
 
 ### PATH
 path=(
@@ -63,13 +68,6 @@ typeset -gxU manpath
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [ -z "$include" ] && typeset -xT INCLUDE include
 typeset -xU ld_library_path include
-
-## function: auto-zcompile & source
-function _auto_zcompile_source  () {
-    local A; A=$1
-    [[ -e "${A:r}.zwc" ]] && [[ "$A" -ot "${A:r}.zwc" ]] ||
-    zcompile $A >/dev/null 2>&1 ; source $A
-}
 
 ### Language specific settings
 
