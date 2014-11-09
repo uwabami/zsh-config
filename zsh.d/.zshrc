@@ -177,7 +177,11 @@ precmd_functions+=prompt_vcs_info
 function count_prompt_chars (){
     # @see https://twitter.com/satoh_fumiyasu/status/519386124020482049
     # Thanks to @satoh_fumiyasu
-    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
+    if [[ $OSTYPE == darwin* ]] ; then
+        print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | iconv -f UTF-8-MAC -t US-ASCII//TRANSLIT | sed 's/?/aa/g' | wc -m | sed -e 's/ //g'
+    else
+        print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | sed -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
+    fi
 }
 # precmd のプロンプト更新用関数
 function update_prompt (){
