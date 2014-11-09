@@ -82,6 +82,9 @@ whence java >/dev/null && \
 
 ## Homebrew, Homebrew-Cask
 [[ $OSTYPE == darwin* ]] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+[[ $OSTYPE == darwin* ]] && \
+    [[ -d $HOME/Library/Qt/5.3/clang_64/bin ]] && \
+        path=( $HOME/Library/Qt/5.3/clang_64/bin $path )
 
 ## Ruby
 [ -d $HOME/Library/site_ruby ] && \
