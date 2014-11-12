@@ -301,8 +301,6 @@ alias mv='nocorrect mv'
 alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
-[ -d /Applications/MacPorts/Emacs.app ] && \
-  alias emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
 function en (){
     if [ -S /tmp/emacs$UID/server ] ; then
         emacsclient --tty
