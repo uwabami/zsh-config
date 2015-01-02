@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-11-04 12:12:41$
+# $Lastupdate: 2015-01-03 00:38:23$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -301,14 +301,25 @@ alias mv='nocorrect mv'
 alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
-function en (){
-    if [ -S /tmp/emacs$UID/server ] ; then
-        emacsclient --tty
-    else
-        emacs --daemon && emacsclient --tty
-    fi
-}
-# alias en="[ emacsclient --tty"
+
+if whence emacs24 ; then
+    function en (){
+        if [ -S /tmp/emacs$UID/server ] ; then
+            emacsclient.emacs24 --tty
+        else
+            emacs24 --daemon && emacsclient.emacs24 --tty
+        fi
+    }
+    alias emacs=emacs24
+else
+    function en (){
+        if [ -S /tmp/emacs$UID/server ] ; then
+            emacsclient --tty
+        else
+            emacs --daemon && emacsclient --tty
+        fi
+    }
+fi
 alias xscreen="screen -x || screen"
 if whence wcwidth-cjk >/dev/null ; then
     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
