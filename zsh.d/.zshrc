@@ -302,7 +302,7 @@ alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
 
-if whence emacs24 ; then
+if whence emacs24 2>&1 1>/dev/null ; then
     function en (){
         if [ -S /tmp/emacs$UID/server ] ; then
             emacsclient.emacs24 --tty
