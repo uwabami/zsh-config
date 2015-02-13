@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-01-03 00:38:23$
+# $Lastupdate: 2015-02-13 11:37:30$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -143,6 +143,8 @@ setopt prompt_percent    # %文字から始まる置換機能を有効に
 unsetopt promptcr        # 被る時は右プロンプトを消す
 setopt transient_rprompt # コマンド実行後は右プロンプトを消す
 
+# autoload -Uz promptinit ;  promptinit
+
 ## chroot info
 # Debian の chroot 環境には /etc/debian_chroot がある
 function prompt_chroot_info() {
@@ -189,22 +191,25 @@ function update_prompt (){
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}%m%f"
-    local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
-    ## プロンプト: 1段目右
-    local prompt_1st_right="[%F{white}%(5~,%-2~/.../%1~,%~)%f]"
-    ## 1段目行の残り文字列の計算
-    local left_length=$(count_prompt_chars $prompt_1st_left)
-    local right_length=$(count_prompt_chars $prompt_1st_right)
-    local bar_rest_length=$[ COLUMNS - left_length - right_length -1 ]
-    ## 1段目に水平線を引く
-    local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
+    # local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
+    # ## プロンプト: 1段目右
+    # local prompt_1st_right="[%F{white}%(5~,%-2~/.../%1~,%~)%f]"
+    # ## 1段目行の残り文字列の計算
+    # local left_length=$(count_prompt_chars $prompt_1st_left)
+    # local right_length=$(count_prompt_chars $prompt_1st_right)
+    # local bar_rest_length=$[ COLUMNS - left_length - right_length -1 ]
+    # ## 1段目に水平線を引く
+    # local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
     ## PROMPT の設定
     # @see Zshをかわいくする.zshrcの設定
     # URL: http://qiita.com/kubosho_/items/c200680c26e509a4f41c
     # 横幅等を調整.
     local ps_status="[%j]%(?.%B%F{green}.%B%F{blue})%(?!(*'-')%b!(*;-;%)%b)%f "
     local ps_mark="%(!,%B%F{magenta}#%f%b,%%)"
-    PROMPT="$prompt_1st_left$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
+    # PROMPT="$prompt_1st_left$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
+    local prompt_info="[$ps_user@$ps_host$chroot_info"
+    local prompt_pwd="%F{white}%(5~,%-2~/.../%1~,%~)%f]"
+    PROMPT="$prompt_info:$prompt_pwd"$'\n'"$ps_status$ps_mark "
     PROMPT2='|%j]> '
     SPROMPT="[%j]%B%F{red}%{$suggest%}(*'~'%)?<%b %U%r%u is correct? [n,y,a,e]:%f "
     # 右プロンプト
@@ -302,31 +307,17 @@ alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
 
-if whence emacs24 2>&1 1>/dev/null ; then
-    function en (){
-        if [ -S /tmp/emacs$UID/server ] ; then
-            emacsclient.emacs24 --tty
-        else
-            emacs24 --daemon && emacsclient.emacs24 --tty
-        fi
-    }
-    alias emacs=emacs24
-else
-    function en (){
-        if [ -S /tmp/emacs$UID/server ] ; then
-            emacsclient --tty
-        else
-            emacs --daemon && emacsclient --tty
-        fi
-    }
-fi
 alias xscreen="screen -x || screen"
 if whence wcwidth-cjk >/dev/null ; then
     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
     alias xtmux="tmux attach || tmux"
 fi
+if whence emacs24 2>&1 1>/dev/null ; then
+    alias emacs=emacs24
+    alias emacsclient=emacsclient.emacs24
+fi
 
-whence pry >/dev/null && \
+whence pry 2>&1 1>/dev/null && \
     alias irb=pry
 
 if whence git-buildpackage >/dev/null ; then
@@ -345,8 +336,10 @@ fi
 # alias xxx="rm -f ~/.xsession-errors; startx -- -dpi 96 -nolisten tcp 1> ${HOME}/.xlog 2>&1"
 # alias flashswap="sudo swapoff -a ; sudo swapon -a"
 
-alias halt="sudo systemctl poweroff"
-alias reboot="sudo systemctl reboot"
+if whence systemctl 2>&1 1>/dev/null ; then
+    alias halt="sudo systemctl poweroff"
+    alias reboot="sudo systemctl reboot"
+fi
 
 # load last
 is-at-least 4.3.10 && \
