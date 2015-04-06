@@ -46,7 +46,7 @@ setopt auto_pushd           # cd 時に Tab 補完
 setopt pushd_to_home        # pushd を引数無しで実行した時に pushd ~ とする
 setopt pushd_ignore_dups    # ディレクトリスタックに重複する物は古い方を削除
 DIRSTACKSIZE=20
-[[ $OSTYPE == cygwin* ]] || limit coredumpsize 0
+[[ $OSTYPE == (cygwin*|msys*) ]] || limit coredumpsize 0
                             # cygwin 以外では core を吐かないようにする.
 ## Correct command
 setopt correct              # コマンドのスペル訂正
