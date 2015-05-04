@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-02-13 11:37:30$
+# $Lastupdate: 2015-04-30 01:47:52$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -303,6 +303,7 @@ alias rm='nocorrect rm -i'
 alias mv='nocorrect mv -i'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
+alias nmtui='LANG=C nmtui'
 alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
@@ -320,12 +321,12 @@ fi
 whence pry 2>&1 1>/dev/null && \
     alias irb=pry
 
-if whence git-buildpackage >/dev/null ; then
-    alias git-b="git-buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k891D7E07'"
+if whence gbp >/dev/null ; then
+    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k891D7E07'"
     alias git-bp="git-b --git-debian-branch=patche-queue/master"
-    alias git-bc="git-buildpackage --git-ignore-new --git-builder='git-pbuilder'"
-    alias git-bcp="git-buildpackage --git-ignore-new --git-builder='git-pbuilder' --git-debian-branch=patch-queue/master "
-    alias git-bct="git-buildpackage --git-ignore-new --git-tag --git-builder='git-pbuilder'"
+    alias git-bc="gbp buildpackage --git-ignore-new --git-builder='git-pbuilder'"
+    alias git-bcp="gbp buildpackage --git-ignore-new --git-builder='git-pbuilder' --git-debian-branch=patch-queue/master "
+    alias git-bct="gbp buildpackage --git-ignore-new --git-tag --git-builder='git-pbuilder'"
 fi
 if whence svn-buildpackage >/dev/null ; then
     alias svn-b="svn-buildpackage -rfakeroot --svn-ignore --svn-lintian --svn-dont-clean"
