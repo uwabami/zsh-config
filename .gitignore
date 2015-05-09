@@ -1,4 +1,5 @@
 *.zwc
 zsh.d/utils/proxy
 zsh.d/utils/userinfo
+zsh.d/utils/skkserver
 zsh.d/tmp

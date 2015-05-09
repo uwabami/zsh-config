@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-05-04 22:08:44$
+# $Lastupdate: 2014-09-01 05:10:46$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -30,8 +30,4 @@
 # SUCH DAMAGE.
 #
 # Code:
-export DEBFULLNAME="[YOUR NAME]"
-export DEBEMAIL="[YOUR PRIMARY Email Address]"
-export GPG_KEY_ID="[YOUR GPG KEY ID]"
-export KPKG_MAINTAINER=${DEBFULLNAME}
-export KPKG_EMAIL=${DEBEMAIL}
+export SKKSERVER=127.0.0.1

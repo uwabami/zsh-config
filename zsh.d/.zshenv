@@ -137,6 +137,10 @@ fi
 [ -f $ZDOTDIR/utils/proxy ] && \
     _auto_zcompile_source $ZDOTDIR/utils/proxy
 
+### SKKSERVER settings
+[ -f $ZDOTDIR/utils/skkserver ] && \
+    _auto_zcompile_source $ZDOTDIR/utils/skkserver
+
 ### Vendor Software (e.g., Compiler)
 # [ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
 # [ -d /opt/FJSVplang ] && _auto_zcompile_source $ZDOTDIR/vendor/fujitsu.zsh

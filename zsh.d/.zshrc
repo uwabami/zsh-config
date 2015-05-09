@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-04-30 01:47:52$
+# $Lastupdate: 2015-05-04 17:04:22$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -191,25 +191,25 @@ function update_prompt (){
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}%m%f"
-    # local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
-    # ## プロンプト: 1段目右
-    # local prompt_1st_right="[%F{white}%(5~,%-2~/.../%1~,%~)%f]"
-    # ## 1段目行の残り文字列の計算
-    # local left_length=$(count_prompt_chars $prompt_1st_left)
-    # local right_length=$(count_prompt_chars $prompt_1st_right)
-    # local bar_rest_length=$[ COLUMNS - left_length - right_length -1 ]
-    # ## 1段目に水平線を引く
-    # local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
+    local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
+    ## プロンプト: 1段目右
+    local prompt_1st_right="[%F{white}%(5~,%-2~/.../%1~,%~)%f]"
+    ## 1段目行の残り文字列の計算
+    local left_length=$(count_prompt_chars $prompt_1st_left)
+    local right_length=$(count_prompt_chars $prompt_1st_right)
+    local bar_rest_length=$[ COLUMNS - left_length - right_length -1 ]
+    ## 1段目に水平線を引く
+    local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
     ## PROMPT の設定
     # @see Zshをかわいくする.zshrcの設定
     # URL: http://qiita.com/kubosho_/items/c200680c26e509a4f41c
     # 横幅等を調整.
     local ps_status="[%j]%(?.%B%F{green}.%B%F{blue})%(?!(*'-')%b!(*;-;%)%b)%f "
     local ps_mark="%(!,%B%F{magenta}#%f%b,%%)"
-    # PROMPT="$prompt_1st_left$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
-    local prompt_info="[$ps_user@$ps_host$chroot_info"
-    local prompt_pwd="%F{white}%(5~,%-2~/.../%1~,%~)%f]"
-    PROMPT="$prompt_info:$prompt_pwd"$'\n'"$ps_status$ps_mark "
+    PROMPT="$prompt_1st_left$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
+    # local prompt_info="[$ps_user@$ps_host$chroot_info"
+    # local prompt_pwd="%F{white}%(5~,%-2~/.../%1~,%~)%f]"
+    # PROMPT="$prompt_info:$prompt_pwd"$'\n'"$ps_status$ps_mark "
     PROMPT2='|%j]> '
     SPROMPT="[%j]%B%F{red}%{$suggest%}(*'~'%)?<%b %U%r%u is correct? [n,y,a,e]:%f "
     # 右プロンプト
