@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-11-07 18:02:30$
+# $Lastupdate: 2015-05-13 21:31:56$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -70,6 +70,10 @@ typeset -gxU manpath
 typeset -xU ld_library_path include
 
 ### Language specific settings
+
+## Intel Compiler
+[ -d /opt/intel/composer_xe_2015.2.164 ] &&  \
+    _auto_zcompile_source $ZDOTDIR/vendor/intel_composerxe.zsh
 
 ## TeX
 export TEXMFHOME=$HOME/.texmf
