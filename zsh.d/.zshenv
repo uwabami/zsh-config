@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-05-13 21:31:56$
+# $Lastupdate: 2015-10-07 18:25:34$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -83,6 +83,7 @@ path=( /usr/tex/bin(N-/) $path )
 whence java >/dev/null && \
     export JAVA_HOME=$(whence -s java | awk '{print $3}' | sed "s:bin/java::")
 [[ $OSTYPE == darwin* ]] && export JAVA_HOME=/Library/Java/Home
+[[ $OSTYPE == linux* ]] && export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 
 ## Homebrew, Homebrew-Cask
 [[ $OSTYPE == darwin* ]] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
@@ -126,6 +127,23 @@ load_perl_env
 
 ## Python
 [ -d $HOME/.local/bin ] && path=( $HOME/.local/bin $path )
+
+## Go
+[ -d $HOME/Library/gocode ] && export GOPATH=$HOME/Library/gocode
+path=($HOME/Library/gocode/bin $path)
+typeset -gxU path
+
+# ## Adobe FDK
+# function load_adobe_fdk(){
+#     export FDK_EXE=$HOME/Library/FDK/Tools/linux
+#     path=( $HOME/Library/FDK/Tools/linux $path )
+#     typeset -gxU path
+# }
+# function unload_adobe_fdk(){
+#     path=( ${path:#$HOME/Library/FDK/Tools/linux*} )
+#     unset FDK_EXE
+#     typeset -gxU path
+# }
 
 ### VCS
 ## CVS

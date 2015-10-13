@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-05-04 17:04:22$
+# $Lastupdate: 2015-05-24 03:42:26$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -308,11 +308,15 @@ alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
 
-alias xscreen="screen -x || screen"
+if whence screen >/dev/null ; then
+  alias xscreen="screen -x || screen"
+fi
 if whence wcwidth-cjk >/dev/null ; then
     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
-    alias xtmux="tmux attach || tmux"
+  else
+    alias tmux="TERM=xterm-256color tmux -u"
 fi
+whence tmux 2>&1 1>/dev/null && alias xtmux="tmux attach || tmux"
 if whence emacs24 2>&1 1>/dev/null ; then
     alias emacs=emacs24
     alias emacsclient=emacsclient.emacs24
@@ -336,6 +340,7 @@ fi
 
 # alias xxx="rm -f ~/.xsession-errors; startx -- -dpi 96 -nolisten tcp 1> ${HOME}/.xlog 2>&1"
 # alias flashswap="sudo swapoff -a ; sudo swapon -a"
+# alias flashcache="sudo sync; sudo sync ; sudo sync ; sudo sysctl -w vm.drop_caches=3"
 
 if whence systemctl 2>&1 1>/dev/null ; then
     alias halt="sudo systemctl poweroff"
