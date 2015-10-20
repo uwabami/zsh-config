@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-05-24 03:42:26$
+# $Lastupdate: 2015-10-17 04:15:18$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -311,12 +311,15 @@ alias logtail="tailf /var/log/syslog"
 if whence screen >/dev/null ; then
   alias xscreen="screen -x || screen"
 fi
-if whence wcwidth-cjk >/dev/null ; then
-    alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
-  else
-    alias tmux="TERM=xterm-256color tmux -u"
-fi
-whence tmux 2>&1 1>/dev/null && alias xtmux="tmux attach || tmux"
+# if whence wcwidth-cjk >/dev/null ; then
+#     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
+#     whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
+# else
+#     alias tmux="TERM=xterm-256color tmux -u"
+# fi
+# whence tmux 2>&1 1>/dev/null && alias xtmux="tmux attach || tmux"
+whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
+
 if whence emacs24 2>&1 1>/dev/null ; then
     alias emacs=emacs24
     alias emacsclient=emacsclient.emacs24
