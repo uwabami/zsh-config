@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-10-17 04:15:18$
+# $Lastupdate: 2016-02-28 16:43:03$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -318,7 +318,7 @@ fi
 #     alias tmux="TERM=xterm-256color tmux -u"
 # fi
 # whence tmux 2>&1 1>/dev/null && alias xtmux="tmux attach || tmux"
-whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
+# whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
 
 if whence emacs24 2>&1 1>/dev/null ; then
     alias emacs=emacs24
