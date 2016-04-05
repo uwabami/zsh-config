@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2016-02-28 16:43:03$
+# $Lastupdate: 2016-03-17 19:03:14$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -239,6 +239,11 @@ fi
 export MANPAGER='less -s'
 export PAGER='less -R'
 export LESS='-R'
+if whence pygmentize >/dev/null ; then
+   function pygless(){
+       LESSOPEN="| pygmentize -f terminal256 -O style=rrt -g %s" less -R "$@";
+   }
+fi
 # if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ] && (whence nkf >/dev/null)  ; then
 #    export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s | nkf -w '
 # fi
