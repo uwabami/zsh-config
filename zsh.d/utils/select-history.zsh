@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2014-09-01 05:11:14$
+# $Lastupdate: 2016-07-26 11:46:34$
 #
 # Copyright (c) 2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -37,9 +37,7 @@ function peco-select-history() {
     else
         tac="tail -r"
     fi
-    BUFFER=$(history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
+    BUFFER=$(fc -l -n 1 | eval $tac | peco --layout=top-down --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle clear-screen
 }
