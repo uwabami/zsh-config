@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-10-07 18:25:34$
+# $Lastupdate: 2016-05-20 02:12:44$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -171,6 +171,9 @@ fi
 #     _auto_zcompile_source $ZDOTDIR/vendor/soralisstudio.zsh
 
 ### misc
+## mu index
+export XAPIAN_CJK_NGRAM=1
+
 ## VTE terminal: fix EAW width
 export VTE_CJK_WIDTH=1
 
