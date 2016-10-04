@@ -58,6 +58,16 @@ function _my_set_intel_vars(){
     _LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_LIBRARY_PATH}
     _NLSPATH=${_INTEL_PATH}/compiler/lib/${_arch}/locale/%l_%t/%N:${_NLSPATH}
     _MANPATH=${_INTEL_PATH}/man/ja_JP:${_MANPATH}
+    ##
+    #
+    # OpenMPI
+    #
+    if [ -d /opt/openmpi-intel ] ;then
+        _MPIROOT=/opt/openmpi-intel
+        _PATH=${_MPIROOT}/bin:${_PATH}
+        _LD_LIBRARY_PATH=${_MPIROOT}/lib:${_LD_LIBRARY_PATH}
+        _MANPATH=${_MPIROOT}/man:${_MANPATH}
+    fi
 }
 
 ## load function
@@ -90,7 +100,7 @@ function unload_intel(){
     export NLSPATH=${NLSPATH//$_NLSPATH:}
     export MANPATH=${MANPATH//$_MNAPATH:}
     unset NONRPM_DB_DIR
-    # typeset -U path ld_library_path library_path include mic_ld_library_path mic_library_path cpath nlspath manpath
     typeset -U path ld_library_path library_path include cpath nlspath manpath
     /usr/bin/pkill -9 intelremotemond 2>&1 1>/dev/null
+    unset _PATH _LD_LIBRARY_PATH _LIBRARY_PATH _INCLUDE _CPATH _NLSPATH _MANPATH
 }
