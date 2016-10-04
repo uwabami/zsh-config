@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2016-03-17 19:03:14$
+# $Lastupdate: 2016-10-04 15:52:24$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -235,19 +235,45 @@ if whence peco > /dev/null ; then
     _auto_zcompile_source $ZDOTDIR/utils/select-history.zsh
 fi
 
+# emacs <-> zsh
+## Invoke the ``dired'' of current working directory in Emacs buffer.
+function dired () {
+  emacsclient -e "(dired \"${1:a}\")"
+}
+
+## Chdir to the ``default-directory'' of currently opened in Emacs buffer.
+function cde () {
+    EMACS_CWD=`emacsclient -e "
+     (expand-file-name
+      (with-current-buffer
+          (if (featurep 'elscreen)
+              (let* ((frame-confs (elscreen-get-frame-confs (selected-frame)))
+                     (num (nth 1 (assoc 'screen-history frame-confs)))
+                     (cur-window-conf (cadr (assoc num (assoc 'screen-property frame-confs))))
+                     (marker (nth 2 cur-window-conf)))
+                (marker-buffer marker))
+            (nth 1
+                 (assoc 'buffer-list
+                        (nth 1 (nth 1 (current-frame-configuration))))))
+        default-directory))" | sed 's/^"\(.*\)"$/\1/'`
+    echo "chdir to $EMACS_CWD"
+    cd "$EMACS_CWD"
+}
 ### Aliases
-export MANPAGER='less -s'
-export PAGER='less -R'
+if whence lv >/dev/null ; then
+    export PAGER='lv'
+else
+    export PAGER='less'
+fi
 export LESS='-R'
+export LV="-c -T8192 -l -m -k -s"
 if whence pygmentize >/dev/null ; then
    function pygless(){
        LESSOPEN="| pygmentize -f terminal256 -O style=rrt -g %s" less -R "$@";
    }
 fi
-# if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ] && (whence nkf >/dev/null)  ; then
-#    export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s | nkf -w '
-# fi
 export LESSCHARSET=utf-8
+export MANPAGER=less
 
 # alias man='LANG=C man'
 # @see Linux / Unix: Colored Man Pages With less Command
@@ -265,7 +291,6 @@ function man (){
         man "$@"
 }
 
-export LV="-c -T8192 -l"
 whence vim >/dev/null && alias vi=vim
 export EDITOR=vi
 
