@@ -1,0 +1,18 @@
+#! /bin/zsh
+
+check_arch_and_dist(){
+    [ -z $ARCH ] && ARCH=amd64
+    [ -z $DIST ] && DIST=unstable
+    [ x"$DIST" = x"jessie" ] && DIST=stable
+    [ x"$DIST" = x"stretch" ] && DIST=testing
+    [ x"$DIST" = x"sid" ] && DIST=unstable
+}
+alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k891D7E07'"
+alias git-bp="git-b --git-debian-branch=patche-queue/master"
+
+git-bs(){
+    check_arch_and_dist
+    gbp buildpackage --git-ignore-new --git-builder="sbuild --arch=${ARCH} -d ${DIST}"
+}
+alias git-bsp="git-bp --git-debian-branch=patch-queue/master"
+alias git-bst="git-bs --git-tag"
