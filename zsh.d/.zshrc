@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2016-10-04 15:52:24$
+# $Lastupdate: 2017-01-11 19:52:07$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -145,12 +145,18 @@ setopt transient_rprompt # コマンド実行後は右プロンプトを消す
 
 # autoload -Uz promptinit ;  promptinit
 
+# isemacs(){
+#     [[ x"$EMACS" != x"" ]] && return 0
+#     return 1
+# }
+
 ## chroot info
 # Debian の chroot 環境には /etc/debian_chroot がある
 function prompt_chroot_info() {
     chroot=$(cat /etc/debian_chroot 2>/dev/null) || return
     chroot_info="|%F{green}$chroot%f"
 }
+# isemacs ||
 precmd_functions+=prompt_chroot_info
 
 if is-at-least 4.3.10 ; then
@@ -173,6 +179,7 @@ else
         ps_vcs_info=''
     }
 fi
+# isemacs ||
 precmd_functions+=prompt_vcs_info
 
 # 変数の文字列計算用関数
@@ -215,20 +222,21 @@ function update_prompt (){
     # 右プロンプト
     RPROMPT="$ps_vcs_info"
 }
+# isemacs ||
 precmd_functions+=update_prompt
 
 ### ssh-reagent
-function ssh-reagent(){
-    for agent in /tmp/ssh-*/agent.*; do
-        export SSH_AUTH_SOCK=$agent
-        if ssh-add -l 2>&1 > /dev/null; then
-            echo "Found working SSH agent:"
-            ssh-add -l
-            return
-        fi
-    done
-    echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
-}
+# function ssh-reagent(){
+#     for agent in /tmp/ssh-*/agent.*; do
+#         export SSH_AUTH_SOCK=$agent
+#         if ssh-add -l 2>&1 > /dev/null; then
+#             echo "Found working SSH agent:"
+#             ssh-add -l
+#             return
+#         fi
+#     done
+#     echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
+# }
 
 # peco
 if whence peco > /dev/null ; then
@@ -337,6 +345,7 @@ alias nmtui='LANG=C nmtui'
 alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
 alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
 alias logtail="tailf /var/log/syslog"
+alias dmesg='sudo dmesg'
 
 if whence screen >/dev/null ; then
   alias xscreen="screen -x || screen"
@@ -350,25 +359,16 @@ fi
 # whence tmux 2>&1 1>/dev/null && alias xtmux="tmux attach || tmux"
 # whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
 
-if whence emacs24 2>&1 1>/dev/null ; then
-    alias emacs=emacs24
-    alias emacsclient=emacsclient.emacs24
-fi
+# if whence emacs25 2>&1 1>/dev/null ; then
+#     alias emacs=emacs25
+#     alias emacsclient=emacsclient.emacs25
+# fi
 
 whence pry 2>&1 1>/dev/null && \
     alias irb=pry
 
 if whence gbp >/dev/null ; then
-    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k891D7E07'"
-    alias git-bp="git-b --git-debian-branch=patche-queue/master"
-    alias git-bc="gbp buildpackage --git-ignore-new --git-builder='git-pbuilder'"
-    alias git-bcp="gbp buildpackage --git-ignore-new --git-builder='git-pbuilder' --git-debian-branch=patch-queue/master "
-    alias git-bct="gbp buildpackage --git-ignore-new --git-tag --git-builder='git-pbuilder'"
-fi
-if whence svn-buildpackage >/dev/null ; then
-    alias svn-b="svn-buildpackage -rfakeroot --svn-ignore --svn-lintian --svn-dont-clean"
-    alias svn-bc="svn-buildpackage --svn-builder='svn-pbuilder' --svn-lintian --svn-dont-clean"
-    alias svn-bct="svn-buildpackage --svn-builder='svn-pbuilder' --svn-lintian --svn-tag --svn-retag --svn-dont-clean"
+    _auto_zcompile_source $ZDOTDIR/utils/gbp
 fi
 
 # alias xxx="rm -f ~/.xsession-errors; startx -- -dpi 96 -nolisten tcp 1> ${HOME}/.xlog 2>&1"

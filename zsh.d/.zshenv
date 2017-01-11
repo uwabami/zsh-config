@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2016-05-20 02:12:44$
+# $Lastupdate: 2017-01-11 20:11:06$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -71,10 +71,6 @@ typeset -xU ld_library_path include
 
 ### Language specific settings
 
-## Intel Compiler
-[ -d /opt/intel/composer_xe_2015.2.164 ] &&  \
-    _auto_zcompile_source $ZDOTDIR/vendor/intel_composerxe.zsh
-
 ## TeX
 export TEXMFHOME=$HOME/.texmf
 path=( /usr/tex/bin(N-/) $path )
@@ -106,7 +102,6 @@ function unload_local_gems(){
     unset GEM_HOME
     typeset -gxU path
 }
-load_local_gems
 
 ## Perl
 function load_perl_env(){
@@ -164,11 +159,15 @@ fi
     _auto_zcompile_source $ZDOTDIR/utils/skkserver
 
 ### Vendor Software (e.g., Compiler)
-# [ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
+[ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
 # [ -d /opt/FJSVplang ] && _auto_zcompile_source $ZDOTDIR/vendor/fujitsu.zsh
 # [ -d /opt/intel ] && _auto_zcompile_source $ZDOTDIR/vendor/intel.zsh
 # [ -d /opt/SolarisStudio ] && \
 #     _auto_zcompile_source $ZDOTDIR/vendor/soralisstudio.zsh
+
+## Emacs Cask
+[ -d $HOME/.emacs.d/share/cask ] && \
+  path=( $HOME/.emacs.d/share/cask/bin $path)
 
 ### misc
 ## mu index
