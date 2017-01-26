@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-01-11 20:11:06$
+# $Lastupdate: 2017-01-12 20:48:10$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -164,10 +164,6 @@ fi
 # [ -d /opt/intel ] && _auto_zcompile_source $ZDOTDIR/vendor/intel.zsh
 # [ -d /opt/SolarisStudio ] && \
 #     _auto_zcompile_source $ZDOTDIR/vendor/soralisstudio.zsh
-
-## Emacs Cask
-[ -d $HOME/.emacs.d/share/cask ] && \
-  path=( $HOME/.emacs.d/share/cask/bin $path)
 
 ### misc
 ## mu index
