@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-01-12 20:48:10$
+# $Lastupdate: 2017-02-07 17:18:18$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -128,6 +128,13 @@ load_perl_env
 path=($HOME/Library/gocode/bin $path)
 typeset -gxU path
 
+## Node - nvm
+function load_nvm(){
+    export NVM_DIR=$HOME/.nvm
+    [ -s $NVM_DIR/nvm.sh ] &&  . $NVM_DIR/nvm.sh
+    typeset -gxU path
+}
+
 # ## Adobe FDK
 # function load_adobe_fdk(){
 #     export FDK_EXE=$HOME/Library/FDK/Tools/linux
@@ -149,6 +156,9 @@ if [ -d $HOME/Library/git ]; then
     ld_library_path=( $HOME/Library/git/lib $ld_library_path )
     manpath=( $HOME/Library/git/share/man $manpath )
 fi
+
+### Chromium workarounds
+export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
 ### global proxy settings
 [ -f $ZDOTDIR/utils/proxy ] && \
