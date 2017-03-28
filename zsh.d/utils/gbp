@@ -14,5 +14,6 @@ git-bs(){
     check_arch_and_dist
     gbp buildpackage --git-ignore-new --git-builder="sbuild --arch=${ARCH} -d ${DIST}"
 }
-alias git-bsp="git-bp --git-debian-branch=patch-queue/master"
+alias git-bsp="git-bs --git-debian-branch=patch-queue/master"
+alias git-bss="git-bs --git-debian-branch=jessie-backports"
 alias git-bst="git-bs --git-tag"

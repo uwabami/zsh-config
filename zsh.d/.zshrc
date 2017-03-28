@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-01-11 19:52:07$
+# $Lastupdate: 2017-03-28 12:42:27$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -159,7 +159,7 @@ function prompt_chroot_info() {
 # isemacs ||
 precmd_functions+=prompt_chroot_info
 
-## check cwd_fs_type <-- disable VCSinfo in NFSHome 
+## check cwd_fs_type <-- disable VCSinfo in NFSHome
 my_cwd_fs_type_update (){
     my_cwd_fs_type="${${=${${(f)$(df -PT . 2>/dev/null)}[2]}}[2]}"
 }
@@ -174,19 +174,20 @@ if is-at-least 4.3.10 ; then
     zstyle ':vcs_info:*' actionformats '%s:%b%a'
     zstyle ':vcs_info:(svn|bzr)' branchformat '%b:r%r'
     zstyle ':vcs_info:bzr:*' use-simple true
-    my_cvs_info_lang=C
     function prompt_vcs_info(){
         case $my_cwd_fs_type in
             nfs*)
                 vcs_info_msg_0_=
                 ;;
             *)
-                if [[ -n "$vcs_info_msg_0_" ]]; then
-                    ps_vcs_info="[%B%F{red}$vcs_info_msg_0_%f%b]"
-                else
-                    ps_vcs_info=''
-                fi
+                LANG=C vcs_info "$@"
+                ;;
         esac
+        if [[ -n "$vcs_info_msg_0_" ]]; then
+            ps_vcs_info="[%B%F{red}$vcs_info_msg_0_%f%b]"
+        else
+            ps_vcs_info=''
+        fi
     }
 else
     function prompt_vcs_info(){
