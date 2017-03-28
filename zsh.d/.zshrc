@@ -159,6 +159,14 @@ function prompt_chroot_info() {
 # isemacs ||
 precmd_functions+=prompt_chroot_info
 
+## check cwd_fs_type <-- disable VCSinfo in NFSHome 
+my_cwd_fs_type_update (){
+    my_cwd_fs_type="${${=${${(f)$(df -PT . 2>/dev/null)}[2]}}[2]}"
+}
+my_cwd_fs_type_update
+chpwd_functions+=my_cwd_fs_type_update
+
+## VCS info
 if is-at-least 4.3.10 ; then
     autoload -Uz vcs_info
     zstyle ':vcs_info:*' enable git bzr svn hg
@@ -166,13 +174,19 @@ if is-at-least 4.3.10 ; then
     zstyle ':vcs_info:*' actionformats '%s:%b%a'
     zstyle ':vcs_info:(svn|bzr)' branchformat '%b:r%r'
     zstyle ':vcs_info:bzr:*' use-simple true
+    my_cvs_info_lang=C
     function prompt_vcs_info(){
-        LANG=C vcs_info
-        if [[ -n "$vcs_info_msg_0_" ]]; then
-            ps_vcs_info="[%B%F{red}$vcs_info_msg_0_%f%b]"
-        else
-            ps_vcs_info=''
-        fi
+        case $my_cwd_fs_type in
+            nfs*)
+                vcs_info_msg_0_=
+                ;;
+            *)
+                if [[ -n "$vcs_info_msg_0_" ]]; then
+                    ps_vcs_info="[%B%F{red}$vcs_info_msg_0_%f%b]"
+                else
+                    ps_vcs_info=''
+                fi
+        esac
     }
 else
     function prompt_vcs_info(){
