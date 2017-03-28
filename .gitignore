@@ -3,3 +3,5 @@ zsh.d/utils/proxy
 zsh.d/utils/userinfo
 zsh.d/utils/skkserver
 zsh.d/tmp
+zsh.d/.nfs*
+zsh.d/.zcompdump*
