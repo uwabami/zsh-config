@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-03-28 12:42:27$
+# $Lastupdate: 2017-05-07 17:23:11$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -240,18 +240,18 @@ function update_prompt (){
 # isemacs ||
 precmd_functions+=update_prompt
 
-### ssh-reagent
-# function ssh-reagent(){
-#     for agent in /tmp/ssh-*/agent.*; do
-#         export SSH_AUTH_SOCK=$agent
-#         if ssh-add -l 2>&1 > /dev/null; then
-#             echo "Found working SSH agent:"
-#             ssh-add -l
-#             return
-#         fi
-#     done
-#     echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
-# }
+# ssh-reagent
+function ssh-reagent(){
+    for agent in /tmp/ssh-*/agent.*; do
+        export SSH_AUTH_SOCK=$agent
+        if ssh-add -l 2>&1 > /dev/null; then
+            echo "Found working SSH agent:"
+            ssh-add -l
+            return
+        fi
+    done
+    echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
+}
 
 # peco
 if whence peco > /dev/null ; then
