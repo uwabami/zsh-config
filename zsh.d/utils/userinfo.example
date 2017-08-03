@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2015-05-04 22:08:44$
+# $Lastupdate: 2017-08-03 17:14:50$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -35,3 +35,13 @@ export DEBEMAIL="[YOUR PRIMARY Email Address]"
 export GPG_KEY_ID="[YOUR GPG KEY ID]"
 export KPKG_MAINTAINER=${DEBFULLNAME}
 export KPKG_EMAIL=${DEBEMAIL}
+export PASSWORD_STORE_DIR="[Your PASSWORD store directory]"
+export TERMINAL="[Your favorite TERMINAL command]"
+
+[ -d $HOME/.ssh/config.d ] && \
+  function ssh-config-update(){
+    cat $HOME/.ssh/common.conf > $HOME/.ssh/config
+    for f in `/bin/ls -1 $HOME/.ssh/config.d/*.conf`; do
+      cat $f >> $HOME/.ssh/config
+    done
+  }
