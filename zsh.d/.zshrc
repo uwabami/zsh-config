@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-05-07 17:23:11$
+# $Lastupdate: 2017-08-03 16:52:41$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -212,7 +212,7 @@ function update_prompt (){
     ## プロンプト: 1段目左
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
-    [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}%m%f"
+    [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
     local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(5~,%-2~/.../%1~,%~)%f]"
@@ -386,13 +386,19 @@ if whence gbp >/dev/null ; then
     _auto_zcompile_source $ZDOTDIR/utils/gbp
 fi
 
-# alias xxx="rm -f ~/.xsession-errors; startx -- -dpi 96 -nolisten tcp 1> ${HOME}/.xlog 2>&1"
+alias xxx=startx
 # alias flashswap="sudo swapoff -a ; sudo swapon -a"
 # alias flashcache="sudo sync; sudo sync ; sudo sync ; sudo sysctl -w vm.drop_caches=3"
 
 if whence systemctl 2>&1 1>/dev/null ; then
     alias halt="sudo systemctl poweroff"
     alias reboot="sudo systemctl reboot"
+fi
+
+if whence khal 2>&1 1>/dev/null ; then
+    function khal (){
+        urxvt -title khal -e sh -c "env LANG=en_US.UTF-8 khal --color interactive"
+    }
 fi
 
 # load last
