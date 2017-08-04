@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-02-07 17:18:18$
+# $Lastupdate: 2017-08-04 15:56:27$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -42,8 +42,8 @@ function _auto_zcompile_source  () {
 export LANG=ja_JP.UTF-8
 
 ## Debian specific
-[ -f $ZDOTDIR/utils/userinfo ] && \
-    _auto_zcompile_source $ZDOTDIR/utils/userinfo
+[ -f $ZDOTDIR/tmp/userinfo ] && \
+    _auto_zcompile_source $ZDOTDIR/tmp/userinfo
 
 ### PATH
 path=(
@@ -159,14 +159,6 @@ fi
 
 ### Chromium workarounds
 export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
-
-### global proxy settings
-[ -f $ZDOTDIR/utils/proxy ] && \
-    _auto_zcompile_source $ZDOTDIR/utils/proxy
-
-### SKKSERVER settings
-[ -f $ZDOTDIR/utils/skkserver ] && \
-    _auto_zcompile_source $ZDOTDIR/utils/skkserver
 
 ### Vendor Software (e.g., Compiler)
 [ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
