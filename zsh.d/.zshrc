@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-08-03 16:52:41$
+# $Lastupdate: 2017-08-07 16:06:55$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -251,6 +251,19 @@ function ssh-reagent(){
         fi
     done
     echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
+}
+
+# tmux + ssh
+function ssh() {
+  if [ -n $(printenv TMUX) ]; then
+      local window_name=$(tmux display -p '#{window_name}')
+      tmux rename-window -- "$@[-1]" # zsh specified
+      # tmux rename-window -- "${!#}" # for bash
+      command ssh $@
+      tmux rename-window $window_name
+  else
+      command ssh $@
+  fi
 }
 
 # peco
