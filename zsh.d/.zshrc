@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-08-07 16:06:55$
+# $Lastupdate: 2017-08-15 05:11:29$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -254,17 +254,17 @@ function ssh-reagent(){
 }
 
 # tmux + ssh
-function ssh() {
-  if [ -n $(printenv TMUX) ]; then
-      local window_name=$(tmux display -p '#{window_name}')
-      tmux rename-window -- "$@[-1]" # zsh specified
-      # tmux rename-window -- "${!#}" # for bash
-      command ssh $@
-      tmux rename-window $window_name
-  else
-      command ssh $@
-  fi
-}
+# function ssh() {
+#   if [ -n $(printenv TMUX) ]; then
+#       local window_name=$(tmux display -p '#{window_name}')
+#       tmux rename-window -- "$@[-1]" # zsh specified
+#       # tmux rename-window -- "${!#}" # for bash
+#       command ssh $@
+#       tmux rename-window $window_name
+#   else
+#       command ssh $@
+#   fi
+# }
 
 # peco
 if whence peco > /dev/null ; then
@@ -408,11 +408,11 @@ if whence systemctl 2>&1 1>/dev/null ; then
     alias reboot="sudo systemctl reboot"
 fi
 
-if whence khal 2>&1 1>/dev/null ; then
-    function khal (){
-        urxvt -title khal -e sh -c "env LANG=en_US.UTF-8 khal --color interactive"
-    }
-fi
+# if whence khal 2>&1 1>/dev/null ; then
+#     function khal (){
+#         urxvt -title khal -e sh -c "env LANG=en_US.UTF-8 khal --color interactive"
+#     }
+# fi
 
 # load last
 is-at-least 4.3.10 && \
