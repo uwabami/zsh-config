@@ -311,7 +311,6 @@ fi
 export LESSCHARSET=utf-8
 export MANPAGER=less
 
-# alias man='LANG=C man'
 # @see Linux / Unix: Colored Man Pages With less Command
 # http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
 function man (){
@@ -323,7 +322,6 @@ function man (){
         LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
         LESS_TERMCAP_ue=$(printf "\e[0m") \
         LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        LANG=C \
         man "$@"
 }
 
