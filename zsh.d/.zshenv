@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-08-04 15:56:27$
+# $Lastupdate: 2018-02-09 01:26:39$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -128,10 +128,13 @@ load_perl_env
 path=($HOME/Library/gocode/bin $path)
 typeset -gxU path
 
-## Node - nvm
-function load_nvm(){
-    export NVM_DIR=$HOME/.nvm
-    [ -s $NVM_DIR/nvm.sh ] &&  . $NVM_DIR/nvm.sh
+## Node - nodebrew
+function load_nodebrew(){
+    path=( $HOME/.nodebrew/current/bin $path)
+    typeset -gxU path
+}
+function unload_nodebrew(){
+    path=( ${path:#$HOME/.nodebrew/current/bin*} )
     typeset -gxU path
 }
 
