@@ -1,0 +1,7 @@
+#! /bin/zsh
+function load_anyenv(){
+    path=( $HOME/Library/anyenv/bin(N-/)
+           $path)
+    typeset -gxU path
+    eval "$(anyenv init --no-rehash - zsh)"
+}

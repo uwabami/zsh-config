@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2017-08-15 05:11:29$
+# $Lastupdate: 2018-02-19 20:15:00$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -84,13 +84,6 @@ setopt hist_ignore_space               # コマンド行先頭が空白の時登
 setopt hist_ignore_all_dups            # 重複ヒストリは古い方を削除
 setopt hist_reduce_blanks              # 余分なスペースを削除
 setopt hist_no_store                   # historyコマンドは登録しない
-## ヒストリを表示する際にカーソルを末尾に
-autoload -Uz history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-function history-all { history -E 1}   # 履歴の一覧を出力
 
 ### Completion
 ## LSCOLORS
@@ -128,13 +121,14 @@ zstyle ':completion:*' remote-access true
 zstyle ':completion:*' completer \
     _oldlist _complete _match _ignored _approximate _list _history
 ## 補完候補の追加
-is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
-    fpath+=( $ZDOTDIR/modules/zsh-completions/src $fpath )
-is-at-least 4.3.10 && [ -d $HOME/.rbenv/completions/rbenv.zsh ] && \
-    fpath+=( $HOME/.rbenv/completions/rbenv.zsh $fpath )
+# is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
+#     fpath+=( $ZDOTDIR/modules/zsh-completions/src $fpath )
+# is-at-least 4.3.10 && [ -d $HOME/.rbenv/completions/rbenv.zsh ] && \
+#     fpath+=( $HOME/.rbenv/completions/rbenv.zsh $fpath )
 typeset -gxU fpath
 # 初期化
-autoload -Uz compinit ; compinit -u -d $ZDOTDIR/tmp/$USER-zcompdump
+autoload -Uz compinit
+compinit -u -d $ZDOTDIR/tmp/$USER-zcompdump
 
 ### PROMPT
 ## option
@@ -156,15 +150,7 @@ function prompt_chroot_info() {
     chroot=$(cat /etc/debian_chroot 2>/dev/null) || return
     chroot_info="|%F{green}$chroot%f"
 }
-# isemacs ||
 precmd_functions+=prompt_chroot_info
-
-## check cwd_fs_type <-- disable VCSinfo in NFSHome
-my_cwd_fs_type_update (){
-    my_cwd_fs_type="${${=${${(f)$(df -PT . 2>/dev/null)}[2]}}[2]}"
-}
-my_cwd_fs_type_update
-chpwd_functions+=my_cwd_fs_type_update
 
 ## VCS info
 if is-at-least 4.3.10 ; then
@@ -175,27 +161,17 @@ if is-at-least 4.3.10 ; then
     zstyle ':vcs_info:(svn|bzr)' branchformat '%b:r%r'
     zstyle ':vcs_info:bzr:*' use-simple true
     function prompt_vcs_info(){
-        case $my_cwd_fs_type in
-            nfs*)
-                vcs_info_msg_0_=
-                ;;
-            *)
-                LANG=C vcs_info "$@"
-                ;;
-        esac
+        [[ -n $_PR_GIT_UPDATE_ ]] && LANG=C vcs_info "$@"
         if [[ -n "$vcs_info_msg_0_" ]]; then
             ps_vcs_info="[%B%F{red}$vcs_info_msg_0_%f%b]"
         else
             ps_vcs_info=''
         fi
     }
+    precmd_functions+=prompt_vcs_info
 else
-    function prompt_vcs_info(){
-        ps_vcs_info=''
-    }
+    ps_vcs_info=''
 fi
-# isemacs ||
-precmd_functions+=prompt_vcs_info
 
 # 変数の文字列計算用関数
 function count_prompt_chars (){
@@ -267,64 +243,24 @@ function ssh-reagent(){
 # }
 
 # peco
-if whence peco > /dev/null ; then
-    _auto_zcompile_source $ZDOTDIR/utils/select-history.zsh
-fi
+zstyle ":anyframe:selector:" use peco
+zstyle ":anyframe:selector:peco:" command "peco --rcfile=${HOME}/.config/peco/config.json"
+autoload -Uz anyframe-init
+anyframe-init
+bindkey '^R' anyframe-widget-put-history
 
 # emacs <-> zsh
 ## Invoke the ``dired'' of current working directory in Emacs buffer.
-function dired () {
-  emacsclient -e "(dired \"${1:a}\")"
-}
-
 ## Chdir to the ``default-directory'' of currently opened in Emacs buffer.
-function cde () {
-    EMACS_CWD=`emacsclient -e "
-     (expand-file-name
-      (with-current-buffer
-          (if (featurep 'elscreen)
-              (let* ((frame-confs (elscreen-get-frame-confs (selected-frame)))
-                     (num (nth 1 (assoc 'screen-history frame-confs)))
-                     (cur-window-conf (cadr (assoc num (assoc 'screen-property frame-confs))))
-                     (marker (nth 2 cur-window-conf)))
-                (marker-buffer marker))
-            (nth 1
-                 (assoc 'buffer-list
-                        (nth 1 (nth 1 (current-frame-configuration))))))
-        default-directory))" | sed 's/^"\(.*\)"$/\1/'`
-    echo "chdir to $EMACS_CWD"
-    cd "$EMACS_CWD"
-}
+autoload -Uz cde
+autoload -Uz dired
 ### Aliases
-if whence lv >/dev/null ; then
-    export PAGER='lv'
-else
-    export PAGER='less'
-fi
+export PAGER='less'
 export LESS='-R'
-export LV="-c -T8192 -l -m -k -s"
-if whence pygmentize >/dev/null ; then
-   function pygless(){
-       LESSOPEN="| pygmentize -f terminal256 -O style=rrt -g %s" less -R "$@";
-   }
-fi
 export LESSCHARSET=utf-8
 export MANPAGER=less
-
-# @see Linux / Unix: Colored Man Pages With less Command
-# http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
-function man (){
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        man "$@"
-}
-
+export LV="-c -T8192 -l -m -k -s"
+autoload man
 whence vim >/dev/null && alias vi=vim
 export EDITOR=vi
 
@@ -367,39 +303,12 @@ alias rm='nocorrect rm -i'
 alias mv='nocorrect mv -i'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
-alias nmtui='LANG=C nmtui'
-alias clean='rm -rf *~; rm -rf *.bak ; rm -rf a.out'
-alias cleanall='rm -rf .*~ ; rm -rf .*.bak; rm -rf .saves-*'
-alias logtail="tailf /var/log/syslog"
 alias dmesg='sudo dmesg'
 
-if whence screen >/dev/null ; then
-  alias xscreen="screen -x || screen"
-fi
-# if whence wcwidth-cjk >/dev/null ; then
-#     alias tmux="TERM=xterm-256color wcwidth-cjk tmux -u"
-#     whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
-# else
-#     alias tmux="TERM=xterm-256color tmux -u"
-# fi
-# whence tmux 2>&1 1>/dev/null && alias xtmux="tmux attach || tmux"
-# whence mux 2>&1 1>/dev/null && alias mux="TERM=xterm-256color wcwidth-cjk mux"
-
-# if whence emacs25 2>&1 1>/dev/null ; then
-#     alias emacs=emacs25
-#     alias emacsclient=emacsclient.emacs25
-# fi
-
-whence pry 2>&1 1>/dev/null && \
-    alias irb=pry
-
+whence pry >/dev/null && alias irb=pry
 if whence gbp >/dev/null ; then
-    _auto_zcompile_source $ZDOTDIR/utils/gbp
+    auto_zcompile_and_source $ZDOTDIR/utils/gbp
 fi
-
-alias xxx=startx
-# alias flashswap="sudo swapoff -a ; sudo swapon -a"
-# alias flashcache="sudo sync; sudo sync ; sudo sync ; sudo sysctl -w vm.drop_caches=3"
 
 if whence systemctl 2>&1 1>/dev/null ; then
     alias halt="sudo systemctl poweroff"
@@ -413,6 +322,8 @@ fi
 # fi
 
 # load last
-is-at-least 4.3.10 && \
-    [ -d $ZDOTDIR/modules/zsh-syntax-highlighting ] && \
-    source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZDOTDIR/modules/zsh-syntax-highlighing/zsh-syntax-highlighting.zsh
+
+# if type zprof > /dev/null 2>&1; then
+#   zprof | less
+# fi

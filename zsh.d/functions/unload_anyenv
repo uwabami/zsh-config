@@ -1,0 +1,5 @@
+#! /bin/zsh
+function unload_anyenv(){
+    path=( ${path:#$HOME/Library/anyenv/bin*} )
+    typeset -gxU path
+}

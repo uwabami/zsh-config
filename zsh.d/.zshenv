@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-09 01:26:39$
+# $Lastupdate: 2018-02-19 20:07:52$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -30,20 +30,19 @@
 # SUCH DAMAGE.
 #
 ### BASIC
-
-## config load function: auto-zcompile & source
-function _auto_zcompile_source  () {
-    local A; A=$1
-    [[ -e "${A:r}.zwc" ]] && [[ "$A" -ot "${A:r}.zwc" ]] ||
-    zcompile $A >/dev/null 2>&1 ; source $A
-}
-
+# zmodload zsh/zprof
 ## LANG
-export LANG=ja_JP.UTF-8
+typeset -gx LANG=ja_JP.UTF-8
+# custom fpath
+fpath=( $ZDOTDIR/functions(N-/)
+        $ZDOTDIR/modules/anyframe(N-/)
+        $fpath)
+## config load function: auto-zcompile & source
+autoload -Uz auto_zcompile_and_source
 
-## Debian specific
+## Personal settings
 [ -f $ZDOTDIR/tmp/userinfo ] && \
-    _auto_zcompile_source $ZDOTDIR/tmp/userinfo
+    auto_zcompile_and_source $ZDOTDIR/tmp/userinfo
 
 ### PATH
 path=(
@@ -54,7 +53,6 @@ path=(
     {/usr/local,/usr}/games(N-)
     $path
 )
-typeset -gxU path
 ## manpath
 manpath=(
     # Solaris
@@ -62,7 +60,6 @@ manpath=(
      # Linux, Mac OS X with homebrew
     {/usr,/usr/local}/share/man(N-/)
 )
-typeset -gxU manpath
 
 ## treat LD_LIBRARY_PATH, INCLUDE
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
@@ -72,75 +69,72 @@ typeset -xU ld_library_path include
 ### Language specific settings
 
 ## TeX
-export TEXMFHOME=$HOME/.texmf
+typeset -gx TEXMFHOME=$HOME/.texmf
 path=( /usr/tex/bin(N-/) $path )
 
 ## Java
-whence java >/dev/null && \
-    export JAVA_HOME=$(whence -s java | awk '{print $3}' | sed "s:bin/java::")
-[[ $OSTYPE == darwin* ]] && export JAVA_HOME=/Library/Java/Home
-[[ $OSTYPE == linux* ]] && export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+typeset -gx _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+# case ${OSTYPE} in
+#     darwin*)
+#         typeset -gx JAVA_HOME=/Library/Java/Home
+#         ;;
+#     linux*)
+#         # if [ -d /usr/lib/jvm/default-java/jre ] ; then
+#         typeset -gx JAVA_hOME=/usr/lib/jvm/default-java/jre
+#         # else
+#         #     JAVA_HOME=$(whence -s java | awk '{print $3}' | sed "s:bin/java::")
+#         # fi
 
-## Homebrew, Homebrew-Cask
-[[ $OSTYPE == darwin* ]] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-[[ $OSTYPE == darwin* ]] && \
-    [[ -d $HOME/Library/Qt/5.3/clang_64/bin ]] && \
-        path=( $HOME/Library/Qt/5.3/clang_64/bin $path )
+#         ;;
+#     *)
+#         ;;
+# esac
 
-## Ruby
-[ -d $HOME/Library/site_ruby ] && \
-    export RUBYLIB=$HOME/Library/site_ruby:$RUBYLIB
-whence rbenv >/dev/null && eval "$(rbenv init -)"
-# load/unload local gems
-function load_local_gems(){
-    export GEM_HOME=$HOME/.gem
-    path=( $GEM_HOME/bin $path )
-    typeset -gxU path
-}
-function unload_local_gems(){
-    path=( ${path:#$HOME/.gem*} )
-    unset GEM_HOME
-    typeset -gxU path
-}
+## Lang -- anyenv
+autoload -U load_anyenv
+autoload -U unload_anyenv
+# Ruby
+autoload -U load_local_gems
+autoload -U unload_local_gems
 
-## Perl
-function load_perl_env(){
-    local arch; arch="$(perl -MConfig -e 'print $Config{archname}')"
-    local extlib; extlib="$HOME/Library/CPAN/lib/perl5"
-    export PERL5LIB="$extlib:$extlib/$arch"
-    path=( $HOME/Library/CPAN/bin $path )
-    whence cpanm > /dev/null && \
-        export PERL_CPANM_OPT="--local-lib=$HOME/Library/CPAN"
-    typeset -gxU path
-}
-function unload_perl_env(){
-    path=( ${path:#$HOME/Library/CPAN/bin*} )
-    unset PERL5LIB; unset PERL_CPANM_OPT
-    typeset -gxU path
-}
-load_perl_env
+# ## Perl
+# function load_perl_env(){
+#     # local arch; arch="$(perl -MConfig -e 'print $Config{archname}')"
+#     local extlib; extlib="$HOME/Library/CPAN/lib/perl5"
+#     typeset -gx PERL5LIB="$extlib:$extlib/$arch"
+#     path=( $HOME/Library/CPAN/bin $path )
+#     # whence cpanm > /dev/null && \
+#     #     typeset -gx PERL_CPANM_OPT="--local-lib=$HOME/Library/CPAN"
+#     typeset -gxU path
+# }
+# function unload_perl_env(){
+#     path=( ${path:#$HOME/Library/CPAN/bin*} )
+#     unset PERL5LIB; unset PERL_CPANM_OPT
+#     typeset -gxU path
+# }
+# load_perl_env
 
-## Python
-[ -d $HOME/.local/bin ] && path=( $HOME/.local/bin $path )
+# ## Python
+# [ -d $HOME/.local/bin ] && path=( $HOME/.local/bin $path )
 
-## Go
-[ -d $HOME/Library/gocode ] && export GOPATH=$HOME/Library/gocode
-path=($HOME/Library/gocode/bin $path)
-typeset -gxU path
+# ## Go
+# [ -d $HOME/Library/gocode ] && typeset -gx GOPATH=$HOME/Library/gocode
+# path=($HOME/Library/gocode/bin $path)
+# typeset -gxU path
 
-## Node - nodebrew
-function load_nodebrew(){
-    path=( $HOME/.nodebrew/current/bin $path)
-    typeset -gxU path
-}
-function unload_nodebrew(){
-    path=( ${path:#$HOME/.nodebrew/current/bin*} )
-    typeset -gxU path
-}
+# ## Node - nodebrew
+# function load_nodebrew(){
+#     path=( $HOME/.nodebrew/current/bin $path)
+#     typeset -gxU path
+# }
+# function unload_nodebrew(){
+#     path=( ${path:#$HOME/.nodebrew/current/bin*} )
+#     typeset -gxU path
+# }
 
 # ## Adobe FDK
 # function load_adobe_fdk(){
-#     export FDK_EXE=$HOME/Library/FDK/Tools/linux
+#     typeset -gx FDK_EXE=$HOME/Library/FDK/Tools/linux
 #     path=( $HOME/Library/FDK/Tools/linux $path )
 #     typeset -gxU path
 # }
@@ -152,7 +146,7 @@ function unload_nodebrew(){
 
 ### VCS
 ## CVS
-export CVS_RSH=ssh
+typeset -gx CVS_RSH=ssh
 ## Git
 if [ -d $HOME/Library/git ]; then
     path=( $HOME/Library/git/bin $path)
@@ -161,10 +155,10 @@ if [ -d $HOME/Library/git ]; then
 fi
 
 ### Chromium workarounds
-export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
+typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
 ### Vendor Software (e.g., Compiler)
-[ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
+# [ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
 # [ -d /opt/FJSVplang ] && _auto_zcompile_source $ZDOTDIR/vendor/fujitsu.zsh
 # [ -d /opt/intel ] && _auto_zcompile_source $ZDOTDIR/vendor/intel.zsh
 # [ -d /opt/SolarisStudio ] && \
@@ -172,10 +166,10 @@ export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
 ### misc
 ## mu index
-export XAPIAN_CJK_NGRAM=1
+typeset -gx XAPIAN_CJK_NGRAM=1
 
 ## VTE terminal: fix EAW width
-export VTE_CJK_WIDTH=1
+typeset -gx VTE_CJK_WIDTH=1
 
 ### High priority path settings
 [ -d $HOME/bin ] && path=( $HOME/bin $path )
