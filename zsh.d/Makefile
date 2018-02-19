@@ -1,7 +1,8 @@
 # -*- mode: makefile ; coding: utf-8;
-_SRC_= .zshenv .zshrc
+_SRC_  = .zshenv .zshrc
+_SRC_ += $(shell find functions -type f | grep -v zwc)
 # module: zsh-syntax-highlighting
-_SRC_ += $(shell find modules/zsh-syntax-highlighing -name *.zsh | grep -v test )
+_SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test )
 # module: anyframe
 _SRC_ += $(shell find modules/anyframe -name *.zsh )
 _SRC_ += modules/anyframe/anyframe-init

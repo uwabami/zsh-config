@@ -50,7 +50,7 @@ DIRSTACKSIZE=20
                             # cygwin 以外では core を吐かないようにする.
 ## Correct command
 setopt correct              # コマンドのスペル訂正
-setopt rc_quotes            # '' で ' を表現(エスケープをちょっとだけ省く)
+setopt rc_quotes            # '' で \' を表現(エスケープをちょっとだけ省く)
 unsetopt correct_all        # 全ての引数のスペル訂正: 無効化
 unsetopt ignore_eof         # ^D でのログアウトするために unsetopt
 
@@ -322,7 +322,7 @@ fi
 # fi
 
 # load last
-source $ZDOTDIR/modules/zsh-syntax-highlighing/zsh-syntax-highlighting.zsh
+source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # if type zprof > /dev/null 2>&1; then
 #   zprof | less
