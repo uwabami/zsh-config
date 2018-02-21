@@ -1,0 +1,8 @@
+function ssh-config-update(){
+    [ -d $HOME/.ssh/config.d ] && \
+    cat $HOME/.ssh/common.conf > $HOME/.ssh/config
+    for f in `/bin/ls -1 $HOME/.ssh/config.d/*.conf`; do
+        cat $f >> $HOME/.ssh/config
+        echo "" >> $HOME/.ssh/config
+    done
+}

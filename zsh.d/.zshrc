@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-19 20:15:00$
+# $Lastupdate: 2018-02-21 22:01:01$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -180,7 +180,7 @@ function count_prompt_chars (){
     if [[ $OSTYPE == darwin* ]] ; then
         print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | iconv -f UTF-8-MAC -t US-ASCII//TRANSLIT | sed 's/?/aa/g' | wc -m | sed -e 's/ //g'
     else
-        print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | sed -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
+        print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
     fi
 }
 # precmd のプロンプト更新用関数
@@ -213,9 +213,10 @@ function update_prompt (){
     # 右プロンプト
     RPROMPT="$ps_vcs_info"
 }
-# isemacs ||
 precmd_functions+=update_prompt
 
+# ssh config update
+autoload -Uz ssh-config-update
 # ssh-reagent
 function ssh-reagent(){
     for agent in /tmp/ssh-*/agent.*; do
@@ -306,20 +307,15 @@ alias mv='nocorrect mv'
 alias dmesg='sudo dmesg'
 
 whence pry >/dev/null && alias irb=pry
+
 if whence gbp >/dev/null ; then
-    auto_zcompile_and_source $ZDOTDIR/utils/gbp
+    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID}"
+    alias git-bp="git-b --git-debian-branch=patche-queue/master"
+    autoload git-bs
+    alias git-bsp="git-bs --git-debian-branch=patch-queue/master"
+    alias git-bss="git-bs --git-debian-branch=jessie-backports"
+    alias git-bst="git-bs --git-tag"
 fi
-
-if whence systemctl 2>&1 1>/dev/null ; then
-    alias halt="sudo systemctl poweroff"
-    alias reboot="sudo systemctl reboot"
-fi
-
-# if whence khal 2>&1 1>/dev/null ; then
-#     function khal (){
-#         urxvt -title khal -e sh -c "env LANG=en_US.UTF-8 khal --color interactive"
-#     }
-# fi
 
 # load last
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
