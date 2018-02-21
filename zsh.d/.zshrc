@@ -155,12 +155,12 @@ if is-at-least 4.3.10 && [[ x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
     zstyle ':vcs_info:git:*' check-for-changes true
     zstyle ':vcs_info:git:*' stagedstr "%B%F{yellow}"
     zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
-    zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b%f'
-    zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b%f'
+    zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b'
+    zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b'
     function prompt_vcs_info(){
         LANG=C vcs_info "$@"
         if [[ -n "$vcs_info_msg_0_" ]]; then
-            ps_vcs_info="[$vcs_info_msg_0_]"
+            ps_vcs_info="%b%f[$vcs_info_msg_0_%b%f]"
         else
             ps_vcs_info=''
         fi
