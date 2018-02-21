@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-22 01:47:05$
+# $Lastupdate: 2018-02-22 01:56:53$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -188,7 +188,7 @@ function update_prompt (){
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
     local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
     ## プロンプト: 1段目右
-    local prompt_1st_right="[%F{white}%(5~,%-2~/.../%1~,%~)%f]"
+    local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
     ## 1段目行の残り文字列の計算
     local left_length=$(count_prompt_chars $prompt_1st_left)
     local right_length=$(count_prompt_chars $prompt_1st_right)
