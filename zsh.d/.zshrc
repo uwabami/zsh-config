@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-21 22:01:01$
+# $Lastupdate: 2018-02-22 01:47:05$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -121,14 +121,12 @@ zstyle ':completion:*' remote-access true
 zstyle ':completion:*' completer \
     _oldlist _complete _match _ignored _approximate _list _history
 ## 補完候補の追加
-# is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
-#     fpath+=( $ZDOTDIR/modules/zsh-completions/src $fpath )
-# is-at-least 4.3.10 && [ -d $HOME/.rbenv/completions/rbenv.zsh ] && \
-#     fpath+=( $HOME/.rbenv/completions/rbenv.zsh $fpath )
+is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
+    fpath+=( $ZDOTDIR/modules/zsh-completions/src $fpath )
 typeset -gxU fpath
 # 初期化
 autoload -Uz compinit
-compinit -u -d $ZDOTDIR/tmp/$USER-zcompdump
+compinit -C -u -d $ZDOTDIR/tmp/$USER-zcompdump
 
 ### PROMPT
 ## option
@@ -136,13 +134,7 @@ setopt prompt_subst      # プロンプト定義内で変数置換やコマン�
 setopt prompt_percent    # %文字から始まる置換機能を有効に
 unsetopt promptcr        # 被る時は右プロンプトを消す
 setopt transient_rprompt # コマンド実行後は右プロンプトを消す
-
-# autoload -Uz promptinit ;  promptinit
-
-# isemacs(){
-#     [[ x"$EMACS" != x"" ]] && return 0
-#     return 1
-# }
+autoload -Uz promptinit
 
 ## chroot info
 # Debian の chroot 環境には /etc/debian_chroot がある
@@ -153,17 +145,22 @@ function prompt_chroot_info() {
 precmd_functions+=prompt_chroot_info
 
 ## VCS info
-if is-at-least 4.3.10 ; then
+if is-at-least 4.3.10 && [[ x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
     autoload -Uz vcs_info
-    zstyle ':vcs_info:*' enable git bzr svn hg
+    zstyle ':vcs_info:*' enable git svn hg bzr
     zstyle ':vcs_info:*' formats '%s:%b'
-    zstyle ':vcs_info:*' actionformats '%s:%b%a'
+    zstyle ':vcs_info:*' actionformats '%s:%b|%a'
     zstyle ':vcs_info:(svn|bzr)' branchformat '%b:r%r'
     zstyle ':vcs_info:bzr:*' use-simple true
+    zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' stagedstr "%B%F{yellow}"
+    zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
+    zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b%f'
+    zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b%f'
     function prompt_vcs_info(){
-        [[ -n $_PR_GIT_UPDATE_ ]] && LANG=C vcs_info "$@"
+        LANG=C vcs_info "$@"
         if [[ -n "$vcs_info_msg_0_" ]]; then
-            ps_vcs_info="[%B%F{red}$vcs_info_msg_0_%f%b]"
+            ps_vcs_info="[$vcs_info_msg_0_]"
         else
             ps_vcs_info=''
         fi
