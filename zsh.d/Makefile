@@ -6,6 +6,8 @@ _SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test
 # module: anyframe
 _SRC_ += $(shell find modules/anyframe -name *.zsh )
 _SRC_ += modules/anyframe/anyframe-init
+# module: zsh-completion
+_SRC_ += $(shell find modules/zsh-completions/src/ -type f | grep -v .zwc)
 # update target
 TARGET=$(_SRC_:%=%.zwc)
 
