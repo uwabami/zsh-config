@@ -1,6 +1,5 @@
 #! /bin/zsh
-function cde () {
-    EMACS_CWD=`emacsclient -e "
+EMACS_CWD=`emacsclient -e "
      (expand-file-name
       (with-current-buffer
           (if (featurep 'elscreen)
@@ -13,6 +12,5 @@ function cde () {
                  (assoc 'buffer-list
                         (nth 1 (nth 1 (current-frame-configuration))))))
         default-directory))" | sed 's/^"\(.*\)"$/\1/'`
-    echo "chdir to $EMACS_CWD"
-    cd "$EMACS_CWD"
-}
+echo "chdir to $EMACS_CWD"
+cd "$EMACS_CWD"

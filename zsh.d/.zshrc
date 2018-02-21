@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-22 01:56:53$
+# $Lastupdate: 2018-02-22 03:00:29$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -134,7 +134,7 @@ setopt prompt_subst      # プロンプト定義内で変数置換やコマン�
 setopt prompt_percent    # %文字から始まる置換機能を有効に
 unsetopt promptcr        # 被る時は右プロンプトを消す
 setopt transient_rprompt # コマンド実行後は右プロンプトを消す
-autoload -Uz promptinit
+# autoload -Uz promptinit
 
 ## chroot info
 # Debian の chroot 環境には /etc/debian_chroot がある
@@ -308,7 +308,7 @@ whence pry >/dev/null && alias irb=pry
 if whence gbp >/dev/null ; then
     alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID}"
     alias git-bp="git-b --git-debian-branch=patche-queue/master"
-    autoload git-bs
+    autoload -Uz git-bs
     alias git-bsp="git-bs --git-debian-branch=patch-queue/master"
     alias git-bss="git-bs --git-debian-branch=jessie-backports"
     alias git-bst="git-bs --git-tag"

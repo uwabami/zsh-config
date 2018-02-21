@@ -1,10 +1,8 @@
 #! /bin/zsh
 
-git-bs(){
-    [ -z $ARCH ] && ARCH=amd64
-    [ -z $DIST ] && DIST=unstable
-    [ x"$DIST" = x"jessie" ] && DIST=stable
-    [ x"$DIST" = x"stretch" ] && DIST=testing
-    [ x"$DIST" = x"sid" ] && DIST=unstable
-    gbp buildpackage --git-ignore-new --git-builder="sbuild --arch=${ARCH} -d ${DIST}"
-}
+[ -z $ARCH ] && ARCH=amd64
+[ -z $DIST ] && DIST=unstable
+[ x"$DIST" = x"jessie" ] && DIST=stable
+[ x"$DIST" = x"stretch" ] && DIST=testing
+[ x"$DIST" = x"sid" ] && DIST=unstable
+gbp buildpackage --git-ignore-new --git-builder="sbuild --arch=${ARCH} -d ${DIST}"

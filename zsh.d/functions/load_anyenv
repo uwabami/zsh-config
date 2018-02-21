@@ -1,15 +1,13 @@
 #! /bin/zsh
-function load_anyenv(){
-    path=( $HOME/.anyenv/bin(N-/)
-           $path)
-    for dir in `ls $HOME/.anyenv/envs/` ; do
-        if test -d $HOME/.anyenv/envs/$dir ; then
-            path=( $HOME/.anyenv/envs/${dir}bin(N-/)
-                   $HOME/.anyenv/envs/${dir}shims(N-/)
-                   $path)
-        fi
-    done
-    ## for rbenv
-    typeset -gx RBENV_ROOT=$HOME/.anyenv/envs/rbenv
-    typeset -gxU path
-}
+path=( $HOME/.anyenv/bin(N-/)
+       $path)
+for dir in `ls $HOME/.anyenv/envs/` ; do
+    if test -d $HOME/.anyenv/envs/$dir ; then
+        path=( $HOME/.anyenv/envs/${dir}bin(N-/)
+               $HOME/.anyenv/envs/${dir}shims(N-/)
+               $path)
+    fi
+done
+## for rbenv
+typeset -gx RBENV_ROOT=$HOME/.anyenv/envs/rbenv
+typeset -gxU path

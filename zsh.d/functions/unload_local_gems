@@ -1,6 +1,4 @@
 #! /bin/zsh
-function unload_local_gems(){
-    path=( ${path:#$HOME/.gem*} )
-    unset GEM_HOME
-    typeset -gxU path
-}
+path=( ${path:#$HOME/.gem*} )
+unset GEM_HOME
+typeset -gxU path
