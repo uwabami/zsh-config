@@ -241,11 +241,13 @@ function ssh-reagent(){
 # }
 
 # peco
-zstyle ":anyframe:selector:" use peco
-zstyle ":anyframe:selector:peco:" command "peco --rcfile=${HOME}/.config/peco/config.json"
-autoload -Uz anyframe-init
-anyframe-init
-bindkey '^R' anyframe-widget-put-history
+if whence peco > /dev/null ; then
+  zstyle ":anyframe:selector:" use peco
+  zstyle ":anyframe:selector:peco:" command "peco --rcfile=${HOME}/.config/peco/config.json"
+  autoload -Uz anyframe-init
+  anyframe-init
+  bindkey '^R' anyframe-widget-put-history
+fi
 
 # emacs <-> zsh
 ## Invoke the ``dired'' of current working directory in Emacs buffer.
