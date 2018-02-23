@@ -1,7 +1,7 @@
 <!-- -*- mode: markdown; coding: utf-8 -*- -->
 # My Zsh configutarion
 
-... to be written ...
+be simple, without any plugin system.
 
 # Usage
 
@@ -13,8 +13,11 @@ simply:
         % cd ~/.zsh.d
         % git submodule init
         % git submodule update
+        % copy tmp/userinfo.example tmp/userinfo
+        ...edit tmp/userinfo...
         % make
-
+        ... re-login...
+        
 enjoy!
 
 # Licsene
