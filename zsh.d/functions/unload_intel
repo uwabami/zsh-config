@@ -1,3 +1,4 @@
+#! /bin/zsh
 [ ! -d $HOME/intel ] || rsync -auvz $HOME/intel/ $HOME/.config/intel/
 rm -fr ${HOME}/intel
 unset INTEL_LICENSE_FILE

@@ -1,3 +1,4 @@
+#! /bin/zsh
 _INTEL_PATH=/opt/intel/composer_xe_2015.2.164
 _arch=intel64
 #

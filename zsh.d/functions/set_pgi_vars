@@ -1,3 +1,4 @@
+#! /bin/zsh
 PGI=/opt/pgi
 LM_LICENSE_FILE=$PGI/license.dat
 _PGI_PATH=$PGI/linux86-64/17.4/bin

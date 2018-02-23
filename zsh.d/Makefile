@@ -1,6 +1,9 @@
 # -*- mode: makefile ; coding: utf-8;
 _SRC_  = .zshenv .zshrc
 _SRC_ += $(shell find functions -type f | grep -v zwc)
+ifeq ($(shell test -f tmp/userinfo && echo -n yes),yes)
+	_SRC_ += tmp/userinfo
+endif
 # module: zsh-syntax-highlighting
 _SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test )
 # module: anyframe

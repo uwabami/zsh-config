@@ -1,3 +1,4 @@
+#! /bin/zsh
 set_pgi_vars
 typeset -gx PATH=${PATH//$_PGI_PATH:}
 typeset -gx PATH=${PATH//$_PGI_MPI_PATH:}

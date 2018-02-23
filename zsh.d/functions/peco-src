@@ -1,3 +1,4 @@
+#! /bin/zsh
 local selected_dir=$(ghq list -p | peco --rcfile=$HOME/.config/peco/config.json --query "$LBUFFER")
 if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"

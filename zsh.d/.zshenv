@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-23 23:16:21$
+# $Lastupdate: 2018-02-24 02:47:31$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -37,12 +37,9 @@ typeset -gx LANG=ja_JP.UTF-8
 fpath=( $ZDOTDIR/functions(N-/)
         $ZDOTDIR/modules/anyframe(N-/)
         $fpath)
-## config load function: auto-zcompile & source
-autoload -Uz auto_zcompile_and_source
 
 ## Personal settings
-[ -f $ZDOTDIR/tmp/userinfo ] && \
-    auto_zcompile_and_source $ZDOTDIR/tmp/userinfo
+[ -f $ZDOTDIR/tmp/userinfo ] && source $ZDOTDIR/tmp/userinfo
 
 ### PATH
 path=(

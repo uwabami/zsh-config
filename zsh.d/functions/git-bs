@@ -1,5 +1,4 @@
 #! /bin/zsh
-
 [ -z $ARCH ] && ARCH=amd64
 [ -z $DIST ] && DIST=unstable
 [ x"$DIST" = x"jessie" ] && DIST=stable

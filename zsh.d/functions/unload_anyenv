@@ -9,5 +9,5 @@ for dir in `ls $HOME/.anyenv/envs/` ; do
 done
 # for rbenv
 unset RBENV_ROOT
-# unset NDENV_ROOT
+unset NDENV_ROOT
 typeset -gxU path

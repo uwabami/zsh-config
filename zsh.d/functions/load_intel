@@ -1,3 +1,4 @@
+#! /bin/zsh
 [ ! -d $HOME/.config/intel ] || rsync -auvz $HOME/.config/intel $HOME/
 set_intel_vars
 typeset -gx INTEL_LICENSE_FILE=${_INTEL_LICENSE_FILE}

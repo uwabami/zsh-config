@@ -1,3 +1,4 @@
+#! /bin/zsh
 set_pgi_vars
 typeset -gx PGI=$PGI
 typeset -gx LM_LICENSE_FILE=$LM_LICENSE_FILE
