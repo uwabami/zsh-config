@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-22 10:05:53$
+# $Lastupdate: 2018-02-23 22:49:03$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -63,8 +63,11 @@ manpath=(
 
 ## treat LD_LIBRARY_PATH, INCLUDE
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
+[ -z "$library_path" ] && typeset -xT LIBRARY_PATH library_path
 [ -z "$include" ] && typeset -xT INCLUDE include
-typeset -xU ld_library_path include
+[ -z "$cpath" ] && typeset -xT CPATH cpath
+[ -z "$nlspath" ] && typeset -xT NLSPATH nlspath
+[ -z "$manpath" ] && typeset -xT MANPATH manpath
 
 ### Language specific settings
 
@@ -175,8 +178,22 @@ typeset -gx XAPIAN_CJK_NGRAM=1
 ## VTE terminal: fix EAW width
 typeset -gx VTE_CJK_WIDTH=1
 
+## vendor
+# intel
+if [ -d /opt/intel ] ; then
+    autoload -Uz set_intel_vars
+    autoload -Uz load_intel
+    autoload -Uz unload_intel
+fi
+# PGI
+if [ -d /opt/pgi ] ; then
+    autoload -Uz set_pgi_vars
+    autoload -Uz load_pgi
+    autoload -Uz unload_pgi
+fi
+
 ### High priority path settings
 [ -d $HOME/bin ] && path=( $HOME/bin $path )
 
 ### duplicate cleaning
-typeset -gxU path cdpath fpath manpath ld_library_path include
+typeset -gxU path ld_library_path library_path include cpath nlspath manpath

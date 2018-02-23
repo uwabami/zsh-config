@@ -1,0 +1,7 @@
+set_pgi_vars
+typeset -gx PGI=$PGI
+typeset -gx LM_LICENSE_FILE=$LM_LICENSE_FILE
+path=($_PGI_MPI_PATH $_PGI_PATH $path)
+ld_library_path=($_PGI_LIB_PATH $_PGI_MPI_LIB_PATH $ld_library_path)
+manpath=($_PGI_MANPATH $manpath)
+typeset -U path manpath ld_library_path

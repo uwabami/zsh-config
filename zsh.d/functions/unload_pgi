@@ -1,0 +1,13 @@
+set_pgi_vars
+typeset -gx PATH=${PATH//$_PGI_PATH:}
+typeset -gx PATH=${PATH//$_PGI_MPI_PATH:}
+typeset -gx LD_LIBRARY_PATH=${LD_LIBRARY_PATH//$_PGI_LIB_PATH:}
+typeset -gx LD_LIBRARY_PATH=${LD_LIBRARY_PATH//$_PGI_MPI_LIB_PATH:}
+if [ x"$LD_LIBRARY_PATH" = x"$_PGI_MPI_LIB_PATH" -o \
+      x"$LD_LIBRARY_PATH" = x"$_PGI_LIB_PATH" ] ; then
+    typeset -gx LD_LIBRARY_PATH=""
+fi
+typeset -gx MANPATH=${MANPATH//$_PGI_MANPATH:}
+typeset -U path manpath ld_library_path
+unset PGI
+unset LM_LICENSE_FILE

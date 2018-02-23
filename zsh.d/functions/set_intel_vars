@@ -1,0 +1,48 @@
+_INTEL_PATH=/opt/intel/composer_xe_2015.2.164
+_arch=intel64
+#
+# license file
+#
+_INTEL_LICENSE_FILE=${_INTEL_PATH}/licenses:/opt/intel/licenses
+##
+# tbbvars.sh
+#
+_LD_LIBRARY_PATH=${_INTEL_PATH}/tbb/lib/${_arch}/gcc4.4
+_LIBRARY_PATH=${_INTEL_PATH}/tbb/lib/${_arch}/gcc4.4
+_CPATH=${_INTEL_PATH}/tbb/include
+##
+# mklvars.h
+#
+_LD_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mkl/lib/${_arch}:${_LD_LIBRARY_PATH}
+_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mkl/lib/${_arch}:${_LIBRARY_PATH}
+_NLSPATH=${_INTEL_PATH}/mkl/lib/${_arch}/locale/%l_%t/%N
+_MANPATH=${_INTEL_PATH}/man/en_US
+_INCLUDE=${_INTEL_PATH}/mkl/include:${_INTEL_PATH}/mkl/include/${_arch}/lp64:${_INCLUDE}
+_CPATH=${_INTEL_PATH}/mkl/include:${_CPATH}
+##
+# ippvars.sh
+#
+_CPATH=${_INTEL_PATH}/ipp/include:${_CPATH}
+_LD_LIBRARY_PATH=${_INTEL_PATH}/ipp/lib/${_arch}:${_INTEL_PATH}/ipp/tools/${_arch}/perfsys:${_LD_LIBRARY_PATH}
+_LIBRARY_PATH=${INTEL_PATH}/ipp/../compiler/lib/${_arch}:${_INTEL_PATH}/ipp/lib/${_arch}:${_LIBRARY_PATH}
+_NLSPATH=${_INTEL_PATH}/ipp/${_arch}/locale/%l_%t/%N:${_NLSPATH}
+# _MIC_LD_LIBRARY_PATH=${_INTEL_PATH}/ipp/lib/lib/mic:${_MIC_LIBRARY_PATH}
+##
+#
+# compilervars_arch.sh
+#
+_PATH=${_INTEL_PATH}/bin/${_arch}
+_LD_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mpirt/lib/${_arch}:${_LD_LIBRARY_PATH}
+_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_LIBRARY_PATH}
+_NLSPATH=${_INTEL_PATH}/compiler/lib/${_arch}/locale/%l_%t/%N:${_NLSPATH}
+_MANPATH=${_INTEL_PATH}/man/ja_JP:${_MANPATH}
+##
+#
+# OpenMPI
+#
+if [ -d /opt/openmpi-intel ] ;then
+    _MPIROOT=/opt/openmpi-intel
+    _PATH=${_MPIROOT}/bin:${_PATH}
+    _LD_LIBRARY_PATH=${_MPIROOT}/lib:${_LD_LIBRARY_PATH}
+    _MANPATH=${_MPIROOT}/man:${_MANPATH}
+fi

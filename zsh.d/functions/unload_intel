@@ -1,0 +1,12 @@
+[ ! -d $HOME/intel ] || rsync -auvz $HOME/intel/ $HOME/.config/intel/
+rm -fr ${HOME}/intel
+unset INTEL_LICENSE_FILE
+export PATH=${PATH//$_PATH:}
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH//$_LD_LIBRARY_PATH:}
+export LIBRARY_PATH=${LIBRARY_PATH//$_LIBRARY_PATH:}
+export NLSPATH=${NLSPATH//$_NLSPATH:}
+export MANPATH=${MANPATH//$_MNAPATH:}
+unset NONRPM_DB_DIR
+typeset -U path ld_library_path library_path include cpath nlspath manpath
+/usr/bin/pkill -9 intelremotemond 2>&1 1>/dev/null
+unset _PATH _LD_LIBRARY_PATH _LIBRARY_PATH _INCLUDE _CPATH _NLSPATH _MANPATH

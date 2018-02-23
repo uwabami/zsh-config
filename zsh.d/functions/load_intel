@@ -1,0 +1,10 @@
+[ ! -d $HOME/.config/intel ] || rsync -auvz $HOME/.config/intel $HOME/
+set_intel_vars
+typeset -gx INTEL_LICENSE_FILE=${_INTEL_LICENSE_FILE}
+typeset -gx PATH=${_PATH}:${PATH}
+typeset -gx LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
+typeset -gx LIBRARY_PATH=${_LIBRARY_PATH}:${LIBRARY_PATH}
+typeset -gx NLSPATH=${_NLSPATH}:${NLSPATH}
+typeset -gx MANPATH=${_MNAPATH}:${MANPATH}
+typeset -gx NONRPM_DB_DIR=$HOME/.intel
+typeset -U path ld_library_path library_path include cpath nlspath manpath

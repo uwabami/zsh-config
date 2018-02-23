@@ -1,0 +1,7 @@
+PGI=/opt/pgi
+LM_LICENSE_FILE=$PGI/license.dat
+_PGI_PATH=$PGI/linux86-64/17.4/bin
+_PGI_LIB_PATH=$PGI/linux86-64/17.4/lib
+_PGI_MPI_PATH=$PGI/linux86-64/17.4/mpi/openmpi/bin
+_PGI_MPI_LIB_PATH=$PGI/linux86-64/17.4/mpi/openmpi/lib
+_PGI_MANPATH=$PGI/linux86-64/17.4/man
