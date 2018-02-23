@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-23 22:49:03$
+# $Lastupdate: 2018-02-23 23:16:21$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -48,9 +48,12 @@ autoload -Uz auto_zcompile_and_source
 path=(
     # Solaris
     /opt/{csw,sfw}/bin(N-/)
-     # Linux, Mac OS X with homebrew
+    # Linux, Mac OS X with homebrew
     {/usr/local,/usr,}{/sbin,/bin}(N-/)
     {/usr/local,/usr}/games(N-)
+    # pip installed app.
+    $HOME/.local/bin(N-)
+    # load default
     $path
 )
 ## manpath
@@ -63,11 +66,11 @@ manpath=(
 
 ## treat LD_LIBRARY_PATH, INCLUDE
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
-[ -z "$library_path" ] && typeset -xT LIBRARY_PATH library_path
-[ -z "$include" ] && typeset -xT INCLUDE include
-[ -z "$cpath" ] && typeset -xT CPATH cpath
-[ -z "$nlspath" ] && typeset -xT NLSPATH nlspath
-[ -z "$manpath" ] && typeset -xT MANPATH manpath
+[ -z "$library_path" ]    && typeset -xT LIBRARY_PATH library_path
+[ -z "$include" ]         && typeset -xT INCLUDE include
+[ -z "$cpath" ]           && typeset -xT CPATH cpath
+[ -z "$nlspath" ]         && typeset -xT NLSPATH nlspath
+[ -z "$manpath" ]         && typeset -xT MANPATH manpath
 
 ### Language specific settings
 
@@ -76,18 +79,17 @@ typeset -gx TEXMFHOME=$HOME/.texmf
 path=( /usr/tex/bin(N-/) $path )
 
 ## Java
-typeset -gx _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+# typeset -gx _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 # case ${OSTYPE} in
 #     darwin*)
 #         typeset -gx JAVA_HOME=/Library/Java/Home
 #         ;;
 #     linux*)
 #         # if [ -d /usr/lib/jvm/default-java/jre ] ; then
-#         typeset -gx JAVA_hOME=/usr/lib/jvm/default-java/jre
+#         typeset -gx JAVA_HOME=/usr/lib/jvm/default-java/jre
 #         # else
 #         #     JAVA_HOME=$(whence -s java | awk '{print $3}' | sed "s:bin/java::")
 #         # fi
-
 #         ;;
 #     *)
 #         ;;
@@ -121,13 +123,8 @@ autoload -U unload_local_gems
 # }
 # load_perl_env
 
-# ## Python
-# [ -d $HOME/.local/bin ] && path=( $HOME/.local/bin $path )
 
 # ## Go
-# [ -d $HOME/Library/gocode ] && typeset -gx GOPATH=$HOME/Library/gocode
-# path=($HOME/Library/gocode/bin $path)
-# typeset -gxU path
 
 # ## Node - nodebrew
 # function load_nodebrew(){

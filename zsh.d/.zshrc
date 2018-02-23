@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-22 11:02:59$
+# $Lastupdate: 2018-02-23 23:08:27$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -316,20 +316,44 @@ alias dmesg='sudo dmesg'
 
 whence pry >/dev/null && alias irb=pry
 
-whence ghq > /dev/null && autoload -Uz peco-src
-zle -N peco-src
-bindkey '^s' peco-src
+if whence ghq > /dev/null ; then
+    autoload -Uz peco-src
+    zle -N peco-src
+    bindkey '^s' peco-src
+fi
 
 if whence gbp >/dev/null ; then
+    autoload -Uz git-bs
     alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID}'"
     alias git-bp="git-b --git-debian-branch=patche-queue/master"
-    autoload -Uz git-bs
     alias git-bsp="git-bs --git-debian-branch=patch-queue/master"
     alias git-bss="git-bs --git-debian-branch=jessie-backports"
     alias git-bst="git-bs --git-tag"
 fi
 
-# load last
+## zsh syntax highlihter -- load last
+# load する plugin
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+# style のカスタマイズ
+typeset -A ZSH_HIGHLIGHT_STYLES
+# alias, function
+ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[function]='fg=magenta,bold'
+# 存在するパスのハイライト <-- default
+ZSH_HIGHLIGHT_STYLES[path]='underline'
+# グロブ
+ZSH_HIGHLIGHT_STYLES[globbing]='none'
+# マッチしない括弧
+ZSH_HIGHLIGHT_STYLES[bracket-error]='fg=red,bold'
+# 括弧の階層
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=blue,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=yellow,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=cyan,bold'
+# カーソルがある場所の括弧にマッチする括弧
+ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='standout'
+# load
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # if type zprof > /dev/null 2>&1; then

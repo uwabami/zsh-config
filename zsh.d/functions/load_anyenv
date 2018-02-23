@@ -10,4 +10,8 @@ for dir in `ls $HOME/.anyenv/envs/` ; do
 done
 ## for rbenv
 typeset -gx RBENV_ROOT=$HOME/.anyenv/envs/rbenv
+## for ndenv
+# typeset -gx NDENV_ROOT=$HOME.anyenv/envs/ndenv
+
+# cleanup duplicate
 typeset -gxU path
