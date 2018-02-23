@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-22 03:00:29$
+# $Lastupdate: 2018-02-22 11:02:59$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -84,6 +84,15 @@ setopt hist_ignore_space               # コマンド行先頭が空白の時登
 setopt hist_ignore_all_dups            # 重複ヒストリは古い方を削除
 setopt hist_reduce_blanks              # 余分なスペースを削除
 setopt hist_no_store                   # historyコマンドは登録しない
+
+### 区切り文字の設定
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars "_-./;@"
+zstyle ':zle:*' word-style unspecified
+
+# Ctrl+sのロック, Ctrl+qのロック解除を無効にする
+setopt no_flow_control
 
 ### Completion
 ## LSCOLORS
@@ -307,8 +316,12 @@ alias dmesg='sudo dmesg'
 
 whence pry >/dev/null && alias irb=pry
 
+whence ghq > /dev/null && autoload -Uz peco-src
+zle -N peco-src
+bindkey '^s' peco-src
+
 if whence gbp >/dev/null ; then
-    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID}"
+    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID}'"
     alias git-bp="git-b --git-debian-branch=patche-queue/master"
     autoload -Uz git-bs
     alias git-bsp="git-bs --git-debian-branch=patch-queue/master"

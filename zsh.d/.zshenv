@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-21 23:32:08$
+# $Lastupdate: 2018-02-22 10:05:53$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -93,7 +93,11 @@ typeset -gx _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 ## Lang -- anyenv
 autoload -U load_anyenv
 autoload -U unload_anyenv
-# Ruby
+# golang -- for ghq
+typeset -gx GOPATH=$HOME/Library/GOPATH
+path=( $GOPATH/bin(N-/)
+       $path)
+# RubyGems
 autoload -U load_local_gems
 autoload -U unload_local_gems
 
