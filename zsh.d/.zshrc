@@ -37,7 +37,7 @@
 # Code:
 
 ### Basic Settings
-umask 022                   # default umask
+umask 002                   # default umask
 bindkey -e                  # keybind  -> emacs like
 setopt no_beep              # beep を無効化
 
