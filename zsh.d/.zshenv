@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-### BASIC
+## BASIC
 # zmodload zsh/zprof
 ## LANG
 typeset -gx LANG=ja_JP.UTF-8
@@ -41,7 +41,7 @@ fpath=( $ZDOTDIR/functions(N-/)
 ## Personal settings
 [ -f $ZDOTDIR/tmp/userinfo ] && source $ZDOTDIR/tmp/userinfo
 
-### PATH
+## PATH
 path=(
     # Solaris
     /opt/{csw,sfw}/bin(N-/)
@@ -68,8 +68,6 @@ manpath=(
 [ -z "$cpath" ]           && typeset -xT CPATH cpath
 [ -z "$nlspath" ]         && typeset -xT NLSPATH nlspath
 [ -z "$manpath" ]         && typeset -xT MANPATH manpath
-
-### Language specific settings
 
 ## TeX
 typeset -gx TEXMFHOME=$HOME/.texmf
@@ -103,18 +101,15 @@ path=( $GOPATH/bin(N-/)
 autoload -U load_local_gems
 autoload -U unload_local_gems
 
-### VCS
 ## CVS
 typeset -gx CVS_RSH=ssh
+
 ## Git
 if [ -d $HOME/Library/git ]; then
     path=( $HOME/Library/git/bin $path)
     ld_library_path=( $HOME/Library/git/lib $ld_library_path )
     manpath=( $HOME/Library/git/share/man $manpath )
 fi
-
-### Chromium workarounds
-typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
 ## vendor
 # intel
@@ -130,12 +125,15 @@ if [ -d /opt/pgi ] ; then
     autoload -Uz unload_pgi
 fi
 
-### misc
-## mu index
+## misc
+# mu index
 typeset -gx XAPIAN_CJK_NGRAM=1
 
-## VTE terminal: fix EAW width
+# VTE terminal: fix EAW width
 typeset -gx VTE_CJK_WIDTH=1
+
+# Chromium workarounds
+typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
 ## High priority path settings
 [ -d $HOME/bin ] && path=( $HOME/bin $path )
