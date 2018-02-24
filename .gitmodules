@@ -7,3 +7,6 @@
 [submodule "zsh.d/modules/anyframe"]
 	path = zsh.d/modules/anyframe
 	url = https://github.com/mollifier/anyframe.git
+[submodule "zsh.d/modules/auto-fu"]
+	path = zsh.d/modules/auto-fu
+	url = https://github.com/hchbaw/auto-fu.zsh.git

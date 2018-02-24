@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-25 04:34:24$
+# $Lastupdate: 2018-02-25 04:54:28$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -118,6 +118,7 @@ setopt always_last_prompt     # カーソル位置を保持してファイル名
 zstyle ':completion:*' menu select=2 # カーソルによる補完候補の選択を有効化
 # 色指定に LS_COLORS を使用
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' format '%F{white}%d%f'
 # 種別を別々に表示させるため, グループを空白に
 zstyle ':completion:*' group-name ''
 # ディレクトリ名の補完
