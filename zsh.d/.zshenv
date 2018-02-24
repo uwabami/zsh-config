@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-24 20:30:36$
+# $Lastupdate: 2018-02-25 04:34:38$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -35,8 +35,8 @@
 typeset -gx LANG=ja_JP.UTF-8
 # custom fpath
 fpath=( $ZDOTDIR/functions(N-/)
-        $ZDOTDIR/modules/anyframe(N-/)
-        $fpath)
+        $fpath )
+typeset -gxU fpath
 
 ## Personal settings
 [ -f $ZDOTDIR/tmp/userinfo ] && source $ZDOTDIR/tmp/userinfo

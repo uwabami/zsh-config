@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-24 20:31:56$
+# $Lastupdate: 2018-02-25 04:34:24$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -68,9 +68,9 @@ typeset -Uga precmd_functions
 typeset -Uga preexec_functions
 
 ## utilities
-autoload -Uz is-at-least     # zsh のバージョンチェック
-autoload -Uz colors; colors  # 色指定を $fg[red] 等で行なえるように.
-
+autoload -Uz colors         # 色指定を $fg[red] 等で行なえるように.
+autoload -Uz 256colors      # 256色表示用簡易コマンド
+                            # @see functions/256colors
 ### History
 ## change history file for root/sudo
 HISTFILE=$ZDOTDIR/tmp/${USER}-zhistory
@@ -129,10 +129,6 @@ zstyle ':completion:*' remote-access true
 # ...はて?
 zstyle ':completion:*' completer \
     _oldlist _complete _match _ignored _approximate _list _history
-## 補完候補の追加
-is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
-    fpath+=( $ZDOTDIR/modules/zsh-completions/src $fpath )
-typeset -gxU fpath
 # 初期化
 autoload -Uz compinit
 _ZCOMPDUMP=$ZDOTDIR/tmp/$USER-zcompdump
@@ -160,8 +156,8 @@ autoload -Uz prompt_chroot_info
 precmd_functions+=prompt_chroot_info
 
 ## VCS info
-if is-at-least 4.3.10 && [[ x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
-    autoload -Uz vcs_info
+if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
+          x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
     zstyle ':vcs_info:*' enable git svn hg bzr
     zstyle ':vcs_info:*' formats '%s:%b'
     zstyle ':vcs_info:*' actionformats '%s:%b|%a'
@@ -172,6 +168,7 @@ if is-at-least 4.3.10 && [[ x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
     zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
     zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b'
     zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b'
+    autoload -Uz vcs_info
     function prompt_vcs_info(){
         LANG=C vcs_info "$@"
         if [[ -n "$vcs_info_msg_0_" ]]; then
@@ -229,13 +226,17 @@ autoload -Uz ssh-config-update
 # ssh-reagent
 autoload -Uz ssh-reagent
 
-# peco
-if whence peco > /dev/null ; then
-  zstyle ":anyframe:selector:" use peco
-  zstyle ":anyframe:selector:peco:" command "peco --rcfile=${HOME}/.config/peco/config.json"
-  autoload -Uz anyframe-init
-  anyframe-init
-  bindkey '^R' anyframe-widget-put-history
+# peco, ghq
+if whence peco >/dev/null ; then
+    alias peco='peco --rcfile=$HOME/.config/peco/config.json'
+    autoload -Uz peco-select-history
+    zle -N peco-select-history
+    bindkey '^R' peco-select-history
+fi
+if whence ghq > /dev/null && whence peco >/dev/null ; then
+    autoload -Uz peco-ghq
+    zle -N peco-ghq
+    bindkey '^S' peco-ghq
 fi
 
 # emacs <-> zsh
@@ -295,12 +296,6 @@ alias mv='nocorrect mv'
 alias dmesg='sudo dmesg'
 
 whence pry >/dev/null && alias irb=pry
-
-if whence ghq > /dev/null ; then
-    autoload -Uz peco-src
-    zle -N peco-src
-    bindkey '^s' peco-src
-fi
 
 if whence gbp >/dev/null ; then
     autoload -Uz git-bs
