@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 ### BASIC
-zmodload zsh/zprof
+# zmodload zsh/zprof
 ## LANG
 typeset -gx LANG=ja_JP.UTF-8
 # custom fpath
