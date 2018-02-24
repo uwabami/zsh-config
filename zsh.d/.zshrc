@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-23 23:08:27$
+# $Lastupdate: 2018-02-24 20:31:56$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -135,7 +135,13 @@ is-at-least 4.3.10 && [ -d $ZDOTDIR/modules/zsh-completions ] && \
 typeset -gxU fpath
 # 初期化
 autoload -Uz compinit
-compinit -C -u -d $ZDOTDIR/tmp/$USER-zcompdump
+_ZCOMPDUMP=$ZDOTDIR/tmp/$USER-zcompdump
+for dump in $_ZCOMPDUMP(N.mh+24); do
+    compinit -d $_ZCOMPDUMP
+done
+[[ -e "${_ZCOMPDUMP:r}.zwc" ]] && [[ "$_ZCOMPDUMP" -ot "${_ZCOMPDUMP:r}.zwc" ]] ||
+    zcompile $_ZCOMPDUMP >/dev/null 2>&1
+compinit -C -d $_ZCOMPDUMP
 
 ### PROMPT
 ## option
@@ -143,7 +149,6 @@ setopt prompt_subst      # プロンプト定義内で変数置換やコマン�
 setopt prompt_percent    # %文字から始まる置換機能を有効に
 unsetopt promptcr        # 被る時は右プロンプトを消す
 setopt transient_rprompt # コマンド実行後は右プロンプトを消す
-# autoload -Uz promptinit
 
 ## chroot info
 # Debian の chroot 環境には /etc/debian_chroot がある
@@ -151,6 +156,7 @@ function prompt_chroot_info() {
     chroot=$(cat /etc/debian_chroot 2>/dev/null) || return
     chroot_info="|%F{green}$chroot%f"
 }
+autoload -Uz prompt_chroot_info
 precmd_functions+=prompt_chroot_info
 
 ## VCS info
@@ -211,9 +217,6 @@ function update_prompt (){
     local ps_status="[%j]%(?.%B%F{green}.%B%F{blue})%(?!(*'-')%b!(*;-;%)%b)%f "
     local ps_mark="%(!,%B%F{magenta}#%f%b,%%)"
     PROMPT="$prompt_1st_left$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
-    # local prompt_info="[$ps_user@$ps_host$chroot_info"
-    # local prompt_pwd="%F{white}%(5~,%-2~/.../%1~,%~)%f]"
-    # PROMPT="$prompt_info:$prompt_pwd"$'\n'"$ps_status$ps_mark "
     PROMPT2='|%j]> '
     SPROMPT="[%j]%B%F{red}%{$suggest%}(*'~'%)?<%b %U%r%u is correct? [n,y,a,e]:%f "
     # 右プロンプト
@@ -224,30 +227,7 @@ precmd_functions+=update_prompt
 # ssh config update
 autoload -Uz ssh-config-update
 # ssh-reagent
-function ssh-reagent(){
-    for agent in /tmp/ssh-*/agent.*; do
-        export SSH_AUTH_SOCK=$agent
-        if ssh-add -l 2>&1 > /dev/null; then
-            echo "Found working SSH agent:"
-            ssh-add -l
-            return
-        fi
-    done
-    echo "Cannot find ssh agent - maybe you should reconnect and forward it?"
-}
-
-# tmux + ssh
-# function ssh() {
-#   if [ -n $(printenv TMUX) ]; then
-#       local window_name=$(tmux display -p '#{window_name}')
-#       tmux rename-window -- "$@[-1]" # zsh specified
-#       # tmux rename-window -- "${!#}" # for bash
-#       command ssh $@
-#       tmux rename-window $window_name
-#   else
-#       command ssh $@
-#   fi
-# }
+autoload -Uz ssh-reagent
 
 # peco
 if whence peco > /dev/null ; then
@@ -269,7 +249,7 @@ export LESS='-R'
 export LESSCHARSET=utf-8
 export MANPAGER=less
 export LV="-c -T8192 -l -m -k -s"
-autoload man
+autoload -Uz man
 whence vim >/dev/null && alias vi=vim
 export EDITOR=vi
 

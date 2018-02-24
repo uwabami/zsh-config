@@ -1,7 +1,7 @@
 #! /bin/zsh
 local selected_dir=$(ghq list | peco --rcfile=$HOME/.config/peco/config.json --query "$LBUFFER")
 if [ -n "$selected_dir" ]; then
-    BUFFER="cd $(ghq root)/${selected_dir}"
+    BUFFER="cd $(git config --get ghq.root)/${selected_dir}"
     # pecoで選択中, Enter を押した瞬間に実行する
     zle accept-line
 fi

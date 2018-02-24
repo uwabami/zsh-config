@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-24 02:47:31$
+# $Lastupdate: 2018-02-24 20:30:36$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 ### BASIC
-# zmodload zsh/zprof
+zmodload zsh/zprof
 ## LANG
 typeset -gx LANG=ja_JP.UTF-8
 # custom fpath
@@ -103,48 +103,6 @@ path=( $GOPATH/bin(N-/)
 autoload -U load_local_gems
 autoload -U unload_local_gems
 
-# ## Perl
-# function load_perl_env(){
-#     # local arch; arch="$(perl -MConfig -e 'print $Config{archname}')"
-#     local extlib; extlib="$HOME/Library/CPAN/lib/perl5"
-#     typeset -gx PERL5LIB="$extlib:$extlib/$arch"
-#     path=( $HOME/Library/CPAN/bin $path )
-#     # whence cpanm > /dev/null && \
-#     #     typeset -gx PERL_CPANM_OPT="--local-lib=$HOME/Library/CPAN"
-#     typeset -gxU path
-# }
-# function unload_perl_env(){
-#     path=( ${path:#$HOME/Library/CPAN/bin*} )
-#     unset PERL5LIB; unset PERL_CPANM_OPT
-#     typeset -gxU path
-# }
-# load_perl_env
-
-
-# ## Go
-
-# ## Node - nodebrew
-# function load_nodebrew(){
-#     path=( $HOME/.nodebrew/current/bin $path)
-#     typeset -gxU path
-# }
-# function unload_nodebrew(){
-#     path=( ${path:#$HOME/.nodebrew/current/bin*} )
-#     typeset -gxU path
-# }
-
-# ## Adobe FDK
-# function load_adobe_fdk(){
-#     typeset -gx FDK_EXE=$HOME/Library/FDK/Tools/linux
-#     path=( $HOME/Library/FDK/Tools/linux $path )
-#     typeset -gxU path
-# }
-# function unload_adobe_fdk(){
-#     path=( ${path:#$HOME/Library/FDK/Tools/linux*} )
-#     unset FDK_EXE
-#     typeset -gxU path
-# }
-
 ### VCS
 ## CVS
 typeset -gx CVS_RSH=ssh
@@ -157,20 +115,6 @@ fi
 
 ### Chromium workarounds
 typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
-
-### Vendor Software (e.g., Compiler)
-# [ -d /opt/pgi ] && _auto_zcompile_source $ZDOTDIR/vendor/pgi.zsh
-# [ -d /opt/FJSVplang ] && _auto_zcompile_source $ZDOTDIR/vendor/fujitsu.zsh
-# [ -d /opt/intel ] && _auto_zcompile_source $ZDOTDIR/vendor/intel.zsh
-# [ -d /opt/SolarisStudio ] && \
-#     _auto_zcompile_source $ZDOTDIR/vendor/soralisstudio.zsh
-
-### misc
-## mu index
-typeset -gx XAPIAN_CJK_NGRAM=1
-
-## VTE terminal: fix EAW width
-typeset -gx VTE_CJK_WIDTH=1
 
 ## vendor
 # intel
@@ -186,8 +130,15 @@ if [ -d /opt/pgi ] ; then
     autoload -Uz unload_pgi
 fi
 
-### High priority path settings
+### misc
+## mu index
+typeset -gx XAPIAN_CJK_NGRAM=1
+
+## VTE terminal: fix EAW width
+typeset -gx VTE_CJK_WIDTH=1
+
+## High priority path settings
 [ -d $HOME/bin ] && path=( $HOME/bin $path )
 
-### duplicate cleaning
+## duplicate cleaning
 typeset -gxU path ld_library_path library_path include cpath nlspath manpath
