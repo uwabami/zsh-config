@@ -159,7 +159,7 @@ precmd_functions+=prompt_chroot_info
 ## VCS info
 if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
           x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
-    zstyle ':vcs_info:*' enable git svn hg bzr
+    zstyle ':vcs_info:*' enable git hg svn bzr
     zstyle ':vcs_info:*' formats '%s:%b'
     zstyle ':vcs_info:*' actionformats '%s:%b|%a'
     zstyle ':vcs_info:(svn|bzr)' branchformat '%b:r%r'

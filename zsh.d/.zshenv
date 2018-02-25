@@ -34,7 +34,8 @@
 ## LANG
 typeset -gx LANG=ja_JP.UTF-8
 # custom fpath
-fpath=( $ZDOTDIR/functions(N-/)
+fpath=( $ZDOTDIR/modules/faster-vcs-info(N-/)
+        $ZDOTDIR/functions(N-/)
         $fpath )
 typeset -gxU fpath
 

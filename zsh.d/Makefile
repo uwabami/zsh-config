@@ -9,12 +9,15 @@ _SRC_ += tmp/$(USER)-zcompdump
 _SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test )
 # module: zsh-completion
 _SRC_ += $(shell find modules/zsh-completions/src -type f | grep -v .zwc)
+# module: faster-vcs-info
+_SRC_ += $(shell find modules/faster-vcs-info -type f -name VCS* | grep -v .zwc)
 # update target
 TARGET=$(_SRC_:%=%.zwc)
 
 all: check $(TARGET)
 
 check:
+	@zsh -ic exit
 	@chmod a-x $(_SRC_)
 
 %.zwc: %
