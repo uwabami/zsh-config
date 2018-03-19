@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-25 04:54:28$
+# $Lastupdate: 2018-03-19 12:59:27$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -295,6 +295,8 @@ alias mv='nocorrect mv -i'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias dmesg='sudo dmesg'
+
+whence ranger >/dev/null && alias ranger='urxvtcd -e ranger'
 
 whence pry >/dev/null && alias irb=pry
 
