@@ -9,5 +9,12 @@ for dir in `ls $HOME/.anyenv/envs/` ; do
 done
 # for rbenv
 unset RBENV_ROOT
+unset RBENV_SHELL
+unfunction rbenv
 unset NDENV_ROOT
+unset NDENV_SHELL
+unfunction ndenv
+unset PYENV_ROOT
+unset PYENV_SHELL
+unfunction pyenv
 typeset -gxU path

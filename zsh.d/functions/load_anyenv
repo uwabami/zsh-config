@@ -1,6 +1,7 @@
 #! /bin/zsh
 path=( $HOME/.anyenv/bin(N-/)
        $path)
+
 for dir in `ls $HOME/.anyenv/envs/` ; do
     if test -d $HOME/.anyenv/envs/$dir ; then
         path=( $HOME/.anyenv/envs/${dir}bin(N-/)
@@ -8,10 +9,71 @@ for dir in `ls $HOME/.anyenv/envs/` ; do
                $path)
     fi
 done
+anyenv() {
+  typeset command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+  command anyenv "$command" "$@"
+}
+# source "/home/uwabami/.anyenv/libexec/../completions/anyenv.zsh"
+
 ## for rbenv
 typeset -gx RBENV_ROOT=$HOME/.anyenv/envs/rbenv
+typeset -gx RBENV_SHELL=zsh
+rbenv() {
+  local command
+  command="${1:-}"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  rehash|shell)
+    eval "$(rbenv "sh-$command" "$@")";;
+  *)
+    command rbenv "$command" "$@";;
+  esac
+}
+# source '/home/uwabami/.anyenv/envs/rbenv/libexec/../completions/rbenv.zsh'
+
 ## for ndenv
 typeset -gx NDENV_ROOT=$HOME/.anyenv/envs/ndenv
+ndenv() {
+  typeset command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  rehash|shell)
+    eval "`ndenv "sh-$command" "$@"`";;
+  *)
+    command ndenv "$command" "$@";;
+  esac
+}
+# source "/home/uwabami/.anyenv/envs/ndenv/libexec/../completions/ndenv.zsh"
+
+## for pyenv
+typeset -gx NDENV_ROOT=$HOME/.anyenv/envs/pyenv
+typeset -gx PYENV_SHELL=zsh
+pyenv() {
+  local command
+  command="${1:-}"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  rehash|shell)
+    eval "$(pyenv "sh-$command" "$@")";;
+  *)
+    command pyenv "$command" "$@";;
+  esac
+}
+# source '/home/uwabami/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh'
 
 # cleanup duplicate
 typeset -gxU path
