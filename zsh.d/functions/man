@@ -1,7 +1,7 @@
 #! /bin/sh
 # @see Linux / Unix: Colored Man Pages With less Command
 # http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
-env \
+env LANG=C \
     LESS_TERMCAP_mb=$(printf "\e[1;31m") \
     LESS_TERMCAP_md=$(printf "\e[1;31m") \
     LESS_TERMCAP_me=$(printf "\e[0m") \
