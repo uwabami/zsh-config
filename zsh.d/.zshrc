@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-06-27 12:36:52$
+# $Lastupdate: 2018-07-11 17:32:39$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -296,9 +296,13 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias dmesg='sudo dmesg'
 
-whence ranger >/dev/null && alias ranger='urxvtcd -e ranger'
+whence /usr/bin/ranger >/dev/null && alias ranger='urxvtcd -e /usr/bin/ranger'
 
 whence pry >/dev/null && alias irb=pry
+
+if [ x"$XDG_CURRENT_DESKTOP" = x"i3" ] ; then
+    alias xdg-open="DE=gnome xdg-open"
+fi
 
 if whence gbp >/dev/null ; then
     autoload -Uz git-bs
