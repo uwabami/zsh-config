@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-02-25 04:34:38$
+# $Lastupdate: 2018-07-24 13:00:27$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -127,8 +127,9 @@ if [ -d /opt/pgi ] ; then
 fi
 
 ## misc
-# mu index
+# notmuch
 typeset -gx XAPIAN_CJK_NGRAM=1
+typeset -gx XAPIAN_PREFER_CHERT=1
 
 # VTE terminal: fix EAW width
 typeset -gx VTE_CJK_WIDTH=1
