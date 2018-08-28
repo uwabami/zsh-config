@@ -1,6 +1,7 @@
 #! /bin/zsh
 if [ -d $HOME/Library/perl5 ] ; then
     typeset -gx PERL5LIB=$HOME/Library/perl5:$PERL5LIB
+    typeset -gx PERL_CPANM_OPT="--local-lib $HOME/Library/perl5"
     path=( $HOME/Library/perl5/bin(N-/)
            $path)
 fi

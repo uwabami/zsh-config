@@ -1,5 +1,6 @@
 #! /bin/zsh
 unset PERL5LIB
+unset PERL_CPANM_OPT
 if [ -d $HOME/Library/perl5 ] ; then
     path=( ${path:#$HOME/Library/perl5/bin*} )
 fi
