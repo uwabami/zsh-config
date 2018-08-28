@@ -7,6 +7,7 @@ for dir in `ls $HOME/.anyenv/envs/` ; do
         path=( ${path:#$HOME/.anyenv/envs/${dir}shims*} )
     fi
 done
+
 # for rbenv
 unset RBENV_ROOT
 unset RBENV_SHELL

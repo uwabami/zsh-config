@@ -1,0 +1,6 @@
+#! /bin/zsh
+unset PERL5LIB
+if [ -d $HOME/Library/perl5 ] ; then
+    path=( ${path:#$HOME/Library/perl5/bin*} )
+fi
+typeset -gxU path

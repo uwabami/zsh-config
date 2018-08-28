@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-08-13 18:15:27$
+# $Lastupdate: 2018-08-13 20:52:40$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -52,7 +52,7 @@ DIRSTACKSIZE=20
 setopt correct              # コマンドのスペル訂正
 setopt rc_quotes            # '' で \' を表現(エスケープをちょっとだけ省く)
 unsetopt correct_all        # 全ての引数のスペル訂正: 無効化
-unsetopt ignore_eof         # ^D でのログアウトするために unsetopt
+unsetopt ignore_eof         # ^D でログアウトするために unsetopt
 
 ## Job
 setopt long_list_jobs       # jobs -l にする, らしいけれど上手く動いてない.

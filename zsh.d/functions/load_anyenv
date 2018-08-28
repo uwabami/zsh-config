@@ -74,6 +74,5 @@ pyenv() {
   esac
 }
 # source '/home/uwabami/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh'
-
 # cleanup duplicate
 typeset -gxU path
