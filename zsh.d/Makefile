@@ -25,3 +25,9 @@ check:
 
 clean:
 	rm -f $(TARGET)
+
+update:
+	git submodule foreach git fetch --all
+	git submodule foreach git rebase origin/master
+	git add modules
+	git commit -s -m "Update submodule"
