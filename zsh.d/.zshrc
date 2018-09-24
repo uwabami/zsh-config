@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-08-13 20:52:40$
+# $Lastupdate: 2018-09-24 17:35:41$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -193,13 +193,18 @@ function count_prompt_chars (){
         print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
     fi
 }
+os_type="()"
+[ -f /etc/debian_version ] && os_type="(%B%F{red}%b%f)"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
+
 # precmd のプロンプト更新用関数
 function update_prompt (){
     ## プロンプト: 1段目左
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
-    [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
-    local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
+    [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host"
+    # local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
+    local prompt_1st_left="[$ps_user@$ps_host$chroot_info$os_type]"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
     ## 1段目行の残り文字列の計算
