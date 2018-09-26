@@ -207,7 +207,7 @@ function update_prompt (){
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
     ## 1段目行の残り文字列の計算
-    local left_length=$[ $(count_prompt_chars $prompt_1st_left) + 4 ]
+    local left_length=$[ $(count_prompt_chars $prompt_1st_left) + 3 ]
     local right_length=$(count_prompt_chars $prompt_1st_right)
     local bar_rest_length=$[ COLUMNS - left_length - right_length -1 ]
     ## 1段目に水平線を引く
