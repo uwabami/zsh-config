@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-10-04 21:18:07$
+# $Lastupdate: 2018-10-04 21:19:02$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -196,16 +196,16 @@ function count_prompt_chars (){
 os_type="()"
 case $(lsb_release -d) in
     *Debian*)
-        os_type="(%{[38;5;196m%}%{[0m%})"
+        os_type="(%{[38;5;196m%}%{[0m%})]"
         ;;
     *Ubuntu*)
-        os_type="(%{[38;5;172m%}%{[0m%})"
+        os_type="(%{[38;5;172m%}%{[0m%})]"
         ;;
     *Red*Hat*)
-        os_type="(%{[38;5;255m%}%{[0m%})"
+        os_type="(%{[38;5;255m%}%{[0m%})]"
         ;;
 esac
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)]"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -213,13 +213,13 @@ function update_prompt (){
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host"
-    local prompt_1st_left="[$ps_user@$ps_host$chroot_info]"
+    local prompt_1st_left="[$ps_user@$ps_host$chroot_info"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
     ## 1段目行の残り文字列の計算
     local left_length=$(count_prompt_chars $prompt_1st_left)
     local right_length=$(count_prompt_chars $prompt_1st_right)
-    local bar_rest_length=$[ COLUMNS - left_length - right_length - 4 ]
+    local bar_rest_length=$[ COLUMNS - left_length - right_length - 5 ]
     ## 1段目に水平線を引く
     local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
     ## PROMPT の設定
