@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-10-04 21:21:15$
+# $Lastupdate: 2018-10-04 21:22:25$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -194,7 +194,7 @@ function count_prompt_chars (){
     fi
 }
 os_type="()"
-if whence lsb_release 2>&1 ; then
+if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
             os_type="(%{[38;5;196m%}%{[0m%})"
