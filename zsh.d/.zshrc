@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-10-04 21:19:02$
+# $Lastupdate: 2018-10-04 21:20:00$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -196,16 +196,16 @@ function count_prompt_chars (){
 os_type="()"
 case $(lsb_release -d) in
     *Debian*)
-        os_type="(%{[38;5;196m%}%{[0m%})]"
+        os_type="(%{[38;5;196m%}%{[0m%})"
         ;;
     *Ubuntu*)
-        os_type="(%{[38;5;172m%}%{[0m%})]"
+        os_type="(%{[38;5;172m%}%{[0m%})"
         ;;
     *Red*Hat*)
-        os_type="(%{[38;5;255m%}%{[0m%})]"
+        os_type="(%{[38;5;255m%}%{[0m%})"
         ;;
 esac
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)]"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -213,13 +213,13 @@ function update_prompt (){
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host"
-    local prompt_1st_left="[$ps_user@$ps_host$chroot_info"
+    local prompt_1st_left="$ps_user@$ps_host$chroot_info"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
     ## 1段目行の残り文字列の計算
     local left_length=$(count_prompt_chars $prompt_1st_left)
     local right_length=$(count_prompt_chars $prompt_1st_right)
-    local bar_rest_length=$[ COLUMNS - left_length - right_length - 5 ]
+    local bar_rest_length=$[ COLUMNS - left_length - right_length - 6 ]
     ## 1段目に水平線を引く
     local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
     ## PROMPT の設定
@@ -228,7 +228,7 @@ function update_prompt (){
     # 横幅等を調整.
     local ps_status="[%j]%(?.%B%F{green}.%B%F{blue})%(?!(*'-')%b!(*;-;%)%b)%f "
     local ps_mark="%(!,%B%F{magenta}#%f%b,%%)"
-    PROMPT="$prompt_1st_left$os_type$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
+    PROMPT="[$prompt_1st_left$os_type]$prompt_1st_hr$prompt_1st_right-"$'\n'"$ps_status$ps_mark "
     PROMPT2='|%j]> '
     SPROMPT="[%j]%B%F{red}%{$suggest%}(*'~'%)?<%b %U%r%u is correct? [n,y,a,e]:%f "
     # 右プロンプト
