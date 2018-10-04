@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-10-04 21:20:00$
+# $Lastupdate: 2018-10-04 21:21:15$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -194,17 +194,19 @@ function count_prompt_chars (){
     fi
 }
 os_type="()"
-case $(lsb_release -d) in
-    *Debian*)
-        os_type="(%{[38;5;196m%}%{[0m%})"
-        ;;
-    *Ubuntu*)
-        os_type="(%{[38;5;172m%}%{[0m%})"
-        ;;
-    *Red*Hat*)
-        os_type="(%{[38;5;255m%}%{[0m%})"
-        ;;
-esac
+if whence lsb_release 2>&1 ; then
+    case $(lsb_release -d) in
+        *Debian*)
+            os_type="(%{[38;5;196m%}%{[0m%})"
+            ;;
+        *Ubuntu*)
+            os_type="(%{[38;5;172m%}%{[0m%})"
+            ;;
+        *Red*Hat*)
+            os_type="(%{[38;5;255m%}%{[0m%})"
+            ;;
+    esac
+fi
 [[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
 
 # precmd のプロンプト更新用関数
