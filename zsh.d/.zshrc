@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-10-05 14:41:55$
+# $Lastupdate: 2018-10-05 14:53:12$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -214,7 +214,7 @@ function update_prompt (){
     ## プロンプト: 1段目左
     local ps_user="%(!,%B%F{magenta}%n%b,%n)"
     local ps_host="%m"
-    [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host"
+    [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
     local prompt_1st_left="$ps_user@$ps_host$chroot_info"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
