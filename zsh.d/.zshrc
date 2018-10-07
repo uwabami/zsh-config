@@ -221,7 +221,7 @@ function update_prompt (){
     ## 1段目行の残り文字列の計算
     local left_length=$(count_prompt_chars $prompt_1st_left)
     local right_length=$(count_prompt_chars $prompt_1st_right)
-    local bar_rest_length=$[ COLUMNS - left_length - right_length - 6 ]
+    local bar_rest_length=$[ COLUMNS - left_length - right_length - 7 ]
     ## 1段目に水平線を引く
     local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
     ## PROMPT の設定
