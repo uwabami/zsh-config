@@ -212,7 +212,7 @@ fi
 # precmd のプロンプト更新用関数
 function update_prompt (){
     ## プロンプト: 1段目左
-    local ps_user="%(!,%B%F{magenta}%n%b,%n)"
+    local ps_user="%(!,%B%F{magenta}%n%b%F{white},%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
     local prompt_1st_left="$ps_user@$ps_host$chroot_info"
