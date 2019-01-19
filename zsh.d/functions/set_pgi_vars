@@ -1,8 +1,8 @@
 #! /bin/zsh
 PGI=/opt/pgi
 LM_LICENSE_FILE=$PGI/license.dat
-_PGI_PATH=$PGI/linux86-64/18.4/bin
-_PGI_LIB_PATH=$PGI/linux86-64/18.4/lib
-_PGI_MPI_PATH=$PGI/linux86-64/18.4/mpi/openmpi/bin
-_PGI_MPI_LIB_PATH=$PGI/linux86-64/18.4/mpi/openmpi/lib
-_PGI_MANPATH=$PGI/linux86-64/18.4/man
+_PGI_PATH=$PGI/linux86-64/2018/bin
+_PGI_LIB_PATH=$PGI/linux86-64/2018/lib
+_PGI_MPI_PATH=$PGI/linux86-64/2018/mpi/openmpi/bin
+_PGI_MPI_LIB_PATH=$PGI/linux86-64/2018/mpi/openmpi/lib
+_PGI_MANPATH=$PGI/linux86-64/2018/man

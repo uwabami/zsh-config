@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-08-28 18:24:05$
+# $Lastupdate: 2018-12-03 08:17:21$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -97,6 +97,9 @@ autoload -U unload_anyenv
 # perl -- cpanm
 autoload -U load_cpanm
 autoload -U unload_cpanm
+# nodejs
+path=( $HOME/Library/nodejs/bin(N-/)
+       $path)
 # golang -- for ghq
 typeset -gx GOPATH=$HOME/Library/GOPATH
 path=( $GOPATH/bin(N-/)

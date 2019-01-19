@@ -1,21 +1,23 @@
 #! /bin/zsh
+
+# ndenv
+unset NDENV_ROOT
+unset NDENV_SHELL
+unfunction ndenv
+# rbenv
+unset RBENV_ROOT
+unset RBENV_SHELL
+unfunction rbenv
+# pyenv
+unset PYENV_ROOT
+unset PYENV_SHELL
+unfunction pyenv
+
 path=( ${path:#$HOME/.anyenv/bin*} )
-typeset -gxU path
 for dir in `ls $HOME/.anyenv/envs/` ; do
     if test -d $HOME/.anyenv/envs/$dir ; then
         path=( ${path:#$HOME/.anyenv/envs/${dir}bin*} )
         path=( ${path:#$HOME/.anyenv/envs/${dir}shims*} )
     fi
 done
-
-# for rbenv
-unset RBENV_ROOT
-unset RBENV_SHELL
-unfunction rbenv
-unset NDENV_ROOT
-unset NDENV_SHELL
-unfunction ndenv
-unset PYENV_ROOT
-unset PYENV_SHELL
-unfunction pyenv
 typeset -gxU path
