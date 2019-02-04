@@ -197,17 +197,17 @@ os_type="()"
 if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
-            os_type="(%{[38;5;196m%}%{[0m%})"
+            os_type="(%{[38;5;196m%}%{[0m%})"
             ;;
         *Ubuntu*)
-            os_type="(%{[38;5;172m%}%{[0m%})"
+            os_type="(%{[38;5;172m%}%{[0m%})"
             ;;
         *Red*Hat*)
-            os_type="(%{[38;5;255m%}%{[0m%})"
+            os_type="(%{[38;5;255m%}%{[0m%})"
             ;;
     esac
 fi
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
