@@ -1,0 +1,5 @@
+#! /bin/zsh
+path=( $HOME/.cargo/bin(N-/)
+       $path)
+ # cleanup duplicate
+typeset -gxU path

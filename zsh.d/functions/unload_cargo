@@ -1,0 +1,3 @@
+#! /bin/zsh
+path=( ${path:#$HOME/.cargo/bin} )
+typeset -gxU path

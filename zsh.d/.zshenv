@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2018-12-03 08:17:21$
+# $Lastupdate: 2019-04-18 07:33:52$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -90,6 +90,10 @@ path=( /usr/tex/bin(N-/) $path )
 #     *)
 #         ;;
 # esac
+
+## rust
+autoload -U load_cargo
+autoload -U unload_cargo
 
 ## Lang -- anyenv
 autoload -U load_anyenv
