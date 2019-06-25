@@ -1,0 +1,13 @@
+#! /bin/zsh
+if [[ -n $(printenv TMUX) ]] ; then
+    # 現在のペインIDの退避と背景色の書き換え
+    local pane_id=`tmux display -p '#{pane_id}'`
+    # 接続先ホスト名に応じて背景色、文字色を切り替え
+    tmux select-pane -P 'bg=colour017'
+    # 通常通りコマンド続行
+    command ssh $@
+    # デフォルトの色設定に戻す
+    tmux select-pane -t $pane_id -P 'default'
+else
+    command ssh $@
+fi

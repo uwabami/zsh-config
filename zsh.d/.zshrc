@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2019-02-04 22:17:58$
+# $Lastupdate: 2019-06-25 12:59:16$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -237,7 +237,9 @@ function update_prompt (){
     RPROMPT="$ps_vcs_info"
 }
 precmd_functions+=update_prompt
-
+if whence tmux > /dev/null ; then
+    autoload -Uz ssh
+fi
 # ssh config update
 autoload -Uz ssh-config-update
 # ssh-reagent
