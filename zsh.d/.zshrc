@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2019-06-25 12:59:16$
+# $Lastupdate: 2019-06-26 19:05:08$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -197,13 +197,13 @@ os_type="()"
 if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
-            os_type="(%{[38;5;196m%}%{[0m%})"
+            os_type="(%{[38;5;196m%}%{[0m%})"
             ;;
         *Ubuntu*)
-            os_type="(%{[38;5;172m%}%{[0m%})"
+            os_type="(%{[38;5;172m%}%{[0m%})"
             ;;
         *Red*Hat*)
-            os_type="(%{[38;5;255m%}%{[0m%})"
+            os_type="(%{[38;5;255m%}%{[0m%})"
             ;;
     esac
 fi
