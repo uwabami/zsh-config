@@ -1,0 +1,7 @@
+#! /bin/zsh
+[ -z $ARCH ] && ARCH=amd64
+[ -z $DIST ] && DIST=unstable
+[ x"$DIST" = x"stretch" ] && DIST=stable
+[ x"$DIST" = x"buster" ] && DIST=testing
+[ x"$DIST" = x"sid" ] && DIST=unstable
+gbp buildpackage --git-ignore-new --git-builder="sbuild --source-only-changes -v -As --arch=${ARCH} -d ${DIST}"

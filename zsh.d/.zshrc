@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2019-06-26 19:05:08$
+# $Lastupdate: 2019-07-27 21:43:02$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -264,11 +264,14 @@ fi
 autoload -Uz cde
 autoload -Uz dired
 ### Aliases
-typeset -gx PAGER='less'
-typeset -gx LESS='-R'
 typeset -gx LESSCHARSET=utf-8
 typeset -gx LESSHISTFILE='-'
+if whence lesspipe >/dev/null ;then
+    typeset -gx LESSOPEN="| $(whence lesspipe) %s"
+fi
 typeset -gx MANPAGER=less
+typeset -gx PAGER='less'
+typeset -gx LESS='-R'
 typeset -gx LV="-c -T8192 -l -m -k -s"
 autoload -Uz man
 whence vim >/dev/null && alias vi=vim
