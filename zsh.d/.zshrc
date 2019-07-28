@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2019-07-27 21:43:02$
+# $Lastupdate: 2019-07-28 18:24:46$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -330,7 +330,7 @@ fi
 
 if whence gbp >/dev/null ; then
     autoload -Uz git-bs
-    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID}'"
+    alias git-b="gbp buildpackage --git-ignore-new --git-builder='debuild --lintian -rfakeroot -i.git -I.git -sa -k${GPG_KEY_ID} '"
     alias git-bp="git-b --git-debian-branch=patche-queue/master"
     alias git-bsp="git-bs --git-debian-branch=patch-queue/master"
     alias git-bss="git-bs --git-debian-branch=jessie-backports"
