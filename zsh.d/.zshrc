@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2019-07-28 18:24:46$
+# $Lastupdate: 2020-01-04 23:20:59$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -193,21 +193,21 @@ function count_prompt_chars (){
         print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
     fi
 }
-os_type="()"
+os_type="()"
 if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
-            os_type="(%{[38;5;196m%}%{[0m%})"
+            os_type="(%{[38;5;196m%}%{[0m%})"
             ;;
         *Ubuntu*)
-            os_type="(%{[38;5;172m%}%{[0m%})"
+            os_type="(%{[38;5;172m%}%{[0m%})"
             ;;
         *Red*Hat*)
-            os_type="(%{[38;5;255m%}%{[0m%})"
+            os_type="(%{[38;5;255m%}%{[0m%})"
             ;;
     esac
 fi
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
