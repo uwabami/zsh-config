@@ -1,5 +1,5 @@
 #! /bin/zsh
-_INTEL_PATH=/opt/intel/composer_xe_2015.2.164
+_INTEL_PATH=/opt/intel/
 _arch=intel64
 #
 # license file
