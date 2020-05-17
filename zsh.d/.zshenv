@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2019-04-18 07:33:52$
+# $Lastupdate: 2020-05-04 02:03:01$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -115,6 +115,10 @@ autoload -U unload_local_gems
 ## CVS
 typeset -gx CVS_RSH=ssh
 
+## lisp -- roswell
+path=( $HOME/.roswell/bin(N-/)
+       $path )
+
 ## Git
 if [ -d $HOME/Library/git ]; then
     path=( $HOME/Library/git/bin $path)
@@ -145,7 +149,7 @@ typeset -gx XAPIAN_PREFER_CHERT=1
 typeset -gx VTE_CJK_WIDTH=1
 
 # Chromium workarounds
-typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
+# typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
 ## High priority path settings
 [ -d $HOME/bin ] && path=( $HOME/bin $path )

@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2020-01-04 23:20:59$
+# $Lastupdate: 2020-05-14 22:48:28$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -75,8 +75,8 @@ autoload -Uz 256colors      # 256色表示用簡易コマンド
 ## change history file for root/sudo
 HISTFILE=$ZDOTDIR/tmp/${USER}-zhistory
 ## メモリ内の履歴の数
-HISTSIZE=100000
-SAVEHIST=$HISTSIZE
+HISTSIZE=2048
+SAVEHIST=100000
 setopt extended_history                # コマンドの開始時刻と経過時間を登録
 setopt share_history                   # ヒストリの共有 for GNU Screen
 setopt inc_append_history              # 履歴を直ぐに反映
@@ -84,6 +84,19 @@ setopt hist_ignore_space               # コマンド行先頭が空白の時登
 setopt hist_ignore_all_dups            # 重複ヒストリは古い方を削除
 setopt hist_reduce_blanks              # 余分なスペースを削除
 setopt hist_no_store                   # historyコマンドは登録しない
+setopt hist_find_no_dups               # history検索時に重複を除外
+# 特定コマンド除外用関数
+zshaddhistory() {
+    local line=${1%%$'\n'} #コマンドライン全体から改行を除去したもの
+    local cmd=${line%% *}  # １つ目のコマンド
+    # 以下の条件をすべて満たすものだけをヒストリに追加する
+    [[ ${#line} -ge 5
+        && ${cmd} != (l|l[sal])
+        && ${cmd} != (cd)
+        && ${cmd} != (m|man)
+        && ${cmd} != (r[mr])
+    ]]
+}
 
 ### 区切り文字の設定
 autoload -Uz select-word-style
@@ -245,6 +258,14 @@ autoload -Uz ssh-config-update
 # ssh-reagent
 autoload -Uz ssh-reagent
 
+# fzf
+# typeset -gz FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+# typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --border --no-unicode --info=inline --ansi'
+# if whence fzf > /dev/null ; then
+#     autoload -Uz fzf-select-history
+#     zle -N fzf-select-history
+#     bindkey '^R' fzf-select-history
+# fi
 # peco, ghq
 if whence peco >/dev/null ; then
     alias peco='peco --rcfile=$HOME/.config/peco/config.json'
