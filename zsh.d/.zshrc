@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2020-06-14 00:42:57$
+# $Lastupdate: 22020-09-05 22:16:14$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -75,7 +75,7 @@ autoload -Uz 256colors      # 256色表示用簡易コマンド
 ## change history file for root/sudo
 HISTFILE=$ZDOTDIR/tmp/${USER}-zhistory
 ## メモリ内の履歴の数
-HISTSIZE=4096
+HISTSIZE=8192
 SAVEHIST=100000
 setopt extended_history                # コマンドの開始時刻と経過時間を登録
 setopt share_history                   # ヒストリの共有 for GNU Screen

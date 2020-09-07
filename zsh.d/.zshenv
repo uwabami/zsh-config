@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2020-05-04 02:03:01$
+# $Lastupdate: 2020-08-12 04:15:02$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -118,12 +118,16 @@ typeset -gx CVS_RSH=ssh
 ## lisp -- roswell
 path=( $HOME/.roswell/bin(N-/)
        $path )
-
 ## Git
 if [ -d $HOME/Library/git ]; then
     path=( $HOME/Library/git/bin $path)
     ld_library_path=( $HOME/Library/git/lib $ld_library_path )
     manpath=( $HOME/Library/git/share/man $manpath )
+fi
+## evm
+if [ -d $HOME/.evm ] ; then
+    autoload -Uz load_evm
+    autoload -Uz unload_evm
 fi
 
 ## vendor

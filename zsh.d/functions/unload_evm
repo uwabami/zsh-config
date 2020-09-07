@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+path=( ${path:#$HOME/.evm/bin*} )
+typeset -gxU path
