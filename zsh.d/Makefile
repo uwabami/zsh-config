@@ -9,8 +9,8 @@ _SRC_ += tmp/$(USER)-zcompdump
 _SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test )
 # module: zsh-completion
 _SRC_ += $(shell find modules/zsh-completions/src -type f | grep -v .zwc)
-# module: faster-vcs-info
-_SRC_ += $(shell find modules/faster-vcs-info -type f -name VCS* | grep -v .zwc)
+# module: zsh-async
+_SRC_ += $(shell find modules/zsh-async -type f -name async.zsh | grep -v .zwc)
 # update target
 TARGET=$(_SRC_:%=%.zwc)
 

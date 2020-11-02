@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22020-09-05 22:16:14$
+# $Lastupdate: 22020-11-02 16:25:49$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -170,8 +170,10 @@ autoload -Uz prompt_chroot_info
 precmd_functions+=prompt_chroot_info
 
 ## VCS info
+ps_vcs_info=''
 if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
           x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
+    autoload -Uz vcs_info
     zstyle ':vcs_info:*' enable git hg svn bzr
     zstyle ':vcs_info:*' formats '%s:%b'
     zstyle ':vcs_info:*' actionformats '%s:%b|%a'
@@ -182,7 +184,6 @@ if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
     zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
     zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b'
     zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b'
-    autoload -Uz vcs_info
     function prompt_vcs_info(){
         LANG=C vcs_info "$@"
         if [[ -n "$vcs_info_msg_0_" ]]; then
@@ -190,12 +191,14 @@ if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
         else
             ps_vcs_info=''
         fi
-    }
+        zle -N reset-prompt
+}
     precmd_functions+=prompt_vcs_info
-else
-    ps_vcs_info=''
+    source $ZDOTDIR/modules/zsh-async/async.zsh
+    async_init
+    async_start_worker vcs_info
+    async_register_callback vcs_info prompt_vcs_info_done
 fi
-
 # 変数の文字列計算用関数
 function count_prompt_chars (){
     # @see https://twitter.com/satoh_fumiyasu/status/519386124020482049

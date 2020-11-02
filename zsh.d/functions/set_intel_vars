@@ -1,49 +1,113 @@
 #! /bin/zsh
-_INTEL_PATH=/opt/intel/
+## base
+_INTEL_PATH=/opt/intel
 _arch=intel64
-#
-# license file
-#
-_INTEL_LICENSE_FILE=${_INTEL_PATH}/licenses:/opt/intel/licenses
-##
-# tbbvars.sh
-#
-_LD_LIBRARY_PATH=${_INTEL_PATH}/tbb/lib/${_arch}/gcc4.4
-_LIBRARY_PATH=${_INTEL_PATH}/tbb/lib/${_arch}/gcc4.4
-_CPATH=${_INTEL_PATH}/tbb/include
-##
-# mklvars.h
-#
-_LD_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mkl/lib/${_arch}:${_LD_LIBRARY_PATH}
-_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mkl/lib/${_arch}:${_LIBRARY_PATH}
-_NLSPATH=${_INTEL_PATH}/mkl/lib/${_arch}/locale/%l_%t/%N
-_MANPATH=${_INTEL_PATH}/man/en_US
-_INCLUDE=${_INTEL_PATH}/mkl/include:${_INTEL_PATH}/mkl/include/${_arch}/lp64:${_INCLUDE}
-_CPATH=${_INTEL_PATH}/mkl/include:${_CPATH}
-##
-# ippvars.sh
-#
-_CPATH=${_INTEL_PATH}/ipp/include:${_CPATH}
-_LD_LIBRARY_PATH=${_INTEL_PATH}/ipp/lib/${_arch}:${_INTEL_PATH}/ipp/tools/${_arch}/perfsys:${_LD_LIBRARY_PATH}
-_LIBRARY_PATH=${INTEL_PATH}/ipp/../compiler/lib/${_arch}:${_INTEL_PATH}/ipp/lib/${_arch}:${_LIBRARY_PATH}
-_NLSPATH=${_INTEL_PATH}/ipp/${_arch}/locale/%l_%t/%N:${_NLSPATH}
-# _MIC_LD_LIBRARY_PATH=${_INTEL_PATH}/ipp/lib/lib/mic:${_MIC_LIBRARY_PATH}
-##
-#
-# compilervars_arch.sh
-#
-_PATH=${_INTEL_PATH}/bin/${_arch}
-_LD_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mpirt/lib/${_arch}:${_LD_LIBRARY_PATH}
-_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_LIBRARY_PATH}
-_NLSPATH=${_INTEL_PATH}/compiler/lib/${_arch}/locale/%l_%t/%N:${_NLSPATH}
-_MANPATH=${_INTEL_PATH}/man/ja_JP:${_MANPATH}
-##
-#
-# OpenMPI
-#
-if [ -d /opt/openmpi-intel ] ;then
-    _MPIROOT=/opt/openmpi-intel
-    _PATH=${_MPIROOT}/bin:${_PATH}
-    _LD_LIBRARY_PATH=${_MPIROOT}/lib:${_LD_LIBRARY_PATH}
-    _MANPATH=${_MPIROOT}/man:${_MANPATH}
-fi
+_INTEL_VER=compilers_and_libraries_2020.4.304
+## license file
+_INTEL_LICENSE_FILE=${_INTEL_PATH}/${_INTEL_VER}/linux/licenses
+_INTEL_LICENSE_FILE=${_INTEL_LICENSE_FILE}:/opt/intel/licenses:
+## TBB
+_TBBROOT=${_TBBROOT}
+_LD_LIBRARY_PATH=${_TBBROOT}/lib/intel64/gcc4.8
+_LIBRARY_PATH=${_TBBROOT}/lib/intel64/gcc4.8
+_CPATH=${_TBBROOT}/include
+## MKL
+_MKLROOT=${_MKLROOT}
+_LD_LIBRARY_PATH=${_MKLROOT}/lib/intel64_lin:${_LD_LIBRARY_PATH}
+_LIBRARY_PATH=${_MKLROOT}/lib/intel64_lin:${_LIBRARY_PATH}
+_CPATH=${_MKLROOT}/include:${_CPATH}
+_NLSPATH=${_MKLROOT}/lib/intel64_lin/locale/%l_%t/%N
+## PSTL
+_PSTLROOT=${_PSTLROOT}
+_CPATH=${_PSTLROOT}/include:${_PSTLROOT}/stdlib:${_CPATH}
+## DAAL
+_DAALROOT=${_DAALROOT}
+_CPATH=${_DAALROOT}/include:${_CPATH}
+_LD_LIBRARY_PATH=${_DAALROOT}/lib/intel64_lin:${_DAALROOT}:${_LD_LIBRARY_PATH}
+_LIBRARY_PATH=${_DAALROOT}/lib/intel64_lin:${_DAALROOT}/../tbb/lib/intel64_lin/gcc4.4:${_DAALROOT}/../tbb/lib/intel64_lin/gcc4.8
+_CLASSPATH=${_DAALROOT}/lib/daal.jar
+
+_IPPROOT=${_INTEL_PATH}/${_INTEL_VER}/linux/ipp
+
+
+
+LIBRARY_PATH=
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/libfabric/lib
+${_INTEL_PATH}/${_INTEL_VER}/linux/ipp/lib/intel64
+${_INTEL_PATH}/${_INTEL_VER}/linux/compiler/lib/intel64_lin
+
+
+
+MANPATH=
+${_INTEL_PATH}/man/common
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/man
+${_INTEL_PATH}/documentation_2020/en/debugger/gdb-ia/man/
+
+# INFOPATH=${_INTEL_PATH}/documentation_2020/en/debugger/gdb-ia/info/
+# I_MPI_ROOT=${_INTEL_PATH}/${_INTEL_VER}/linux/mpi
+# FI_PROVIDER_PATH=${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/libfabric/lib/prov:/usr/lib64/libfabric
+# PKG_CONFIG_PATH=${_MKLROOT}/bin/pkgconfig
+# CLASSPATH=${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/lib/mpi.jar:
+
+LD_LIBRARY_PATH=
+${_INTEL_PATH}/${_INTEL_VER}/linux/compiler/lib/intel64_lin
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/libfabric/lib
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/lib/release
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/lib
+${_INTEL_PATH}/${_INTEL_VER}/linux/ipp/lib/intel64
+${_INTEL_PATH}/debugger_2020/python/intel64/lib
+${_INTEL_PATH}/debugger_2020/libipt/intel64/lib
+
+
+NLSPATH=
+${_INTEL_PATH}/${_INTEL_VER}/linux/compiler/lib/intel64/locale/%l_%t/%N
+${_INTEL_PATH}/debugger_2020/gdb/intel64/share/locale/%l_%t/%N
+
+PATH=
+${_INTEL_PATH}/${_INTEL_VER}/linux/bin/intel64
+${_INTEL_PATH}/${_INTEL_VER}/linux/bin
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/libfabric/bin
+${_INTEL_PATH}/${_INTEL_VER}/linux/mpi/intel64/bin
+${_INTEL_PATH}/debugger_2020/gdb/intel64/bin
+
+# INTEL_PYTHONHOME=${_INTEL_PATH}/debugger_2020/python/intel64/
+
+CPATH=
+${_INTEL_PATH}/${_INTEL_VER}/linux/ipp/include
+
+
+
+
+# ##
+# # mklvars.h
+# #
+# _LD_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mkl/lib/${_arch}:${_LD_LIBRARY_PATH}
+# _LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mkl/lib/${_arch}:${_LIBRARY_PATH}
+# _CPATH=${_INTEL_PATH}/mkl/include:${_CPATH}
+# ##
+# # ippvars.sh
+# #
+# _CPATH=${_INTEL_PATH}/ipp/include:${_CPATH}
+# _LD_LIBRARY_PATH=${_INTEL_PATH}/ipp/lib/${_arch}:${_INTEL_PATH}/ipp/tools/${_arch}/perfsys:${_LD_LIBRARY_PATH}
+# _LIBRARY_PATH=${INTEL_PATH}/ipp/../compiler/lib/${_arch}:${_INTEL_PATH}/ipp/lib/${_arch}:${_LIBRARY_PATH}
+# _NLSPATH=${_INTEL_PATH}/ipp/${_arch}/locale/%l_%t/%N:${_NLSPATH}
+# # _MIC_LD_LIBRARY_PATH=${_INTEL_PATH}/ipp/lib/lib/mic:${_MIC_LIBRARY_PATH}
+# ##
+# #
+# # compilervars_arch.sh
+# #
+# _PATH=${_INTEL_PATH}/bin/${_arch}
+# _LD_LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_INTEL_PATH}/mpirt/lib/${_arch}:${_LD_LIBRARY_PATH}
+# _LIBRARY_PATH=${_INTEL_PATH}/compiler/lib/${_arch}:${_LIBRARY_PATH}
+# _NLSPATH=${_INTEL_PATH}/compiler/lib/${_arch}/locale/%l_%t/%N:${_NLSPATH}
+# _MANPATH=${_INTEL_PATH}/man/ja_JP:${_MANPATH}
+# ##
+# #
+# # OpenMPI
+# #
+# if [ -d /opt/openmpi-intel ] ;then
+#     _MPIROOT=/opt/openmpi-intel
+#     _PATH=${_MPIROOT}/bin:${_PATH}
+#     _LD_LIBRARY_PATH=${_MPIROOT}/lib:${_LD_LIBRARY_PATH}
+#     _MANPATH=${_MPIROOT}/man:${_MANPATH}
+# fi

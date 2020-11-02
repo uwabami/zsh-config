@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 2020-08-12 04:15:02$
+# $Lastupdate: 22020-11-02 16:19:01$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -34,7 +34,7 @@
 ## LANG
 typeset -gx LANG=ja_JP.UTF-8
 # custom fpath
-fpath=( $ZDOTDIR/modules/faster-vcs-info(N-/)
+fpath=( $ZDOTDIR/modules/zsh-async(N-/)
         $ZDOTDIR/functions(N-/)
         $fpath )
 typeset -gxU fpath
@@ -44,6 +44,8 @@ typeset -gxU fpath
 
 ## PATH
 path=(
+    # snap
+    /snap/bin(N-/)
     # Solaris
     /opt/{csw,sfw}/bin(N-/)
     # Linux, Mac OS X with homebrew
