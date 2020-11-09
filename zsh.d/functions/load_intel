@@ -1,11 +1,26 @@
 #! /bin/zsh
 [ ! -d $HOME/.config/intel ] || rsync -auvz $HOME/.config/intel $HOME/
 set_intel_vars
+typeset -gx CLASSPATH=${_CLASSPATH}:${CLASSPATH}
+typeset -gx CPATH=${_CPATH}:${CPATH}
+typeset -gx DAALROOT=${_DAALROOT}
+typeset -gx FI_PROVIDER_PATH=${_FI_PROVIDER_PATH}
+typeset -gx INFOPATH=${_INFOPATH}:${INFOPATH}
 typeset -gx INTEL_LICENSE_FILE=${_INTEL_LICENSE_FILE}
-typeset -gx PATH=${_PATH}:${PATH}
+typeset -gx INTEL_PYTHONHOME=${_INTEL_PYTHONHOME}
+typeset -gx IPPROOT=${_IPPROOT}
+typeset -gx I_MPI_ROOT=${_I_MPI_ROOT}
 typeset -gx LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
 typeset -gx LIBRARY_PATH=${_LIBRARY_PATH}:${LIBRARY_PATH}
-typeset -gx NLSPATH=${_NLSPATH}:${NLSPATH}
 typeset -gx MANPATH=${_MNAPATH}:${MANPATH}
+typeset -gx MKLROOT=${_MKLROOT}
+typeset -gx NLSPATH=${_NLSPATH}:${NLSPATH}
+typeset -gx PATH=${_PATH}:${PATH}
+typeset -gx PKG_CONFIG_PATH=${_PKG_CONFIG_PATH}:${PKG_CONFIG_PATH}
+typeset -gx PTSLROOT=${_PTSLROOT}
+typeset -gx TBBROOT=${_TBBROOT}
 typeset -gx NONRPM_DB_DIR=$HOME/.intel
-typeset -U path ld_library_path library_path include cpath nlspath manpath
+typeset -U classpath cpath daalroot fi_provider_path infopath
+typeset -U intel_license_file intel_pythonhome ipproot i_mpi_root
+typeset -U ld_library_path library_path manpath mklroot nlspath
+typeset -U path pkg_config_path ptslroot tbbroot nonrpm_db_dir

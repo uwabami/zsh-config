@@ -1,13 +1,30 @@
 #! /bin/zsh
 [ ! -d $HOME/intel ] || rsync -auvz $HOME/intel/ $HOME/.config/intel/
 rm -fr ${HOME}/intel
+typeset -gx CLASSPATH=${CLASSPATH//$_CLASSPATH:}
+typeset -gx CPATH=${CPATH//$_CPATH:}
+unset DALLROOT
+unset FI_PROVIDER_PATH
+typeset -gx INFOPATH=${INFOPATH//$_INFOPATH:}
 unset INTEL_LICENSE_FILE
-export PATH=${PATH//$_PATH:}
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH//$_LD_LIBRARY_PATH:}
-export LIBRARY_PATH=${LIBRARY_PATH//$_LIBRARY_PATH:}
-export NLSPATH=${NLSPATH//$_NLSPATH:}
-export MANPATH=${MANPATH//$_MNAPATH:}
-unset NONRPM_DB_DIR
-typeset -U path ld_library_path library_path include cpath nlspath manpath
-/usr/bin/pkill -9 intelremotemond 2>&1 1>/dev/null
-unset _PATH _LD_LIBRARY_PATH _LIBRARY_PATH _INCLUDE _CPATH _NLSPATH _MANPATH
+unset INTEL_PYTHONHOME
+unset IPPROOT
+unset I_MPI_ROOT
+typeset -gx LD_LIBRARY_PATH=${LD_LIBRARY_PATH//$_LD_LIBRARY_PATH:}
+typeset -gx LIBRARY_PATH=${LIBRARY_PATH//$_LIBRARY_PATH:}
+typeset -gx MANPATH=${MANPATH//$_MNAPATH:}
+unset MKLROOT
+typeset -gx NLSPATH=${NLSPATH//$_NLSPATH$}
+typeset -gx PATH=${PATH//$_PATH:}
+typeset -gx PKG_CONFIG_PATH=${PKG_CONFIG_PATH//$_PKG_CONFIG_PATH:}
+unset PTSLROOT
+unset TBBROOT
+# update
+typeset -U classpath cpath daalroot classpath infopath
+typeset -U ld_library_path manpath mklrootnlspath path pkg_config_path
+# clear
+unset _CLASSPATH _DALLROOT _CPATH _INFOPATH _DALLROOT _FI_PROVIDER_PATH
+unset __INTEL_LICENSE_FILE _INTEL_PYTHONHOME _IPPROOT _I_MPI_ROOT
+unset _LD_LIBRARY_PATH _MANPATH _MKLROOT _NLSPATH _PATH
+unset _PKG_CONFIG_PATH _PSTLROOT _TBBROOT
+unset _INTEL_PATH _INTEL_VER
