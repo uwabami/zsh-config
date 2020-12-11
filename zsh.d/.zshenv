@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22020-11-02 16:19:01$
+# $Lastupdate: 22020-12-12 01:34:37$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -131,6 +131,12 @@ if [ -d $HOME/.evm ] ; then
     autoload -Uz load_evm
     autoload -Uz unload_evm
 fi
+## keg
+if [ -d $HOME/.keg ] ; then
+    autoload -Uz load_keg
+    autoload -Uz unload_keg
+fi
+
 
 ## vendor
 # intel

@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+path=( ${path:#$HOME/.keg/bin*} )
+typeset -gxU path
