@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22020-11-02 16:25:49$
+# $Lastupdate: 22020-12-05 16:03:20$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -385,6 +385,11 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=cyan,bold'
 ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='standout'
 # load
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# for Emacs vterm
+if [[ "$INSIDE_EMACS" ==  "vterm" ]]; then
+    alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
+fi
 
 # for Emacs tramp
 if [[ "$TERM" == "dumb" ]]; then
