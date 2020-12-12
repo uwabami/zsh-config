@@ -1,0 +1,6 @@
+#! /bin/zsh
+set_nvhpc_vars
+path=($_NVHPC_MPI_PATH $_NVHPC_PATH $path)
+ld_library_path=($_NVHPC_MPI_LD_LIBRARY $_NVHPC_LD_LIBRARY $ld_library_path)
+manpath=($_NVHPC_MPI_MANPATH $_NVHPC_MANPATH $manpath)
+typeset -U path manpath ld_library_path

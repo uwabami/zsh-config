@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22020-12-12 01:34:37$
+# $Lastupdate: 22020-12-12 23:01:47$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -150,6 +150,12 @@ if [ -d /opt/pgi ] ; then
     autoload -Uz set_pgi_vars
     autoload -Uz load_pgi
     autoload -Uz unload_pgi
+fi
+# NVIDIA HPC sdk
+if [ -d /opt/nvidia/hpc_sdk ] ; then
+    autoload -Uz set_nvhpc_vars
+    autoload -Uz load_nvhpc
+    autoload -Uz unload_nvhpc
 fi
 
 ## misc
