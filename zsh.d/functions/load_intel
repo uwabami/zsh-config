@@ -20,7 +20,8 @@ typeset -gx PKG_CONFIG_PATH=${_PKG_CONFIG_PATH}:${PKG_CONFIG_PATH}
 typeset -gx PTSLROOT=${_PTSLROOT}
 typeset -gx TBBROOT=${_TBBROOT}
 typeset -gx NONRPM_DB_DIR=$HOME/.intel
+typeset -gx MKL_LIBS=${_MKL_LIBS}
 typeset -U classpath cpath daalroot fi_provider_path infopath
 typeset -U intel_license_file intel_pythonhome ipproot i_mpi_root
 typeset -U ld_library_path library_path manpath mklroot nlspath
-typeset -U path pkg_config_path ptslroot tbbroot nonrpm_db_dir
+typeset -U path pkg_config_path ptslroot tbbroot nonrpm_db_dir mkl_libs

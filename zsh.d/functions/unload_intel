@@ -19,6 +19,7 @@ typeset -gx PATH=${PATH//$_PATH:}
 typeset -gx PKG_CONFIG_PATH=${PKG_CONFIG_PATH//$_PKG_CONFIG_PATH:}
 unset PTSLROOT
 unset TBBROOT
+unset MKL_LIBS
 # update
 typeset -U classpath cpath daalroot classpath infopath
 typeset -U ld_library_path manpath mklrootnlspath path pkg_config_path
@@ -26,5 +27,5 @@ typeset -U ld_library_path manpath mklrootnlspath path pkg_config_path
 unset _CLASSPATH _DALLROOT _CPATH _INFOPATH _DALLROOT _FI_PROVIDER_PATH
 unset __INTEL_LICENSE_FILE _INTEL_PYTHONHOME _IPPROOT _I_MPI_ROOT
 unset _LD_LIBRARY_PATH _MANPATH _MKLROOT _NLSPATH _PATH
-unset _PKG_CONFIG_PATH _PSTLROOT _TBBROOT
+unset _PKG_CONFIG_PATH _PSTLROOT _TBBROOT _MKL_LIBS
 unset _INTEL_PATH _INTEL_VER

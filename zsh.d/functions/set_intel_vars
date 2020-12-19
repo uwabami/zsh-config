@@ -64,3 +64,4 @@ _MANPATH=${_MANPATH}:${_INTEL_PATH}/documentation_2020/en/debugger/gdb-ia/man/
 _INFOPATH=${_INTEL_PATH}/documentation_2020/en/debugger/gdb-ia/info/
 _NLSPATH=${_NLSPATH}:${_INTEL_PATH}/debugger_2020/gdb/intel64/share/locale/%l_%t/%N
 _PATH=${_PATH}:${_INTEL_PATH}/debugger_2020/gdb/intel64/bin
+_MKL_LIBS="-L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl"
