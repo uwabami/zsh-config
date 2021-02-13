@@ -173,4 +173,4 @@ typeset -gx VTE_CJK_WIDTH=1
 
 ## duplicate cleaning
 typeset -gxU path ld_library_path library_path include cpath nlspath manpath
-source "$HOME/.cargo/env"
+[ -d $HOME/.cargo/env ] && source "$HOME/.cargo/env"
