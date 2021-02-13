@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22020-12-05 16:03:20$
+# $Lastupdate: 22021-02-13 23:23:14$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -262,25 +262,36 @@ autoload -Uz ssh-config-update
 autoload -Uz ssh-reagent
 
 # fzf
-# typeset -gz FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
-# typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --border --no-unicode --info=inline --ansi'
-# if whence fzf > /dev/null ; then
-#     autoload -Uz fzf-select-history
-#     zle -N fzf-select-history
-#     bindkey '^R' fzf-select-history
-# fi
+typeset -gz FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git"'
+typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border --no-unicode --select-1 --exit-0 --info=inline --ansi'
+# https://github.com/junegunn/fzf/wiki/Color-schemes
+typeset -gx FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+ --color=fg:#eceff1,bg:-1,hl:#40c4ff
+ --color=fg+:#ffffff,bg+:,hl+:#5fd7ff
+ --color=info:#ffd740,prompt:#ff5252,pointer:#ff4cff
+ --color=marker:#5cf19e,spinner:#bf7fff,header:#64FCDA'
+if whence fzf > /dev/null ; then
+    autoload -Uz fzf-select-history
+    zle -N fzf-select-history
+    bindkey '^R' fzf-select-history
+fi
+if whence ghq > /dev/null && whence fzf >/dev/null ; then
+    autoload -Uz fzf-ghq
+    zle -N fzf-ghq
+    bindkey '^S' fzf-ghq
+fi
 # peco, ghq
-if whence peco >/dev/null ; then
-    alias peco='peco --rcfile=$HOME/.config/peco/config.json'
-    autoload -Uz peco-select-history
-    zle -N peco-select-history
-    bindkey '^R' peco-select-history
-fi
-if whence ghq > /dev/null && whence peco >/dev/null ; then
-    autoload -Uz peco-ghq
-    zle -N peco-ghq
-    bindkey '^S' peco-ghq
-fi
+# if whence peco >/dev/null ; then
+#     alias peco='peco --rcfile=$HOME/.config/peco/config.json'
+#     autoload -Uz peco-select-history
+#     zle -N peco-select-history
+#     bindkey '^R' peco-select-history
+# fi
+# if whence ghq > /dev/null && whence peco >/dev/null ; then
+#     autoload -Uz peco-ghq
+#     zle -N peco-ghq
+#     bindkey '^S' peco-ghq
+# fi
 
 # emacs <-> zsh
 ## Invoke the ``dired'' of current working directory in Emacs buffer.

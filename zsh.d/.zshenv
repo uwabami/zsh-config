@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22020-12-12 23:01:47$
+# $Lastupdate: 22021-01-16 14:21:05$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -137,7 +137,6 @@ if [ -d $HOME/.keg ] ; then
     autoload -Uz unload_keg
 fi
 
-
 ## vendor
 # intel
 if [ -d /opt/intel ] ; then
@@ -174,3 +173,4 @@ typeset -gx VTE_CJK_WIDTH=1
 
 ## duplicate cleaning
 typeset -gxU path ld_library_path library_path include cpath nlspath manpath
+source "$HOME/.cargo/env"
