@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22021-02-14 01:43:28$
+# $Lastupdate: 22021-02-17 23:31:50$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -264,7 +264,7 @@ autoload -Uz ssh-reagent
 
 # fzf
 typeset -gz FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git"'
-typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border --no-unicode --select-1 --exit-0 --info=inline --ansi'
+typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --no-unicode --select-1 --exit-0 --info=inline --ansi --cycle'
 # https://github.com/junegunn/fzf/wiki/Color-schemes
 typeset -gx FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
  --color=fg:#eceff1,bg:-1,hl:#40c4ff
