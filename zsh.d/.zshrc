@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22021-02-17 23:31:50$
+# $Lastupdate: 22021-02-18 16:57:33$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -397,6 +397,8 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=cyan,bold'
 ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='standout'
 # load
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias checkmail="systemctl --user start checkmail.service"
 
 # for Emacs vterm
 if [[ "$INSIDE_EMACS" ==  "vterm" ]]; then

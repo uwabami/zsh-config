@@ -1,4 +1,4 @@
 #! /bin/zsh
-BUFFER=$(history -n 1 | awk '!a[$0]++'| fzf --query "$LBUFFER")
+BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
 CURSOR=$#BUFFER
 zle reset-prompt
