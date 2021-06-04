@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22021-02-18 16:57:33$
+# $Lastupdate: 22021-05-23 01:49:04$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -264,7 +264,7 @@ autoload -Uz ssh-reagent
 
 # fzf
 typeset -gz FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git"'
-typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --no-unicode --select-1 --exit-0 --info=inline --ansi --cycle'
+typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --no-unicode --select-1 --exit-0 --info=inline --ansi --cycle --algo=v1 +x'
 # https://github.com/junegunn/fzf/wiki/Color-schemes
 typeset -gx FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
  --color=fg:#eceff1,bg:-1,hl:#40c4ff
@@ -281,7 +281,8 @@ if whence ghq > /dev/null && whence fzf >/dev/null ; then
     zle -N fzf-ghq
     bindkey '^S' fzf-ghq
 fi
-# peco, ghq
+
+# # peco, ghq
 # if whence peco >/dev/null ; then
 #     alias peco='peco --rcfile=$HOME/.config/peco/config.json'
 #     autoload -Uz peco-select-history
@@ -402,6 +403,7 @@ alias checkmail="systemctl --user start checkmail.service"
 
 # for Emacs vterm
 if [[ "$INSIDE_EMACS" ==  "vterm" ]]; then
+    autoload -Uz vterm_printf
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
 fi
 

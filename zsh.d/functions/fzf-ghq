@@ -1,5 +1,5 @@
 #! /bin/zsh
-local selected_dir=$(ghq list | fzf --query "$LBUFFER")
+local selected_dir=$(ghq list | fzf --no-sort +m --query "$LBUFFER")
 if [ -n "$selected_dir" ]; then
     BUFFER="cd $(ghq list --full-path | grep -m 1 ${selected_dir})"
     # fzfで選択中, Enter を押した瞬間に実行する
