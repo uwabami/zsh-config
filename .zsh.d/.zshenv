@@ -168,6 +168,10 @@ typeset -gx VTE_CJK_WIDTH=1
 # Chromium workarounds
 # typeset -gx CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-remote-extensions"
 
+if [ $WSL_DISTRO_NAME ] ; then
+  typeset DISPLAY=$(hostname).mshome.net:0.0
+fi
+
 ## High priority path settings
 [ -d $HOME/bin ] && path=( $HOME/bin $path )
 
