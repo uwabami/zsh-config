@@ -160,7 +160,7 @@ fi
 ## misc
 # notmuch
 typeset -gx XAPIAN_CJK_NGRAM=1
-typeset -gx XAPIAN_PREFER_CHERT=1
+# typeset -gx XAPIAN_PREFER_CHERT=1
 
 # VTE terminal: fix EAW width
 typeset -gx VTE_CJK_WIDTH=1

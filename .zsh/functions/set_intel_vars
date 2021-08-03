@@ -1,6 +1,6 @@
 #! /bin/zsh
 #
-_INTEL_VER=compilers_and_libraries_2020.4.304
+_INTEL_VER=oneapi
 _INTEL_PATH=/opt/intel/${_INTEL_VER}
 ## common
 _INTEL_LICENSE_FILE=${_INTEL_PATH}/linux/licenses
