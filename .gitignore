@@ -1,7 +1,7 @@
 *.zwc
-zsh.d/utils/proxy
-zsh.d/utils/userinfo
-zsh.d/utils/skkserver
-zsh.d/tmp
-zsh.d/.nfs*
-zsh.d/.zcompdump*
+.zsh/utils/proxy
+.zsh/utils/userinfo
+.zsh/utils/skkserver
+.zsh/tmp/
+.zsh/.nfs*
+.zsh/.zcompdump*
