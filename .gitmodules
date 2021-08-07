@@ -1,8 +1,8 @@
 [submodule "zsh.d/modules/zsh-completions"]
-	path = .zsh/modules/zsh-completions
+	path = dot-zsh/modules/zsh-completions
 	url = git://github.com/zsh-users/zsh-completions.git
 [submodule "zsh.d/modules/zsh-syntax-highlighting"]
-	path = .zsh/modules/zsh-syntax-highlighting
+	path = dot-zsh/modules/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "zsh.d/modules/anyframe"]
 	path = zsh.d/modules/anyframe
@@ -11,8 +11,8 @@
 	path = zsh.d/modules/auto-fu
 	url = https://github.com/hchbaw/auto-fu.zsh.git
 [submodule "zsh.d/modules/zsh-async"]
-	path = .zsh/modules/zsh-async
+	path = dot-zsh/modules/zsh-async
 	url = https://github.com/mafredri/zsh-async.git
 [submodule ".zsh/modules/zsh-history-filter"]
-	path = .zsh/modules/zsh-history-filter
+	path = dot-zsh/modules/zsh-history-filter
 	url = https://github.com/MichaelAquilina/zsh-history-filter
