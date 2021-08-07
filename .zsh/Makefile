@@ -11,6 +11,8 @@ _SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test
 _SRC_ += $(shell find modules/zsh-completions/src -type f | grep -v .zwc)
 # module: zsh-async
 _SRC_ += $(shell find modules/zsh-async -type f -name async.zsh | grep -v .zwc)
+# module: zsh-history-filter
+_SRC_ += $(shell find modules/zsh-history-filter -type f -name *.zsh | grep -v .zwc)
 # update target
 TARGET=$(_SRC_:%=%.zwc)
 
@@ -19,6 +21,7 @@ all: check $(TARGET)
 check:
 	@zsh -ic exit
 	@chmod a-x $(_SRC_)
+	@chmod 700 functions modules tmp
 
 %.zwc: %
 	zsh -fc "zcompile $*"

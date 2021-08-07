@@ -13,3 +13,6 @@
 [submodule "zsh.d/modules/zsh-async"]
 	path = .zsh/modules/zsh-async
 	url = https://github.com/mafredri/zsh-async.git
+[submodule ".zsh/modules/zsh-history-filter"]
+	path = .zsh/modules/zsh-history-filter
+	url = https://github.com/MichaelAquilina/zsh-history-filter

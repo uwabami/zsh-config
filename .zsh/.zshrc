@@ -72,13 +72,17 @@ autoload -Uz colors         # 色指定を $fg[red] 等で行なえるように.
 autoload -Uz 256colors      # 256色表示用簡易コマンド
                             # @see functions/256colors
 ### History
+## zsh-history-filter
+source $ZDOTDIR/modules/zsh-history-filter/zsh-history-filter.plugin.zsh
+HISTORY_FILTER_SILENT=1
+HISTORY_FILTER_EXCLUDE=("ls" "la" "ll" "lv" "cd" "man" "rm")
 ## change history file for root/sudo
 HISTFILE=$ZDOTDIR/tmp/${USER}-zhistory
 ## メモリ内の履歴の数
 HISTSIZE=8192
 SAVEHIST=100000
 setopt extended_history                # コマンドの開始時刻と経過時間を登録
-setopt share_history                   # ヒストリの共有 for GNU Screen
+setopt share_history                   # ヒストリの共有 for tmux
 setopt inc_append_history              # 履歴を直ぐに反映
 setopt hist_ignore_space               # コマンド行先頭が空白の時登録しない
 setopt hist_ignore_all_dups            # 重複ヒストリは古い方を削除
@@ -91,8 +95,8 @@ zshaddhistory() {
     local cmd=${line%% *}  # １つ目のコマンド
     # 以下の条件をすべて満たすものだけをヒストリに追加する
     [[ ${#line} -ge 5
-        && ${cmd} != (l|l[sal])
-        && ${cmd} != (cd)
+        && ${cmd} != (l|l[salv])
+        && ${cmd} != (c|cd)
         && ${cmd} != (m|man)
         && ${cmd} != (r[mr])
     ]]
