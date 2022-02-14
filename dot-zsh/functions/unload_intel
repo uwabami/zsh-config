@@ -1,31 +1,114 @@
 #! /bin/zsh
+## cleanup customize directory
 [ ! -d $HOME/intel ] || rsync -auvz $HOME/intel/ $HOME/.config/intel/
 rm -fr ${HOME}/intel
+## clear PATH...
+typeset -gx INFOPATH=${INFOPATH//$_INFOPATH:}
 typeset -gx CLASSPATH=${CLASSPATH//$_CLASSPATH:}
 typeset -gx CPATH=${CPATH//$_CPATH:}
-unset DALLROOT
-unset FI_PROVIDER_PATH
-typeset -gx INFOPATH=${INFOPATH//$_INFOPATH:}
-unset INTEL_LICENSE_FILE
-unset INTEL_PYTHONHOME
-unset IPPROOT
-unset I_MPI_ROOT
+typeset -gx CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH//$_CMAKE_PREFIX_PATH:}
 typeset -gx LD_LIBRARY_PATH=${LD_LIBRARY_PATH//$_LD_LIBRARY_PATH:}
 typeset -gx LIBRARY_PATH=${LIBRARY_PATH//$_LIBRARY_PATH:}
-typeset -gx MANPATH=${MANPATH//$_MNAPATH:}
-unset MKLROOT
-typeset -gx NLSPATH=${NLSPATH//$_NLSPATH$}
+typeset -gx MANPATH=${MANPATH//$_MANPATH:}
+typeset -gx NLSPATH=${NLSPATH//$_NLSPATH:}
 typeset -gx PATH=${PATH//$_PATH:}
 typeset -gx PKG_CONFIG_PATH=${PKG_CONFIG_PATH//$_PKG_CONFIG_PATH:}
-unset PTSLROOT
-unset TBBROOT
-unset MKL_LIBS
+typeset -gx CPLUS_INCLUDE_PATH=${CPLUS_INCLUDE_PATH//$_CPLUS_INCLUDE_PATH:}
+typeset -gx GDB_INFO=${GDB_INFO//$GDB_INFO:}
+
 # update
-typeset -U classpath cpath daalroot classpath infopath
-typeset -U ld_library_path manpath mklrootnlspath path pkg_config_path
-# clear
-unset _CLASSPATH _DALLROOT _CPATH _INFOPATH _DALLROOT _FI_PROVIDER_PATH
-unset __INTEL_LICENSE_FILE _INTEL_PYTHONHOME _IPPROOT _I_MPI_ROOT
-unset _LD_LIBRARY_PATH _MANPATH _MKLROOT _NLSPATH _PATH
-unset _PKG_CONFIG_PATH _PSTLROOT _TBBROOT _MKL_LIBS
-unset _INTEL_PATH _INTEL_VER
+typeset -U infopath classpath cpath ld_library_path library_path cplus_include_path
+typeset -U manpath nlspath path pkg_config_path cmake_prefix_path
+## unset vars
+unset ONEAPI_ROOT
+unset ARCH
+unset ADVISOR_2022_DIR
+unset CCL_ROOT
+unset CLCK_ROOT
+unset CMPLR_ROOT
+unset DAALROOT
+unset DALROOT
+unset DNNLROOT
+unset DPCT_BUNDLE_ROOT
+unset DPL_ROOT
+unset FPGA_VARS_DIR
+unset INSPECTOR_2022_DIR
+unset INTELFPGAOCLSDKROOT
+unset IPPCP_TARGET_ARCH
+unset IPPCRYPTOROOT
+unset IPPROOT
+unset IPP_TARGET_ARCH
+unset I_MPI_ROOT
+unset MKLROOT
+unset TBBROOT
+unset VTUNE_PROFILER_2022_DIR
+unset VT_LIB_DIR
+unset VT_ROOT
+unset VT_SLIB_DIR
+unset INTEL_LICENSE_FILE
+unset GDB_INFO
+unset APM
+unset CONDA_DEFAULT_ENV
+unset CONDA_EXE
+unset CONDA_PREFIX
+unset CONDA_PROMPT_MODIFIER
+unset CONDA_PYTHON_EXE
+unset CONDA_SHLVL
+unset DAL_MAJOR_BINARY
+unset DAL_MINOR_BINARY
+unset FI_PROVIDER_PATH
+unset FPGA_VARS_ARGS
+unset INTEL_PYTHONHOME
+unset OCL_ICD_FILENAMES
+unset PYTHONPATH
+unset VT_ADD_LIBS
+unset VT_LIB_DIR
+unset VT_MPI
+
+# unset working variables
+unset _ONEAPI_ROOT
+unset _ARCH
+unset _ADVISOR_2022_DIR
+unset _CCL_ROOT
+unset _CLCK_ROOT
+unset _CMPLR_ROOT
+unset _DAALROOT
+unset _DALROOT
+unset _DNNLROOT
+unset _DPCT_BUNDLE_ROOT
+unset _DPL_ROOT
+unset _FPGA_VARS_DIR
+unset _INSPECTOR_2022_DIR
+unset _INTELFPGAOCLSDKROOT
+unset _IPPCP_TARGET_ARCH
+unset _IPPCRYPTOROOT
+unset _IPPROOT
+unset _IPP_TARGET_ARCH
+unset _I_MPI_ROOT
+unset _MKLROOT
+unset _TBBROOT
+unset _VTUNE_PROFILER_2022_DIR
+unset _VT_LIB_DIR
+unset _VT_ROOT
+unset _VT_SLIB_DIR
+unset _INTEL_LICENSE_FILE
+unset _GDB_INFO
+unset _APM
+unset _CONDA_DEFAULT_ENV
+unset _CONDA_EXE
+unset _CONDA_PREFIX
+unset _CONDA_PROMPT_MODIFIER
+unset _CONDA_PYTHON_EXE
+unset _CONDA_SHLVL
+unset _DAL_MAJOR_BINARY
+unset _DAL_MINOR_BINARY
+unset _FI_PROVIDER_PATH
+unset _FPGA_VARS_ARGS
+unset _INTEL_PYTHONHOME
+unset _OCL_ICD_FILENAMES
+unset _PYTHONPATH
+unset _VT_ADD_LIBS
+unset _VT_LIB_DIR
+unset _VT_MPI
+## cleanup
+unset SETVARS_COMPLETED

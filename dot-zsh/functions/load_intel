@@ -1,27 +1,72 @@
 #! /bin/zsh
+## copy some customize
 [ ! -d $HOME/.config/intel ] || rsync -auvz $HOME/.config/intel $HOME/
+
+## call valiable settings
 set_intel_vars
-typeset -gx CLASSPATH=${_CLASSPATH}:${CLASSPATH}
-typeset -gx CPATH=${_CPATH}:${CPATH}
+
+## valiables
+typeset -gx ONEAPI_ROOT=${_ONEAPI_ROOT}
+typeset -gx ARCH=${_ARCH}
+typeset -gx ADVISOR_2022_DIR=${_ADVISOR_2022_DIR}
+typeset -gx CCL_ROOT=${_CCL_ROOT}
+typeset -gx CLCK_ROOT=${_CLCK_ROOT}
+typeset -gx CMPLR_ROOT=${_CMPLR_ROOT}
 typeset -gx DAALROOT=${_DAALROOT}
-typeset -gx FI_PROVIDER_PATH=${_FI_PROVIDER_PATH}
-typeset -gx INFOPATH=${_INFOPATH}:${INFOPATH}
-typeset -gx INTEL_LICENSE_FILE=${_INTEL_LICENSE_FILE}
-typeset -gx INTEL_PYTHONHOME=${_INTEL_PYTHONHOME}
+typeset -gx DALROOT=${_DALROOT}
+typeset -gx DNNLROOT=${_DNNLROOT}
+typeset -gx DPCT_BUNDLE_ROOT=${_DPCT_BUNDLE_ROOT}
+typeset -gx DPL_ROOT=${_DPL_ROOT}
+typeset -gx FPGA_VARS_DIR=${_FPGA_VARS_DIR}
+typeset -gx INSPECTOR_2022_DIR=${_INSPECTOR_2022_DIR}
+typeset -gx INTELFPGAOCLSDKROOT=${_INTELFPGAOCLSDKROOT}
+typeset -gx IPPCP_TARGET_ARCH=${_IPPCP_TARGET_ARCH}
+typeset -gx IPPCRYPTOROOT=${_IPPCRYPTOROOT}
 typeset -gx IPPROOT=${_IPPROOT}
+typeset -gx IPP_TARGET_ARCH=${_IPP_TARGET_ARCH}
 typeset -gx I_MPI_ROOT=${_I_MPI_ROOT}
+typeset -gx MKLROOT=${_MKLROOT}
+typeset -gx TBBROOT=${_TBBROOT}
+typeset -gx VTUNE_PROFILER_2022_DIR=${_VTUNE_PROFILER_2022_DIR}
+typeset -gx VT_LIB_DIR=${_VT_LIB_DIR}
+typeset -gx VT_ROOT=${_VT_ROOT}
+typeset -gx VT_SLIB_DIR=${_VT_SLIB_DIR}
+typeset -gx INTEL_LICENSE_FILE=${_INTEL_LICENSE_FILE}
+
+typeset -gx PATH=${_PATH}:${PATH}
 typeset -gx LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
 typeset -gx LIBRARY_PATH=${_LIBRARY_PATH}:${LIBRARY_PATH}
-typeset -gx MANPATH=${_MNAPATH}:${MANPATH}
-typeset -gx MKLROOT=${_MKLROOT}
+typeset -gx CPATH=${_CPATH}:${CPATH}
+typeset -gx CLASSPATH=${_CLASSPATH}:${CLASSPATH}
+typeset -gx CMAKE_PREFIX_PATH=${_CMAKE_PREFIX_PATH}:${CMAKE_PREFIX_PATH}
 typeset -gx NLSPATH=${_NLSPATH}:${NLSPATH}
-typeset -gx PATH=${_PATH}:${PATH}
 typeset -gx PKG_CONFIG_PATH=${_PKG_CONFIG_PATH}:${PKG_CONFIG_PATH}
-typeset -gx PTSLROOT=${_PTSLROOT}
-typeset -gx TBBROOT=${_TBBROOT}
-typeset -gx NONRPM_DB_DIR=$HOME/.intel
-typeset -gx MKL_LIBS=${_MKL_LIBS}
-typeset -U classpath cpath daalroot fi_provider_path infopath
-typeset -U intel_license_file intel_pythonhome ipproot i_mpi_root
-typeset -U ld_library_path library_path manpath mklroot nlspath
-typeset -U path pkg_config_path ptslroot tbbroot nonrpm_db_dir mkl_libs
+typeset -gx MANPATH=${_MANPATH}:${MANPATH}
+typeset -gx GDB_INFO=${_GDB_INFO}:${GDB_INFO}
+typeset -gx INFOPATH=${_INFOPATH}:${INFOPATH}
+typeset -gx CPLUS_INCLUDE_PATH=${_CPLUS_INCLUDE_PATH}:${CPLUS_INCLUDE_PATH}
+
+typeset -gx APM=${_APM}
+typeset -gx CONDA_DEFAULT_ENV=${_CONDA_DEFAULT_ENV}
+typeset -gx CONDA_EXE=${_CONDA_EXE}
+typeset -gx CONDA_PREFIX=${_CONDA_PREFIX}
+typeset -gx CONDA_PROMPT_MODIFIER=(${_CONDA_PROMPT_MODIFIER})
+typeset -gx CONDA_SHLVL=${_CONDA_SHLVL}
+typeset -gx CONDA_PYTHON_EXE=${_CONDA_PYTHON_EXE}
+typeset -gx DAL_MAJOR_BINARY=${_DAL_MAJOR_BINARY}
+typeset -gx DAL_MINOR_BINARY=${_DAL_MINOR_BINARY}
+typeset -gx FPGA_VARS_ARGS=${_FPGA_VARS_ARGS}
+typeset -gx FI_PROVIDER_PATH=${_FI_PROVIDER_PATH}:${FI_PROVIDER_PATH}
+typeset -gx INTEL_PYTHONHOME=${_INTEL_PYTHONHOME}
+typeset -gx OCL_ICD_FILENAMES=${_OCL_ICD_FILENAMES}
+typeset -gx PYTHONPATH=${_PYTHONPATH}
+typeset -gx VT_ADD_LIBS=${_VT_ADD_LIBS}
+typeset -gx VT_LIB_DIR=${_VT_LIB_DIR}
+typeset -gx VT_MPI=${_VT_MPI}
+
+## cleanup duplication
+typeset -U infopath classpath cpath ld_library_path library_path cplus_include_path
+typeset -U manpath nlspath path pkg_config_path cmake_prefix_path
+
+## complete
+typeset -gx SETVARS_COMPLETED=1

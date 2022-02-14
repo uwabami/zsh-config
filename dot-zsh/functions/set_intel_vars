@@ -1,67 +1,69 @@
 #! /bin/zsh
 #
-_INTEL_VER=oneapi
-_INTEL_PATH=/opt/intel/${_INTEL_VER}
-## common
-_INTEL_LICENSE_FILE=${_INTEL_PATH}/linux/licenses
-_MANPATH=${_INTEL_PATH}/man/common
-_LD_LIBRARY_PATH=${_INTEL_PATH}/linux/compiler/lib/intel64_lin
-_NLSPATH=${_INTEL_PATH}/linux/compiler/lib/intel64/locale/%l_%t/%N
-_PATH=${_INTEL_PATH}/linux/bin/intel64
-_PATH=${_PATH}:${_INTEL_PATH}/linux/bin
-## MPI
-_I_MPI_ROOT=${_INTEL_PATH}/linux/mpi
-_FI_PROVIDER_PATH=${_I_MPI_ROOT}/intel64/libfabric/lib/prov
-_FI_PROVIDER_PATH=${_FI_PROVIDER_PATH}:/usr/lib64/libfabric
-_MANPATH=${_MANPATH}:${_I_MPI_ROOT}/man
-_LIBRARY_PATH=${_I_MPI_ROOT}/intel64/libfabric/lib
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_INTEL_PATH}/linux/compiler/lib/intel64_lin
-_CLASSPATH=${_I_MPI_ROOT}/intel64/lib/mpi.jar
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_I_MPI_ROOT}/intel64/libfabric/lib
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_I_MPI_ROOT}/intel64/lib/release
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_I_MPI_ROOT}/intel64/lib
-_PATH=${_PATH}:${_I_MPI_ROOT}/intel64/libfabric/bin
-_PATH=${_PATH}:${_I_MPI_ROOT}/intel64/bin
-## IPP
-_IPPROOT=${_IPPROOT}
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_IPPROOT}/lib/intel64
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_IPPROOT}/lib/intel64
-_CPATH=${_IPPROOT}/include
-## MKL
-_MKLROOT=${_INTEL_PATH}/linux/mkl
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_MKLROOT}/lib/intel64_lin
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_MKLROOT}/lib/intel64_lin
-_PKG_CONFIG_PATH=${_MKLROOT}/bin/pkgconfig
-_NLSPATH=${_NLSPATH}:${_MKLROOT}/lib/intel64_lin/locale/%l_%t/%N
-_CPATH=${_CPATH}:${_MKLROOT}/include
-## TBB
-_TBBROOT=${_INTEL_PATH}/linux/tbb
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_TBBROOT}/lib/intel64/gcc4.8
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_TBBROOT}/lib/intel64/gcc4.8
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_TBBROOT}/lib/intel64/gcc4.8
-_CPATH=${_CPATH}:${_TBBROOT}/include
-_CPATH=${_CPATH}:${_TBBROOT}/include
-# DAAL
-_DAALROOT=${_INTEL_PATH}/linux/daal
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_DAALROOT}/lib/intel64_lin
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_DAALROOT}/../tbb/lib/intel64_lin/gcc4.4
-_LIBRARY_PATH=${_LIBRARY_PATH}:${_DAALROOT}/../tbb/lib/intel64_lin/gcc4.8
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_DAALROOT}/lib/intel64_lin
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_DAALROOT}/../tbb/lib/intel64_lin/gcc4.4
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_DAALROOT}/../tbb/lib/intel64_lin/gcc4.8
-_CLASSPATH=${_CLASSPATH}:${_DAALROOT}/lib/daal.jar
-_CPATH=${_CPATH}:${_DAALROOT}/include
-## PSTL
-_PSTLROOT=${_INTEL_PATH}/linux/pstl
-_CPATH=${_CPATH}:${_PSTLROOT}/include
-_CPATH=${_CPATH}:${_PSTLROOT}/stdlib
-## INTEL PYTHON
-_INTEL_PYTHONHOME=${_INTEL_PATH}/debugger_2020/python/intel64/
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_INTEL_PYTHONHOME}/lib
-## Intel Debugger
-_LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:${_INTEL_PATH}/debugger_2020/libipt/intel64/lib
-_MANPATH=${_MANPATH}:${_INTEL_PATH}/documentation_2020/en/debugger/gdb-ia/man/
-_INFOPATH=${_INTEL_PATH}/documentation_2020/en/debugger/gdb-ia/info/
-_NLSPATH=${_NLSPATH}:${_INTEL_PATH}/debugger_2020/gdb/intel64/share/locale/%l_%t/%N
-_PATH=${_PATH}:${_INTEL_PATH}/debugger_2020/gdb/intel64/bin
-_MKL_LIBS="-L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl"
+# common
+_ONEAPI_ROOT=/opt/intel/oneapi
+_ARCH=intel64
+_CCL_CONFIGURATION=cpu_gpu_dpcpp
+_FPGA_VARS_ARGS=ia64
+# components root dir, variables
+_ADVISOR_2022_DIR=${_ONEAPI_ROOT}/advisor/2022.0.0
+_CCL_ROOT=${_ONEAPI_ROOT}/ccl/2021.5.1
+_CLCK_ROOT=${_ONEAPI_ROOT}/clck/2021.5.0
+_CMPLR_ROOT=${_ONEAPI_ROOT}/compiler/2022.0.2
+_DAALROOT=${_ONEAPI_ROOT}/dal/2021.5.3
+_DALROOT=${_ONEAPI_ROOT}/dal/2021.5.3
+_DNNLROOT=${_ONEAPI_ROOT}/dnnl/2022.0.2/cpu_dpcpp_gpu_dpcpp
+_DPCT_BUNDLE_ROOT=${_ONEAPI_ROOT}/dpcpp-ct/2022.0.0
+_DPL_ROOT=${_ONEAPI_ROOT}/dpl/2021.6.0
+_FPGA_VARS_DIR=${_ONEAPI_ROOT}/compiler/2022.0.2/linux/lib/oclfpga
+_INSPECTOR_2022_DIR=${_ONEAPI_ROOT}/inspector/2022.0.0
+_INTELFPGAOCLSDKROOT=${_ONEAPI_ROOT}/compiler/2022.0.2/linux/lib/oclfpga
+_IPPCP_TARGET_ARCH=${_ARCH}
+_IPPCRYPTOROOT=${_ONEAPI_ROOT}/ippcp/2021.5.1
+_IPPROOT=${_ONEAPI_ROOT}/ipp/2021.5.2
+_IPP_TARGET_ARCH=${_ARCH}
+_I_MPI_ROOT=${_ONEAPI_ROOT}/mpi/2021.5.1
+_MKLROOT=${_ONEAPI_ROOT}/mkl/2022.0.2
+_TBBROOT=${_ONEAPI_ROOT}/tbb/2021.5.1/env/..
+_VTUNE_PROFILER_2022_DIR=${_ONEAPI_ROOT}/vtune/2022.1.0
+_VT_LIB_DIR=${_ONEAPI_ROOT}/itac/2021.5.0/lib
+_VT_ROOT=${_ONEAPI_ROOT}/itac/2021.5.0
+_VT_SLIB_DIR=${_ONEAPI_ROOT}/itac/2021.5.0/slib
+# license file location
+_INTEL_LICENSE_FILE=/opt/intel/licenses:${_ONEAPI_ROOT}/clck/2021.5.0/licensing:${HOME}/intel/licenses
+
+## path variables
+_CLASSPATH=${_I_MPI_ROOT}/lib/mpi.jar:${_DALROOT}/lib/onedal.jar:
+_CMAKE_PREFIX_PATH=${_ONEAPI_ROOT}/vpl/2022.0.0:${_TBBROOT}:${_DALROOT}:${_CMPLR_ROOT}/linux/IntelDPCPP:
+_CPATH=${_ONEAPI_ROOT}/vpl/2022.0.0/include:${_TBBROOT}/include:${_I_MPI_ROOT}/include:${_MKLROOT}/include:${_IPPCRYPTOROOT}/include:${_IPPROOT}/include:${_ONEAPI_ROOT}/dpl/2021.6.0/linux/include:${_DPL_ROOT}/include:${_DNNLROOT}/lib:${_ONEAPI_ROOT}/dev-utilities/2021.5.2/include:${_DALROOT}/include:${_CCL_ROOT}/include/${_CCL_CONFIGURATION}
+_CPLUS_INCLUDE_PATH=${_CLCK_ROOT}/include
+_GDB_INFO=${_ONEAPI_ROOT}/debugger/2021.5.0/documentation/info/
+_INFOPATH=${_ONEAPI_ROOT}/debugger/2021.5.0/gdb/${_ARCH}/lib
+_LD_LIBRARY_PATH=${_ONEAPI_ROOT}/vpl/2022.0.0/lib:${_TBBROOT}/lib/${_ARCH}/gcc4.8:${_I_MPI_ROOT}/libfabric/lib:${_I_MPI_ROOT}/lib/release:${_I_MPI_ROOT}/lib:${_MKLROOT}/lib/${_ARCH}:${_VT_ROOT}/slib:${_IPPCRYPTOROOT}/lib/${_ARCH}:${_IPPROOT}/lib/${_ARCH}:${_DNNLROOT}/lib:${_ONEAPI_ROOT}/debugger/2021.5.0/gdb/${_ARCH}/lib:${_ONEAPI_ROOT}/debugger/2021.5.0/libipt/${_ARCH}/lib:${_ONEAPI_ROOT}/debugger/2021.5.0/dep/lib:${_DALROOT}/lib/${_ARCH}:${_CMPLR_ROOT}/linux/lib:${_CMPLR_ROOT}/linux/lib/x64:${_INTELFPGAOCLSDKROOT}/host/linux64/lib:${_CMPLR_ROOT}/linux/compiler/lib/${_ARCH}_lin:${_CCL_ROOT}/lib/${_CCL_CONFIGURATION}
+_LIBRARY_PATH=${_ONEAPI_ROOT}/vpl/2022.0.0/lib:${_TBBROOT}/lib/${_ARCH}/gcc4.8:${_I_MPI_ROOT}/libfabric/lib:${_I_MPI_ROOT}/lib/release:${_I_MPI_ROOT}/lib:${_MKLROOT}/lib/${_ARCH}:${_IPPCRYPTOROOT}/lib/${_ARCH}:${_IPPROOT}/lib/${_ARCH}:${_DNNLROOT}/lib:${_DALROOT}/lib/${_ARCH}:${_CMPLR_ROOT}/linux/compiler/lib/${_ARCH}_lin:${_CMPLR_ROOT}/linux/lib:${_CLCK_ROOT}/lib/${_ARCH}:${_CCL_ROOT}/lib/${_CCL_CONFIGURATION}
+_MANPATH=${_I_MPI_ROOT}/man:${_VT_ROOT}/man:${_ONEAPI_ROOT}/debugger/2021.5.0/documentation/man:${_CMPLR_ROOT}/documentation/en/man/common:${_CLCK_ROOT}/man:
+_NLSPATH=${_MKLROOT}/lib/${_ARCH}/locale/%l_%t/%N:${_CMPLR_ROOT}/linux/compiler/lib/${_ARCH}_lin/locale/%l_%t/%N
+_PATH=${_ONEAPI_ROOT}/vtune/2022.1.0/bin64:${_ONEAPI_ROOT}/vpl/2022.0.0/bin:${_I_MPI_ROOT}/libfabric/bin:${_I_MPI_ROOT}/bin:${_MKLROOT}/bin/${_ARCH}:${_VT_ROOT}/bin:${_ONEAPI_ROOT}/intelpython/latest/bin:${_ONEAPI_ROOT}/intelpython/latest/condabin:${_ONEAPI_ROOT}/inspector/2022.0.0/bin64:${_DPL_ROOT}/bin:${_ONEAPI_ROOT}/dev-utilities/2021.5.2/bin:${_ONEAPI_ROOT}/debugger/2021.5.0/gdb/${_ARCH}/bin:${_INTELFPGAOCLSDKROOT}/bin:${_CMPLR_ROOT}/linux/bin/${_ARCH}:${_CMPLR_ROOT}/linux/bin:${_CLCK_ROOT}/bin/${_ARCH}:${_ADVISOR_2022_DIR}/bin64:
+_PKG_CONFIG_PATH=${_ONEAPI_ROOT}/vtune/2022.1.0/include/pkgconfig/lib64:${_ONEAPI_ROOT}/vpl/2022.0.0/lib/pkgconfig:${_TBBROOT}/lib/pkgconfig:${_I_MPI_ROOT}/lib/pkgconfig:${_MKLROOT}/lib/pkgconfig:${_IPPCRYPTOROOT}/lib/pkgconfig:${_ONEAPI_ROOT}/inspector/2022.0.0/include/pkgconfig/lib64:${_ONEAPI_ROOT}/dpl/2021.6.0/lib/pkgconfig:${_DNNLROOT}/../lib/pkgconfig:${_DALROOT}/lib/pkgconfig:${_CMPLR_ROOT}/lib/pkgconfig:${_CCL_ROOT}/lib/pkgconfig:${_ADVISOR_2022_DIR}/include/pkgconfig/lib64:
+
+# other
+_APM=${_ADVISOR_2022_DIR}/perfmodels
+_CONDA_DEFAULT_ENV=intelpython-python3.9
+_CONDA_EXE=${_ONEAPI_ROOT}/intelpython/latest/bin/conda
+_CONDA_PREFIX=${_ONEAPI_ROOT}/intelpython/latest
+_CONDA_PROMPT_MODIFIER=intelpython-python3.9
+_CONDA_SHLVL=1
+_CONDA_PYTHON_EXE=${_ONEAPI_ROOT}/intelpython/latest/bin/python
+_DAL_MAJOR_BINARY=1
+_DAL_MINOR_BINARY=1
+_FI_PROVIDER_PATH=${_I_MPI_ROOT}/libfabric/lib/prov:/usr/lib64/libfabric
+_INTEL_PYTHONHOME=${_ONEAPI_ROOT}/debugger/2021.5.0/dep
+_OCL_ICD_FILENAMES=libintelocl_emu.so:libalteracl.so:${_CMPLR_ROOT}/linux/lib/x64/libintelocl.so
+_PYTHONPATH=${_ADVISOR_2022_DIR}/pythonapi
+_VT_ADD_LIBS=-ldwarf -lelf -lvtunwind -lm -lpthread
+_VT_LIB_DIR=/opt/intel/oneapi/itac/2021.5.0/lib
+_VT_MPI=impi4
+
+# personal build
+_PATH=/usr/local/intel/bin:${_PATH}
+_LD_LIBRARY_PATH=/usr/local/intel/lib:${_LD_LIBRARY_PATH}
