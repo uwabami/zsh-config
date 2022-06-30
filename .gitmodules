@@ -13,3 +13,6 @@
 [submodule ".zsh/modules/zsh-history-filter"]
 	path = dot-zsh/modules/zsh-history-filter
 	url = https://github.com/MichaelAquilina/zsh-history-filter
+[submodule "dot-zsh/modules/zsh-completions"]
+	path = dot-zsh/modules/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git
