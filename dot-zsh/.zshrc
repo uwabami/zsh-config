@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22021-11-13 21:14:04$
+# $Lastupdate: 22022-02-24 17:43:19$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -228,7 +228,8 @@ if whence lsb_release 2>&1 1>/dev/null  ; then
     esac
 fi
 [[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
-[[ $WSL_DISTRO_NAME ]] && os_type="(%B%F{blue}%b%f)"
+# [[ $WSL_DISTRO_NAME ]] && os_type="(%B%F{blue}%b%f)"
+[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%b%f)"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -364,7 +365,7 @@ alias rsync2nd='rsync -urlptv'
 
 whence /usr/bin/ranger >/dev/null && alias ranger='urxvtcd -e /usr/bin/ranger'
 
-whence pry >/dev/null && alias irb=pry
+# whence pry >/dev/null && alias irb=pry
 
 whence nmtui > /dev/null && alias nmtui="LANG=C nmtui"
 
