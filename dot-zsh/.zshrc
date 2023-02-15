@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22022-02-24 17:43:19$
+# $Lastupdate: 22023-02-16 01:12:01$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -62,6 +62,10 @@ setopt notify               # バックグラウンドジョブの状態変化�
 setopt nohup                # default は nohup
 
 ### Functions
+## hook
+autoload -Uz add-zsh-hook
+
+
 ## functions treat as array
 typeset -Uga chpwd_functions
 typeset -Uga precmd_functions
@@ -113,8 +117,8 @@ setopt no_flow_control
 
 ### Completion
 ## LSCOLORS
-# 本来なら LSCOLORS は別途設定すべきかもしれないが, 補完の表示に使用した
-# いのでここで設定することに.
+# 本来なら LSCOLORS は別途設定すべきかもしれないが,
+# 補完の表示に使用したいのでここで設定することに.
 typeset -gx LSCOLORS=ExGxFxDxCxDxDxBxadacec
 typeset -gx LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:';
 typeset -gx ZLS_COLORS=$LS_COLORS
@@ -171,23 +175,23 @@ function prompt_chroot_info() {
     chroot_info="|%F{green}$chroot%f"
 }
 autoload -Uz prompt_chroot_info
-precmd_functions+=prompt_chroot_info
+add-zsh-hook precmd prompt_chroot_info
 
-## VCS info
-ps_vcs_info=''
-if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
-          x"$_PR_GIT_UPDATE_" = x"0" ]] ; then
+## async VCS info at RPROMPT
+if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
     autoload -Uz vcs_info
-    zstyle ':vcs_info:*' enable git hg svn bzr
+    zstyle ':vcs_info:*' enable git
     zstyle ':vcs_info:*' formats '%s:%b'
     zstyle ':vcs_info:*' actionformats '%s:%b|%a'
-    zstyle ':vcs_info:(svn|bzr)' branchformat '%b:r%r'
+    zstyle ':vcs_info:(svn|bzr)' branchformat '%f[%B%b:r%r%b%f]'
     zstyle ':vcs_info:bzr:*' use-simple true
     zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' check-for-staged-changes true
     zstyle ':vcs_info:git:*' stagedstr "%B%F{yellow}"
     zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
     zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b'
     zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b'
+
     function prompt_vcs_info(){
         LANG=C vcs_info "$@"
         if [[ -n "$vcs_info_msg_0_" ]]; then
@@ -196,13 +200,12 @@ if [[ -n $(echo ${^fpath}/vcs_info(N)) && \
             ps_vcs_info=''
         fi
         zle -N reset-prompt
-}
-    precmd_functions+=prompt_vcs_info
-    source $ZDOTDIR/modules/zsh-async/async.zsh
-    async_init
-    async_start_worker vcs_info
-    async_register_callback vcs_info prompt_vcs_info_done
+    }
+    add-zsh-hook precmd prompt_vcs_info
+else
+    ps_vcs_info=''
 fi
+
 # 変数の文字列計算用関数
 function count_prompt_chars (){
     # @see https://twitter.com/satoh_fumiyasu/status/519386124020482049
@@ -213,23 +216,23 @@ function count_prompt_chars (){
         print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' -e 's/[^\x01-\x7e]/aa/g' | wc -m | sed -e 's/ //g'
     fi
 }
-os_type="()"
+os_type="(%{%G%})"
 if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
-            os_type="(%{[38;5;196m%}%{[0m%})"
+            os_type="(%{[38;5;196m%}%{%G%}%{[0m%})"
             ;;
         *Ubuntu*)
-            os_type="(%{[38;5;172m%}%{[0m%})"
+            os_type="(%{[38;5;172m%}%{%G%}%{[0m%})"
             ;;
         *Red*Hat*)
-            os_type="(%{[38;5;255m%}%{[0m%})"
+            os_type="(%{[38;5;255m%}%{%G%}%{[0m%})"
             ;;
     esac
 fi
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%b%f)"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G%}%b%f)"
 # [[ $WSL_DISTRO_NAME ]] && os_type="(%B%F{blue}%b%f)"
-[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%b%f)"
+[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G%}%b%f)"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -258,7 +261,8 @@ function update_prompt (){
     # 右プロンプト
     RPROMPT="$ps_vcs_info"
 }
-precmd_functions+=update_prompt
+add-zsh-hook precmd update_prompt
+
 if whence tmux > /dev/null ; then
     autoload -Uz ssh
 fi

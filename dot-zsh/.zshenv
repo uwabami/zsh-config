@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22021-01-16 14:21:05$
+# $Lastupdate: 22023-02-15 23:16:14$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -34,7 +34,7 @@
 ## LANG
 typeset -gx LANG=ja_JP.UTF-8
 # custom fpath
-fpath=( $ZDOTDIR/modules/zsh-async(N-/)
+fpath=( # $ZDOTDIR/modules/async(N-/)
         $ZDOTDIR/functions(N-/)
         $fpath )
 typeset -gxU fpath

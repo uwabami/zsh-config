@@ -10,7 +10,7 @@ _SRC_ += $(shell find modules/zsh-syntax-highlighting -name *.zsh | grep -v test
 # module: zsh-completion
 _SRC_ += $(shell find modules/zsh-completions/src -type f | grep -v .zwc)
 # module: zsh-async
-_SRC_ += $(shell find modules/zsh-async -type f -name async.zsh | grep -v .zwc)
+_SRC_ += $(shell find modules/async -type f -name async.zsh | grep -v .zwc)
 # module: zsh-history-filter
 _SRC_ += $(shell find modules/zsh-history-filter -type f -name *.zsh | grep -v .zwc)
 # update target

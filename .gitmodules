@@ -8,7 +8,7 @@
 	path = zsh.d/modules/auto-fu
 	url = https://github.com/hchbaw/auto-fu.zsh.git
 [submodule "zsh.d/modules/zsh-async"]
-	path = dot-zsh/modules/zsh-async
+	path = dot-zsh/modules/async
 	url = https://github.com/mafredri/zsh-async.git
 [submodule ".zsh/modules/zsh-history-filter"]
 	path = dot-zsh/modules/zsh-history-filter
