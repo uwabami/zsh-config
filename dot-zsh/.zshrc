@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-02-16 01:12:01$
+# $Lastupdate: 22023-02-23 06:05:45$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -191,17 +191,58 @@ if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
     zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
     zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b'
     zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b'
+    # function prompt_vcs_info(){
+    #     LANG=C vcs_info "$@"
+    #     if [[ -n "$vcs_info_msg_0_" ]]; then
+    #         ps_vcs_info="%b%f[$vcs_info_msg_0_%b%f]"
+    #     else
+    #         ps_vcs_info=''
+    #     fi
+    #     zle -N reset-prompt
+    # }
+    # add-zsh-hook precmd prompt_vcs_info
 
-    function prompt_vcs_info(){
-        LANG=C vcs_info "$@"
+    source $ZDOTDIR/modules/async/async.zsh
+    function _async_prompt_vcs_info(){
+        cd -q $1
+        LANG=C vcs_info
+        print ${vcs_info_msg_0_}
+    }
+    function _async_prompt_vcs_info_start(){
+        async_start_worker vcs_info_worker -n
+        async_register_callback vcs_info_worker _async_prompt_vcs_info_done
+    }
+    function _async_prompt_vcs_info_done(){
+        local job=$1
+        local return_code=$2
+        local stdout=$3
+        local more=$6
+        if [[ $job == '[async]' ]]; then
+            if [[ $return_code -eq 2 ]]; then
+                _async_prompt_vcs_info_start
+                return
+            fi
+        fi
+        vcs_info_msg_0_=$stdout
         if [[ -n "$vcs_info_msg_0_" ]]; then
             ps_vcs_info="%b%f[$vcs_info_msg_0_%b%f]"
         else
             ps_vcs_info=''
         fi
-        zle -N reset-prompt
+        [[ $more == 1 ]] || zle -N reset-prompt
     }
-    add-zsh-hook precmd prompt_vcs_info
+
+    async_init
+    _async_prompt_vcs_info_start
+    function _async_prompt_vcs_info_precmd(){
+        async_job vcs_info_worker _async_prompt_vcs_info $PWD
+    }
+    add-zsh-hook precmd _async_prompt_vcs_info_precmd
+
+    function _async_prompt_vcs_info_chpwd(){
+        ps_vcs_info=
+    }
+    add-zsh-hook chpwd _async_prompt_vcs_info_chpwd
 else
     ps_vcs_info=''
 fi
