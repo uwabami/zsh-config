@@ -13,6 +13,8 @@ _SRC_ += $(shell find modules/zsh-completions/src -type f | grep -v .zwc)
 _SRC_ += $(shell find modules/async -type f -name async.zsh | grep -v .zwc)
 # module: zsh-history-filter
 _SRC_ += $(shell find modules/zsh-history-filter -type f -name *.zsh | grep -v .zwc)
+# module: git-prompt
+_SRC_ += $(shell find modules/git-prompt -type f -name *.zsh | grep -v .zwc)
 # update target
 TARGET=$(_SRC_:%=%.zwc)
 

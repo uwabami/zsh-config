@@ -16,3 +16,6 @@
 [submodule "dot-zsh/modules/zsh-completions"]
 	path = dot-zsh/modules/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "dot-zsh/modules/git-prompt"]
+	path = dot-zsh/modules/git-prompt
+	url = https://github.com/woefe/git-prompt.zsh
