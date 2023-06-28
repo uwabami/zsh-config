@@ -1,9 +1,9 @@
 #! /bin/zsh
 
 # ndenv
-unset NDENV_ROOT
-unset NDENV_SHELL
-unfunction ndenv
+unset NODENV_ROOT
+unset NODENV_SHELL
+unfunction nodenv
 # rbenv
 unset RBENV_ROOT
 unset RBENV_SHELL

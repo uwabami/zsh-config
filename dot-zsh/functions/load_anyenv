@@ -24,76 +24,76 @@ for dir in `ls $HOME/.anyenv/envs/` ; do
     fi
 done
 
-## for ndenv
-typeset -gx NDENV_ROOT=$HOME/.anyenv/envs/ndenv
-typeset -gx NDENV_SHELL=$SHELL
-ndenv() {
-    if [ ! -d $NDENV_ROOT ] ; then
-        echo "ndenv not found"
-        return
-    fi
-    typeset command
-    command="$1"
-    if [ "$#" -gt 0 ]; then
-        shift
-    fi
+# ## for ndenv
+# typeset -gx NODENV_ROOT=$HOME/.anyenv/envs/ndenv
+# nodenv() {
+#     if [ ! -d $NODENV_ROOT ] ; then
+#         echo "nodenv not found"
+#         return
+#     fi
+#     typeset command
+#     command="$1"
+#     if [ "$#" -gt 0 ]; then
+#         shift
+#     fi
 
-    case "$command" in
-        rehash|shell)
-            eval "`ndenv "sh-$command" "$@"`";;
-        *)
-            command ndenv "$command" "$@";;
-    esac
-}
-# source "/home/uwabami/.anyenv/envs/ndenv/libexec/../completions/ndenv.zsh"
+#     case "$command" in
+#         rehash|shell)
+#             eval "`nodenv "sh-$command" "$@"`";;
+#         *)
+#             command ndenv "$command" "$@";;
+#     esac
+# }
+# # source "/home/uwabami/.anyenv/envs/ndenv/libexec/../completions/ndenv.zsh"
 
-## for rbenv
-typeset -gx RBENV_ROOT=$HOME/.anyenv/envs/rbenv
-typeset -gx RBENV_SHELL=$SHELL
-rbenv() {
-    if [ ! -d $RBENV_ROOT ] ; then
-        echo "rbenv not found"
-        return
-    fi
-    local command
-    command="${1:-}"
-    if [ "$#" -gt 0 ]; then
-        shift
-    fi
+# ## for rbenv
+# typeset -gx RBENV_ROOT=$HOME/.anyenv/envs/rbenv
+# typeset -gx RBENV_SHELL=$SHELL
+# rbenv() {
+#     if [ ! -d $RBENV_ROOT ] ; then
+#         echo "rbenv not found"
+#         return
+#     fi
+#     local command
+#     command="${1:-}"
+#     if [ "$#" -gt 0 ]; then
+#         shift
+#     fi
 
-    case "$command" in
-        rehash|shell)
-            eval "$(rbenv "sh-$command" "$@")";;
-        *)
-            command rbenv "$command" "$@";;
-    esac
-}
-# source '/home/uwabami/.anyenv/envs/rbenv/libexec/../completions/rbenv.zsh'
+#     case "$command" in
+#         rehash|shell)
+#             eval "$(rbenv "sh-$command" "$@")";;
+#         *)
+#             command rbenv "$command" "$@";;
+#     esac
+# }
+# # source '/home/uwabami/.anyenv/envs/rbenv/libexec/../completions/rbenv.zsh'
 
 
-## for pyenv
-typeset -gx PYENV_ROOT=$HOME/.anyenv/envs/pyenv
-typeset -gx PYENV_SHELL=$SHELL
-pyenv() {
-    if [ ! -d $PYENV_ROOT ] ; then
-        echo "pyenv not found"
-        return
-    fi
+# ## for pyenv
+# typeset -gx PYENV_ROOT=$HOME/.anyenv/envs/pyenv
+# typeset -gx PYENV_SHELL=$SHELL
+# pyenv() {
+#     if [ ! -d $PYENV_ROOT ] ; then
+#         echo "pyenv not found"
+#         return
+#     fi
 
-    local command
-    command="${1:-}"
-    if [ "$#" -gt 0 ]; then
-        shift
-    fi
+#     local command
+#     command="${1:-}"
+#     if [ "$#" -gt 0 ]; then
+#         shift
+#     fi
 
-    case "$command" in
-        rehash|shell)
-            eval "$(pyenv "sh-$command" "$@")";;
-        *)
-            command pyenv "$command" "$@";;
-    esac
-}
-# source '/home/uwabami/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh'
+#     case "$command" in
+#         rehash|shell)
+#             eval "$(pyenv "sh-$command" "$@")";;
+#         *)
+#             command pyenv "$command" "$@";;
+#     esac
+# }
+# # source '/home/uwabami/.anyenv/envs/pyenv/libexec/../completions/pyenv.zsh'
 
  # cleanup duplicate
 typeset -gxU path
+eval "$(anyenv init -)"
