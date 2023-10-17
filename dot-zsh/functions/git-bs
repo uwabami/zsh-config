@@ -1,8 +1,8 @@
 #! /bin/zsh
 [ -z $ARCH ] && ARCH=amd64
 [ -z $DIST ] && DIST=unstable
-[ x"$DIST" = x"bullseye" ] && DIST=stable
-[ x"$DIST" = x"bookworm" ] && DIST=testing
+[ x"$DIST" = x"bookworm" ] && DIST=stable
+[ x"$DIST" = x"trixie" ] && DIST=testing
 [ x"$DIST" = x"sid" ] && DIST=unstable
 [ x"$EXT" = x"experimental"  ] && OPTS="--extra-repository='deb http://dennou-k.gfd-dennou.org/debian experimental main' --build-dep-resolver=aspcud"
 [ ! -z $DEPS ] && OPTS="$OPTS --add-depends='$DEPS'"

@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-02-27 19:19:22$
+# $Lastupdate: 22023-09-12 12:01:46$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -269,18 +269,18 @@ if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
     typeset -gx ZSH_THEME_GIT_PROMPT_SUFFIX="%b%f]"
     typeset -gx ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
     typeset -gx ZSH_THEME_GIT_PROMPT_BRANCH="%F{magenta}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL=" %F{yellow}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%F{yellow}"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL=" %F{yellow}☁"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%F{yellow}🡺"
     typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SUFFIX=""
     typeset -gx ZSH_THEME_GIT_PROMPT_DETACHED="%F{cyan}:"
-    typeset -gx ZSH_THEME_GIT_PROMPT_BEHIND="%F{cyan}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_AHEAD="%F{cyan}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_STAGED="%F{green}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{red}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNTRACKED="%B%F{yellow}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}"
+    typeset -gx ZSH_THEME_GIT_PROMPT_BEHIND="%F{cyan}🡻"
+    typeset -gx ZSH_THEME_GIT_PROMPT_AHEAD="%F{cyan}🡹"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}❌"
+    typeset -gx ZSH_THEME_GIT_PROMPT_STAGED="%F{green}●"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{red}➕"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNTRACKED="%B%F{yellow}❔"
+    typeset -gx ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}🏴"
+    typeset -gx ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}✔"
     ## load
     source $ZDOTDIR/modules/git-prompt/git-prompt.zsh
     ps_vcs_info='$(gitprompt)'

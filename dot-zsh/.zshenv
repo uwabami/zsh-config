@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-02-15 23:16:14$
+# $Lastupdate: 22023-09-19 15:10:34$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -76,21 +76,20 @@ manpath=(
 typeset -gx TEXMFHOME=$HOME/.texmf
 path=( /usr/tex/bin(N-/) $path )
 
-## Java
+# ## Java
 # typeset -gx _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 # case ${OSTYPE} in
 #     darwin*)
 #         typeset -gx JAVA_HOME=/Library/Java/Home
 #         ;;
 #     linux*)
-#         # if [ -d /usr/lib/jvm/default-java/jre ] ; then
-#         typeset -gx JAVA_HOME=/usr/lib/jvm/default-java/jre
-#         # else
-#         #     JAVA_HOME=$(whence -s java | awk '{print $3}' | sed "s:bin/java::")
-#         # fi
-#         ;;
-#     *)
-#         ;;
+#         if [ -d /usr/lib/jvm/default-java/jre ] ; then
+#             typeset -gx JAVA_HOME=/usr/lib/jvm/default-java/jre
+#         else
+#             typeset -gx JAVA_HOME=$(whence -s java | awk '{print $3}' | sed "s:bin/java::")
+# 	    fi
+# 	    ;;
+# 	*)
 # esac
 
 ## rust
@@ -156,6 +155,10 @@ if [ -d /opt/nvidia/hpc_sdk ] ; then
     autoload -Uz load_nvhpc
     autoload -Uz unload_nvhpc
 fi
+
+# flatpak app.
+path=( /var/lib/flatpak/exports/bin(N-/)
+       $path)
 
 ## misc
 # notmuch
