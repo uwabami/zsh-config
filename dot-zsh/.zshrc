@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-09-12 12:01:46$
+# $Lastupdate: 22023-10-26 16:55:29$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -40,6 +40,7 @@
 umask 002                   # default umask
 bindkey -e                  # keybind  -> emacs like
 setopt no_beep              # beep を無効化
+# setopt combiningchars       # 結合文字処理
 
 ## Change Directory
 setopt auto_pushd           # cd 時に Tab 補完
@@ -179,87 +180,6 @@ add-zsh-hook precmd prompt_chroot_info
 
 ## async VCS info at RPROMPT
 if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
-#     autoload -Uz vcs_info
-#     zstyle ':vcs_info:*' enable git hg svn bzr
-#     zstyle ':vcs_info:*' formats '%s:%b'
-#     zstyle ':vcs_info:*' actionformats '%s:%b|%a'
-#     zstyle ':vcs_info:(svn|bzr)' branchformat '%f[%B%b:r%r%b%f]'
-#     zstyle ':vcs_info:bzr:*' use-simple true
-#     zstyle ':vcs_info:git:*' check-for-changes true
-# #    zstyle ':vcs_info:git:*' check-for-staged-changes true
-#     zstyle ':vcs_info:git:*' stagedstr "%B%F{yellow}"
-#     zstyle ':vcs_info:git:*' unstagedstr "%B%F{red}"
-#     zstyle ':vcs_info:git:*' formats '%B%F{green}%c%u%s:%b'
-#     zstyle ':vcs_info:git:*' actionformats '%B%c%u%F{red}%s:%b'
-    ### --- non async ver. ---
-    # function prompt_vcs_info(){
-    #     LANG=C vcs_info "$@"
-    #     if [[ -n "$vcs_info_msg_0_" ]]; then
-    #         ps_vcs_info="%b%f[$vcs_info_msg_0_%b%f]"
-    #     else
-    #         ps_vcs_info=''
-    #     fi
-    #     zle -N reset-prompt
-    # }
-    # add-zsh-hook precmd prompt_vcs_info
-
-    # ### --- async ver. ---
-    # source $ZDOTDIR/modules/async/async.zsh
-    # function _async_prompt_vcs_info(){
-    #     cd -q $1
-    #     LANG=C vcs_info
-    #     print ${vcs_info_msg_0_}
-    # }
-    # function _async_prompt_vcs_info_start(){
-    #     async_start_worker vcs_info_worker -n
-    #     async_register_callback vcs_info_worker _async_prompt_vcs_info_done
-    # }
-    # function _async_prompt_vcs_info_done(){
-    #     local job=$1
-    #     local return_code=$2
-    #     local stdout=$3
-    #     local more=$6
-    #     if [[ $job == '[async]' ]]; then
-    #         if [[ $return_code -eq 2 ]]; then
-    #             _async_prompt_vcs_info_start
-    #             return
-    #         fi
-    #     fi
-    #     vcs_info_msg_0_=$stdout
-    #     if [[ -n "$vcs_info_msg_0_" ]]; then
-    #         ps_vcs_info="%b%f[$vcs_info_msg_0_%b%f]"
-    #     else
-    #         ps_vcs_info=''
-    #     fi
-    #     [[ $more == 1 ]] || zle -N reset-prompt
-    # }
-    # # execute async
-    # async_init
-    # _async_prompt_vcs_info_start
-    # function _async_prompt_vcs_info_precmd(){
-    #     async_job vcs_info_worker _async_prompt_vcs_info $PWD
-    # }
-    # add-zsh-hook precmd _async_prompt_vcs_info_precmd
-    # function _async_prompt_vcs_info_chpwd(){
-    #     ps_vcs_info=
-    # }
-    # add-zsh-hook chpwd _async_prompt_vcs_info_chpwd
-
-    # ### plugin ####
-    # source $HOME/Sources/Git/github.com/romkatv/gitstatus/gitstatus.plugin.zsh
-    # # gitstatus_start MY_VCS_INFO
-    # # gitstatus_query -d $PWD MY_VCS_INFO
-    # # typeset -m 'VCS_STATUS_*'
-    # function prompt_vcs_info(){
-    #     if gitstatus_query MY_VCS_INFO && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
-    #         ps_vcs_info=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}  # escape %
-    #         (( VCS_STATUS_NUM_STAGED    )) && ps_vcs_info+='+'
-    #         (( VCS_STATUS_NUM_UNSTAGED  )) && ps_vcs_info+='!'
-    #         (( VCS_STATUS_NUM_UNTRACKED )) && ps_vcs_info+='?'
-    #     fi
-    # }
-    # gitstatus_stop 'MY_VCS_INFO' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY_VCS_INFO'
-    # add-zsh-hook precmd prompt_vcs_info
 
     ### git-prompt.zsh ###
     typeset -gx ZSH_GIT_PROMPT_FORCE_BLANK=1
@@ -269,17 +189,17 @@ if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
     typeset -gx ZSH_THEME_GIT_PROMPT_SUFFIX="%b%f]"
     typeset -gx ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
     typeset -gx ZSH_THEME_GIT_PROMPT_BRANCH="%F{magenta}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL=" %F{yellow}☁"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%F{yellow}🡺"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%F{yellow}☁️"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%F{yellow}→"
     typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SUFFIX=""
     typeset -gx ZSH_THEME_GIT_PROMPT_DETACHED="%F{cyan}:"
-    typeset -gx ZSH_THEME_GIT_PROMPT_BEHIND="%F{cyan}🡻"
-    typeset -gx ZSH_THEME_GIT_PROMPT_AHEAD="%F{cyan}🡹"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}❌"
+    typeset -gx ZSH_THEME_GIT_PROMPT_BEHIND="%F{cyan}↓"
+    typeset -gx ZSH_THEME_GIT_PROMPT_AHEAD="%F{cyan}↑"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}×"
     typeset -gx ZSH_THEME_GIT_PROMPT_STAGED="%F{green}●"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{red}➕"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNTRACKED="%B%F{yellow}❔"
-    typeset -gx ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}🏴"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{red}＋"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNTRACKED="%B%F{yellow}？"
+    typeset -gx ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}■"
     typeset -gx ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}✔"
     ## load
     source $ZDOTDIR/modules/git-prompt/git-prompt.zsh
@@ -302,19 +222,19 @@ os_type="(%{%G%})"
 if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
-            os_type="(%{[38;5;196m%}%{%G%}%{[0m%})"
+            os_type="(%{[38;5;196m%}%{%G%}%{[0m%} )"
             ;;
         *Ubuntu*)
-            os_type="(%{[38;5;172m%}%{%G%}%{[0m%})"
+            os_type="(%{[38;5;172m%}%{%G%}%{[0m%} )"
             ;;
         *Red*Hat*)
-            os_type="(%{[38;5;255m%}%{%G%}%{[0m%})"
+            os_type="(%{[38;5;255m%}%{%G%}%{[0m%} )"
             ;;
     esac
 fi
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G%}%b%f)"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G%}%b%f )"
 # [[ $WSL_DISTRO_NAME ]] && os_type="(%B%F{blue}%b%f)"
-[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G%}%b%f)"
+[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G%}%b%f )"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){

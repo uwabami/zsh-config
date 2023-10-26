@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-09-19 15:10:34$
+# $Lastupdate: 22023-10-25 14:56:29$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -93,6 +93,7 @@ path=( /usr/tex/bin(N-/) $path )
 # esac
 
 ## rust
+# [ -d $HOME/.cargo/env ] && source "$HOME/.cargo/env"
 autoload -U load_cargo
 autoload -U unload_cargo
 
@@ -180,4 +181,3 @@ fi
 
 ## duplicate cleaning
 typeset -gxU path ld_library_path library_path include cpath nlspath manpath
-[ -d $HOME/.cargo/env ] && source "$HOME/.cargo/env"
