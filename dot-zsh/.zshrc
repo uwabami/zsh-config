@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-10-26 16:55:29$
+# $Lastupdate: 22023-10-31 15:41:17$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -189,18 +189,18 @@ if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
     typeset -gx ZSH_THEME_GIT_PROMPT_SUFFIX="%b%f]"
     typeset -gx ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
     typeset -gx ZSH_THEME_GIT_PROMPT_BRANCH="%F{magenta}"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%F{yellow}☁️"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%F{yellow}→"
+    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%F{yellow}󰑓 "
+    typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%F{yellow}󰁔 "
     typeset -gx ZSH_THEME_GIT_PROMPT_UPSTREAM_SUFFIX=""
     typeset -gx ZSH_THEME_GIT_PROMPT_DETACHED="%F{cyan}:"
-    typeset -gx ZSH_THEME_GIT_PROMPT_BEHIND="%F{cyan}↓"
-    typeset -gx ZSH_THEME_GIT_PROMPT_AHEAD="%F{cyan}↑"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}×"
-    typeset -gx ZSH_THEME_GIT_PROMPT_STAGED="%F{green}●"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{red}＋"
-    typeset -gx ZSH_THEME_GIT_PROMPT_UNTRACKED="%B%F{yellow}？"
-    typeset -gx ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}■"
-    typeset -gx ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}✔"
+    typeset -gx ZSH_THEME_GIT_PROMPT_BEHIND="%F{cyan}󰁅 "
+    typeset -gx ZSH_THEME_GIT_PROMPT_AHEAD="%F{cyan}󰁝 "
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red} "
+    typeset -gx ZSH_THEME_GIT_PROMPT_STAGED="%F{green} "
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{red} "
+    typeset -gx ZSH_THEME_GIT_PROMPT_UNTRACKED="%B%F{yellow}󰇘 "
+    typeset -gx ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}󰈻 "
+    typeset -gx ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}󰸞 "
     ## load
     source $ZDOTDIR/modules/git-prompt/git-prompt.zsh
     ps_vcs_info='$(gitprompt)'
@@ -233,7 +233,6 @@ if whence lsb_release 2>&1 1>/dev/null  ; then
     esac
 fi
 [[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G%}%b%f )"
-# [[ $WSL_DISTRO_NAME ]] && os_type="(%B%F{blue}%b%f)"
 [[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G%}%b%f )"
 
 # precmd のプロンプト更新用関数
