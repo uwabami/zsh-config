@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-10-25 14:56:29$
+# $Lastupdate: 22024-03-04 14:09:27$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -113,6 +113,9 @@ path=( $GOPATH/bin(N-/)
 # RubyGems
 autoload -U load_local_gems
 autoload -U unload_local_gems
+# python
+# typeset -gx VIRTUAL_ENV_DISABLE_PROMPT=1
+
 
 ## CVS
 typeset -gx CVS_RSH=ssh

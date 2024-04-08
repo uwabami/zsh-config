@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22023-10-31 15:41:17$
+# $Lastupdate: 22024-04-03 20:46:37$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -36,11 +36,13 @@
 #
 # Code:
 
+# source $ZDOTDIR/wezterm.sh
+
 ### Basic Settings
 umask 002                   # default umask
 bindkey -e                  # keybind  -> emacs like
 setopt no_beep              # beep を無効化
-# setopt combiningchars       # 結合文字処理
+setopt combiningchars       # 結合文字処理
 
 ## Change Directory
 setopt auto_pushd           # cd 時に Tab 補完
@@ -178,6 +180,13 @@ function prompt_chroot_info() {
 autoload -Uz prompt_chroot_info
 add-zsh-hook precmd prompt_chroot_info
 
+function prompt_venv_info() {
+    venv_info="|%F{green}$VIRTUAL_ENV_PROMPT%f"
+}
+autoload -Uz prompt_venv_info
+add-zsh-hook precmd prompt_venv_info
+
+
 ## async VCS info at RPROMPT
 if [[ x"$_PR_GIT_UPDATE_" = x"0"  ]] ; then
 
@@ -241,13 +250,13 @@ function update_prompt (){
     local ps_user="%(!,%B%F{magenta}%n%b%F{white},%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
-    local prompt_1st_left="$ps_user@$ps_host$chroot_info"
+    local prompt_1st_left="$ps_user@$ps_host$chroot_info$venv_info"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
     ## 1段目行の残り文字列の計算
     local left_length=$(count_prompt_chars $prompt_1st_left)
     local right_length=$(count_prompt_chars $prompt_1st_right)
-    local bar_rest_length=$[ COLUMNS - left_length - right_length - 7 ]
+    local bar_rest_length=$[ COLUMNS - left_length - right_length - 8 ]
     ## 1段目に水平線を引く
     local prompt_1st_hr=${(l:${bar_rest_length}::-:)}
     ## PROMPT の設定
@@ -274,9 +283,7 @@ autoload -Uz ssh-reagent
 
 # fzf
 typeset -gz FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git"'
-# typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --no-unicode --select-1 --exit-0 --info=inline --ansi --cycle --algo=v1 +x'
-# typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --no-unicode --select-1 --exit-0 --info=inline --ansi --cycle --algo=v2 -x -e'
-typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --select-1 --exit-0 --info=inline --ansi --cycle --algo=v2 -x -e'
+typeset -gx FZF_DEFAULT_OPTS='--layout=reverse --height=60% --border=sharp --no-unicode --select-1 --exit-0 --info=inline --ansi --cycle --algo=v2 -x -e'
 # https://github.com/junegunn/fzf/wiki/Color-schemes
 typeset -gx FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
  --color=fg:#eceff1,bg:-1,hl:#40c4ff
@@ -314,7 +321,8 @@ autoload -Uz cde
 autoload -Uz dired
 ### Aliases
 typeset -gx LESSCHARSET=utf-8
-typeset -gx LESSHISTFILE='-'
+typeset -gx LESSHISTFILE='~/.cache/lesshst'
+# typeset -gx LESSHISTFILE='-'
 if whence lesspipe >/dev/null ;then
    # eval "$(lesspipe)"
    typeset -gx LESSOPEN="| /usr/bin/lesspipe %s";
@@ -415,6 +423,7 @@ ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='standout'
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias checkmail="systemctl --user start checkmail.service"
+alias en="env TERM=tmux-direct emacs -nw"
 
 # for Emacs vterm
 if [[ "$INSIDE_EMACS" ==  "vterm" ]]; then
