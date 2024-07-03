@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22024-04-03 20:46:37$
+# $Lastupdate: 22024-07-03 16:20:03$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -231,18 +231,18 @@ os_type="(%{%G%})"
 if whence lsb_release 2>&1 1>/dev/null  ; then
     case $(lsb_release -d) in
         *Debian*)
-            os_type="(%{[38;5;196m%}%{%G%}%{[0m%} )"
+            os_type="(%{[38;5;196m%}%{%G %}%{[0m%} )"
             ;;
         *Ubuntu*)
-            os_type="(%{[38;5;172m%}%{%G%}%{[0m%} )"
+            os_type="(%{[38;5;172m%}%{%G %}%{[0m%} )"
             ;;
         *Red*Hat*)
-            os_type="(%{[38;5;255m%}%{%G%}%{[0m%} )"
+            os_type="(%{[38;5;255m%}%{%G %}%{[0m%} )"
             ;;
     esac
 fi
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G%}%b%f )"
-[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G%}%b%f )"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G %}%b%f )"
+[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G %}%b%f )"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -250,6 +250,7 @@ function update_prompt (){
     local ps_user="%(!,%B%F{magenta}%n%b%F{white},%n)"
     local ps_host="%m"
     [[ -n ${SSH_CONNECTION} ]] && ps_host="%F{yellow}$ps_host%f"
+    [[ -d /mnt/wslg ]] && ps_host="%m"
     local prompt_1st_left="$ps_user@$ps_host$chroot_info$venv_info"
     ## プロンプト: 1段目右
     local prompt_1st_right="[%F{white}%(4~,%-2~/.../%1~,%~)%f]"
@@ -423,7 +424,32 @@ ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='standout'
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias checkmail="systemctl --user start checkmail.service"
+alias wp-mute="systemctl --user start wp-mute.service"
 alias en="env TERM=tmux-direct emacs -nw"
+
+# for WSL2 gnome-keyring
+if [[ -d /mnt/wslg ]]; then
+    # setxkbmap -model pc105 -layout jp -option ctrl:nocaps 2>/dev/null
+    # if [[ -z $GPG_AGENT_INFO ]]; then
+    #     eval $(keychain -q --eval --agents ssh,gpg $GPG_KEY_ID)
+    # fi
+    # . $HOME/.keychain/$HOST-sh-gpg
+    # typeset -gx SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    ####################################################################
+    typeset -gx GNOME_KEYRING_CONTROL=/run/user/$(id -u)/keyring
+    typeset -gx SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    typeset -gx GPG_TTY=$(tty)
+    # if [[ ! -d /run/user/$(id -u)/keyring ]] ;then
+    #     sleep 15 # Uglyyyy
+    #     echo | gnome-keyring-daemon --unlock --replace 2>&1 1>/dev/null
+    # fi
+    gpg-connect-agent updatestartuptty /bye > /dev/null
+    setxkbmap -model pc105 -layout jp -option ctrl:nocaps 2>/dev/null
+    ## WezTerm ssh hack
+    typeset -gx DISPLAY=:0
+    typeset -gx WAYLAND_DISPLAY=wayland-0
+    unset LC_ALL
+fi
 
 # for Emacs vterm
 if [[ "$INSIDE_EMACS" ==  "vterm" ]]; then
