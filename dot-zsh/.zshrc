@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 # -*- mode: sh; coding: utf-8; indent-tabs-mode: nil -*-
-# $Lastupdate: 22024-07-03 16:20:03$
+# $Lastupdate: 22024-12-12 11:53:55$
 #
 # Copyright (c) 2010-2014 Youhei SASAKI <uwabami@gfd-dennou.org>
 # All rights reserved.
@@ -241,8 +241,8 @@ if whence lsb_release 2>&1 1>/dev/null  ; then
             ;;
     esac
 fi
-[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G %}%b%f )"
-[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G %}%b%f )"
+[[ $OSTYPE == darwin* ]] && os_type="(%B%F{red}%{%G󰀵 %}%b%f )"
+[[ -d /mnt/wslg ]] && os_type="(%B%F{blue}%{%G󰖳%}%b%f )"
 
 # precmd のプロンプト更新用関数
 function update_prompt (){
@@ -331,7 +331,7 @@ if whence lesspipe >/dev/null ;then
 fi
 typeset -gx MANPAGER=less
 typeset -gx PAGER='less'
-typeset -gx LESS='-R'
+typeset -gx LESS='-R -S'
 typeset -gx LV="-c -T8192 -l -m -k -s"
 autoload -Uz man
 whence vim >/dev/null && alias vi=vim
@@ -377,13 +377,13 @@ alias mv='nocorrect mv -i'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias dmesg='sudo dmesg'
-alias rsync2nd='rsync -urlptv'
+alias rsync2nd='rsync -urlCptv --exclude=.git --exclude=.gitignore'
 
-whence /usr/bin/ranger >/dev/null && alias ranger='urxvtcd -e /usr/bin/ranger'
+# whence /usr/bin/ranger >/dev/null && alias ranger='urxvtcd -e /usr/bin/ranger'
 
 # whence pry >/dev/null && alias irb=pry
 
-whence nmtui > /dev/null && alias nmtui="LANG=C nmtui"
+whence nmtui > /dev/null && alias nmtui="LANG=en_US.UTF-8 nmtui"
 
 if [ x"$XDG_CURRENT_DESKTOP" = x"i3" ] ; then
     alias xdg-open="DE=gnome xdg-open"
@@ -444,10 +444,13 @@ if [[ -d /mnt/wslg ]]; then
     #     echo | gnome-keyring-daemon --unlock --replace 2>&1 1>/dev/null
     # fi
     gpg-connect-agent updatestartuptty /bye > /dev/null
-    setxkbmap -model pc105 -layout jp -option ctrl:nocaps 2>/dev/null
     ## WezTerm ssh hack
-    typeset -gx DISPLAY=:0
+    # X410 vsock HACK
+    typeset -gx LD_PRELOAD="$HOME/Library/libxcb-1.14-vsock-x64/libxcb.so.1.1.0"
+    typeset -gx DISPLAY="vsock/:0"
+    # typeset -gx DISPLAY=:0
     typeset -gx WAYLAND_DISPLAY=wayland-0
+    # unset WAYLAND_DISPLAY
     unset LC_ALL
 fi
 

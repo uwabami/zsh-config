@@ -4,7 +4,8 @@
 [ x"$DIST" = x"bookworm" ] && DIST=stable
 [ x"$DIST" = x"trixie" ] && DIST=testing
 [ x"$DIST" = x"sid" ] && DIST=unstable
-[ x"$EXT" = x"experimental"  ] && OPTS="--extra-repository='deb http://dennou-k.gfd-dennou.org/debian experimental main' --build-dep-resolver=aspcud"
+[ x"$EXT" = x"experimental"  ] && OPTS="--extra-repository='deb https://dennou-k.gfd-dennou.org/debian experimental main' --build-dep-resolver=aspcud"
+[ x"$EXT" = x"ruby3.3" ] && OPTS="--extra-repository='deb [trusted=yes] https://ruby-builds.debian.net/ruby3.3/ ./' --build-dep-resolver=aspcud"
 [ ! -z $DEPS ] && OPTS="$OPTS --add-depends='$DEPS'"
 echo gbp buildpackage --git-ignore-new --git-builder="sbuild --arch=${ARCH} -d ${DIST} $OPTS"
 gbp buildpackage --git-ignore-new --git-builder="sbuild --arch=${ARCH} -d ${DIST} $OPTS"
